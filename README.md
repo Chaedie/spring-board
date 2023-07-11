@@ -9,3 +9,9 @@
 
 - Post로 글 작성 후 view만 바꿀 경우 Post가 다시 요청 될 수 있다.
 - 이를 방지하기 위해 redirect를 통해 상세 페이지를 Get하면 Post 재요청을 방지할 수 있다.
+
+### 배운 점
+
+#### Test에서 Transactional
+
+- Test코드에서 @Transactional Annotation을 넣으면 Test용 동작이 실제 DB에 저장되지 않고 Rollback 된다.
