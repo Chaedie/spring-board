@@ -10,6 +10,9 @@ import lombok.*;
 @EqualsAndHashCode
 @Builder
 public class PostRequestDTO {
+
+    private Long postId;
+    
     private String postTitle;
 
     private String postContent;

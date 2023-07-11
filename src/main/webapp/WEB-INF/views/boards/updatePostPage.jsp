@@ -32,7 +32,7 @@
     </nav>
 
     <main>
-      <div class="card m-4 w-100">
+      <div class="card m-4">
         <div class="card-header">
           <svg height="20px" width="20px" class="svg-inline--fa fa-table me-1" aria-hidden="true" focusable="false"
                data-prefix="fas"
@@ -43,18 +43,15 @@
           게시판
         </div>
 
-        <div class="card-body w-100">
-          <div class="postDetailContainer">
-            <p class="postTitle">
-              <%=postResponseDTO.getPostTitle()%>
-            </p>
-            <p class="postContent">
-              <%=postResponseDTO.getPostContent()%>
-            </p>
-            <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
-              <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
-            </a>
-          </div>
+        <div class="card-body">
+          <form class="d-flex flex-column gap-2" method="post" action="update">
+            <input class="p-2" type="text" placeholder="제목" name="title" id="title"
+                   value="<%=postResponseDTO.getPostTitle()%>">
+            <textarea class="p-2" name="content" placeholder="내용" rows="20" cols="5"
+                      style="resize: none"><%=postResponseDTO.getPostContent()%></textarea>
+            <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
+            <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
+          </form>
         </div>
       </div>
     </main>

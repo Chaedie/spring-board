@@ -11,4 +11,7 @@ public interface PostService {
     PostResponseDTO findById(Long postId);
 
     PostResponseDTO insertPost(PostRequestDTO postRequestDTO);
+
+    PostResponseDTO updatePost(PostRequestDTO postRequestDTO) throws Exception;
+
 }

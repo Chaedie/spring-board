@@ -39,8 +39,6 @@
   if (ordering == null) {
     ordering = "asc";
   }
-
-  System.out.println("responseDTOList = " + responseDTOList);
 %>
 <!DOCTYPE html>
 <html lang="ko">
