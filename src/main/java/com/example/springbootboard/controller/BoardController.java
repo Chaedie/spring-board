@@ -1,12 +1,12 @@
 package com.example.springbootboard.controller;
 
+import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +27,31 @@ public class BoardController {
         model.addAttribute("listName", "Post");
         model.addAttribute("responseDTOList", postResponseDTOList);
 
-        return "postList";
+        return "boards/postList";
     }
+
+    @GetMapping("/write")
+    public String getWritePostPage(Model model) {
+        return "boards/writePostPage";
+    }
+
+    @PostMapping("/write")
+    public String postWritePostPage(Model model,
+                                    @RequestParam String title,
+                                    @RequestParam String content) {
+        PostRequestDTO postRequestDTO = new PostRequestDTO(title, content, 1l);
+        PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
+        model.addAttribute(postResponseDTO);
+        Long postId = postResponseDTO.getPostId();
+        
+        return "boards/" + postId;
+    }
+
+    @GetMapping("/{postId}")
+    public String getWritePostPage(Model model, @PathVariable Long postId) {
+
+        return "boards/detailPage";
+    }
+
+
 }

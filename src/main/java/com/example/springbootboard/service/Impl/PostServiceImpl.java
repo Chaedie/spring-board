@@ -1,5 +1,6 @@
 package com.example.springbootboard.service.Impl;
 
+import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.data.entity.Post;
 import com.example.springbootboard.data.repository.PostRepository;
@@ -31,5 +32,16 @@ public class PostServiceImpl implements PostService {
         }
 
         return postResponseDTOList;
+    }
+
+    @Override
+    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO) {
+        Post savedPost = postRepository.save(new Post().builder()
+                .postTitle(postRequestDTO.getPostTitle())
+                .postContent(postRequestDTO.getPostContent())
+                .userId(postRequestDTO.getUserId())
+                .build());
+
+        return new PostResponseDTO(savedPost);
     }
 }
