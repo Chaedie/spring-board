@@ -1,11 +1,8 @@
 package com.example.springbootboard.data.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Builder
 @Getter
@@ -16,7 +13,7 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 @Entity
 @Table(name = "comments")
-public class Comment {
+public class Comment extends BaseEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +21,6 @@ public class Comment {
 
     @Column(name = "content")
     private String commentContent;
-
-    @CreationTimestamp
-    private Timestamp createdAt;
-
-    @UpdateTimestamp
-    private Timestamp updatedAt;
 
     @Column(name = "user_id")
     private Long userId;
