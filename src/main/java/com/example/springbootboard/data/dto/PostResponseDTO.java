@@ -3,7 +3,7 @@ package com.example.springbootboard.data.dto;
 import com.example.springbootboard.data.entity.Post;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,10 +19,18 @@ public class PostResponseDTO {
 
     private String postContent;
 
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
+
+    private Long userId;
 
     public PostResponseDTO(Post post) {
+        this.postId = post.getPostId();
+        this.postTitle = post.getPostTitle();
+        this.postContent = post.getPostContent();
+        this.createdAt = post.getCreatedAt();
+        this.updatedAt = post.getUpdatedAt();
+        this.userId = post.getUserId();
     }
 }
