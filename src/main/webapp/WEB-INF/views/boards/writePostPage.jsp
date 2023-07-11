@@ -45,8 +45,8 @@
 
         <div class="card-body">
           <form class="d-flex flex-column gap-2" method="post" action="write">
-            <input class="p-2" type="text" placeholder="제목" name="title" id="title">
-            <textarea class="p-2" name="content" placeholder="내용" rows="20" cols="5"
+            <input class="p-2" name="postTitle" id="title" type="text" placeholder="제목">
+            <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
                       style="resize: none"></textarea>
 
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>

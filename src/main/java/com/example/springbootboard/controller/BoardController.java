@@ -40,13 +40,10 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String postWritePostPage(Model model,
-                                    @RequestParam String title,
-                                    @RequestParam String content) {
-        PostRequestDTO postRequestDTO = new PostRequestDTO().builder()
-                .postTitle(title)
-                .postContent(content)
-                .userId(1l).build();
+    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO) {
+        // TODO: User 기능 추가 후 제거
+        postRequestDTO.setUserId(1l);
+
         PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
         model.addAttribute(postResponseDTO);
         Long postId = postResponseDTO.getPostId();
@@ -63,15 +60,9 @@ public class BoardController {
     }
 
     @PostMapping("/update")
-    public String postUpdatePostPage(Model model,
-                                     @RequestParam String title,
-                                     @RequestParam String content,
-                                     @RequestParam String postId) throws EntityNotFoundException {
-        PostRequestDTO postRequestDTO = new PostRequestDTO().builder()
-                .postId(Long.parseLong(postId))
-                .postTitle(title)
-                .postContent(content)
-                .userId(1l).build();
+    public String postUpdatePostPage(Model model, PostRequestDTO postRequestDTO) throws EntityNotFoundException {
+        // TODO: 유저 기능 추가 후 삭제
+        postRequestDTO.setUserId(1l);
         PostResponseDTO postResponseDTO = null;
         try {
             postResponseDTO = postService.updatePost(postRequestDTO);
@@ -80,8 +71,7 @@ public class BoardController {
         }
         model.addAttribute(postResponseDTO);
 
-
-        return "redirect:" + postId;
+        return "redirect:" + postResponseDTO.getPostId();
     }
 
     @GetMapping("/{postId}")
