@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -10,6 +10,7 @@
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
+  PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -45,7 +46,8 @@
         <div class="card-body">
           <form class="d-flex flex-column gap-2" method="post" action="write">
             <input class="p-2" type="text" placeholder="제목" name="title" id="title">
-            <textarea class="p-2" name="content" placeholder="내용" rows="20" cols="5" style="resize: none"></textarea>
+            <textarea class="p-2" name="content" placeholder="내용" rows="20" cols="5"
+                      style="resize: none"></textarea>
 
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
           </form>

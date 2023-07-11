@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -42,6 +43,26 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(EntityNotFoundException::new);
 
         return new PostResponseDTO(post);
+    }
+
+    @Override
+    public PostResponseDTO updatePost(PostRequestDTO postRequestDTO) throws Exception {
+        Optional<Post> selectedPost = postRepository.findById(postRequestDTO.getPostId());
+
+        Post updatedPost;
+        if (selectedPost.isPresent()) {
+            Post post = selectedPost.get();
+
+            post.setPostTitle(postRequestDTO.getPostTitle());
+            post.setPostContent(postRequestDTO.getPostContent());
+
+            updatedPost = postRepository.save(post);
+
+        } else {
+            throw new EntityNotFoundException();
+        }
+
+        return new PostResponseDTO(updatedPost);
     }
 
     @Override

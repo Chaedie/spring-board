@@ -34,8 +34,6 @@
   if (ordering == null) {
     ordering = "asc";
   }
-
-  System.out.println("responseDTOList = " + responseDTOList);
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -91,7 +89,9 @@
                 <%
                   for (int i = 0; i < responseDTOList.size(); i++) {
                 %>
-                <tr data-index="<%=i%>">
+
+                <tr data-index="<%=i%>" style="cursor: pointer"
+                    onclick="location.href='<%=contextPath%>/boards/<%=responseDTOList.get(i).getPostId()%>'">
                   <td><%=responseDTOList.get(i).getPostId()%>
                   </td>
                   <td><%=responseDTOList.get(i).getPostTitle()%>
@@ -100,7 +100,9 @@
                   </td>
                   <td><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
                   </td>
-                    <%
+                </tr>
+
+                <%
                   }
                 %>
                 </tbody>
