@@ -45,9 +45,9 @@
 
         <div class="card-body">
           <form class="d-flex flex-column gap-2" method="post" action="update">
-            <input class="p-2" type="text" placeholder="제목" name="title" id="title"
+            <input class="p-2" type="text" placeholder="제목" name="postTitle" id="postTitle"
                    value="<%=postResponseDTO.getPostTitle()%>">
-            <textarea class="p-2" name="content" placeholder="내용" rows="20" cols="5"
+            <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
                       style="resize: none"><%=postResponseDTO.getPostContent()%></textarea>
             <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
