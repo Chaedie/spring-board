@@ -27,6 +27,6 @@ public class BoardController {
         model.addAttribute("listName", "Post");
         model.addAttribute("responseDTOList", postResponseDTOList);
 
-        return "postList";
+        return "boards/postList";
     }
 }

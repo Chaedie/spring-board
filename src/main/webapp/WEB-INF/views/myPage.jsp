@@ -2,11 +2,17 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: chaedongim
+  Date: 2023/07/01
+  Time: 4:56 AM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
-  String listName = (String) request.getAttribute("listName");
   List<PostResponseDTO> responseDTOList = new ArrayList<>();
   List<PostResponseDTO> tempList = (List<PostResponseDTO>) request.getAttribute("responseDTOList");
   if (tempList != null) {
@@ -44,7 +50,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/navbar.css">
+  <link rel="stylesheet" href="<%=contextPath%>/resources/css/nav.css">
   <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
   <link rel="stylesheet" href="<%=contextPath%>/resources/css/listPage.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -65,7 +71,7 @@
             <path fill="currentColor"
                   d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path>
           </svg>
-          게시판
+          가입 손님 리스트
         </div>
 
         <div class="card-body">
@@ -91,13 +97,21 @@
                   for (int i = 0; i < responseDTOList.size(); i++) {
                 %>
                 <tr data-index="<%=i%>">
-                  <td><%=responseDTOList.get(i).getPostId()%>
+                  <td style="width: 2rem;"><%=responseDTOList.get(i).getCId()%>
                   </td>
-                  <td><%=responseDTOList.get(i).getPostTitle()%>
+                  <td style="width: 3rem;"><%=responseDTOList.get(i).getCName()%>
                   </td>
-                  <td><%=responseDTOList.get(i).getUpdatedAt()%>
+                  <td style="width: 5rem;"><%=responseDTOList.get(i).getCRrn()%>
                   </td>
-                  <td><%=responseDTOList.get(i).getUpdatedAt()%>
+                  <td style="width: 0.5rem;"><%=responseDTOList.get(i).getCGender() == 'M' ? "남자" : "여자"%>
+                  </td>
+                  <td style="width: 10rem"><%=responseDTOList.get(i).getCAddress()%>
+                  </td>
+                  <td style="width: 3rem;"><%=responseDTOList.get(i).getCMobile()%>
+                  </td>
+                  <td style="width: 3rem;"><%=responseDTOList.get(i).getCJob()%>
+                  </td>
+                  <td style="width: 3rem;"><%=responseDTOList.get(i).getEId()%>
                   </td>
                     <%
                   }
@@ -106,8 +120,7 @@
               </table>
             </div>
             <div class="datatable-bottom">
-              <div class="datatable-info">Showing <%=responseDTOList.size()%> <%=listName%>
-                of <%=totalCount%> <%=listName%>s
+              <div class="datatable-info">Showing <%=responseDTOList.size()%> Customer of <%=totalCount%> Customers
               </div>
               <nav class="datatable-pagination">
                 <ul class="datatable-pagination-list"></ul>
@@ -116,7 +129,6 @@
           </div>
         </div>
       </div>
-
 
     </main>
   </div>
