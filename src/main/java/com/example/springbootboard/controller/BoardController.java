@@ -4,12 +4,13 @@ import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/boards")
@@ -22,11 +23,13 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String getPostList(Model model) {
-        List<PostResponseDTO> postResponseDTOList = postService.findAll();
+    public String getPostList(Model model, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
+        Page<PostResponseDTO> postResponseDTOList = postService.findAllWithPagination(search, pageable);
+        System.out.println("pageable = " + pageable);
 
         model.addAttribute("listName", "Post");
-        model.addAttribute("responseDTOList", postResponseDTOList);
+        model.addAttribute("responseDTOList", postResponseDTOList.toList());
+        model.addAttribute("totalCount", postResponseDTOList.getTotalElements());
 
         return "boards/postList";
     }

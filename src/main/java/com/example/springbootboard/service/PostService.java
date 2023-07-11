@@ -2,11 +2,15 @@ package com.example.springbootboard.service;
 
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface PostService {
     List<PostResponseDTO> findAll();
+
+    Page<PostResponseDTO> findAllWithPagination(String search, Pageable pageable);
 
     PostResponseDTO findById(Long postId);
 

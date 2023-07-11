@@ -13,7 +13,7 @@
       <%--        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>--%>
       <%--        마이페이지--%>
       <%--      </a>--%>
-      <a class="nav-link" href="<%=contextPath%>/boards/list?page=1&size=10 ">
+      <a class="nav-link" href="<%=contextPath%>/boards/list?page=0&size=10&sort=postId,DESC">
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
         게시판
       </a>
