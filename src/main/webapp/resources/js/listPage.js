@@ -56,6 +56,6 @@ $columnHead.innerHTML = `
                 <tr>
                   <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_id')">글 ID</a></th>
                   <th data-sortable="true" style="width: 10rem;><a class="datatable-sorter" onclick="handleClickColumn('c_name')">글 제목</a></th>
-                  <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_rrn')">수정 시간</a></th>
-                  <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_gender')">작성 시간</a></th>
+                  <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_gender')">작성일</a></th>
+                  <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_rrn')">수정일</a></th>
                 </tr>`;

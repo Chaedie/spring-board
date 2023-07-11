@@ -6,8 +6,10 @@ import com.example.springbootboard.data.entity.Post;
 import com.example.springbootboard.data.repository.PostRepository;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostResponseDTO> findAll() {
-        List<Post> postList = postRepository.findAll();
+        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "postId"));
         List<PostResponseDTO> postResponseDTOList = new ArrayList<>();
         for (Post post : postList) {
             PostResponseDTO postResponseDTO = new PostResponseDTO(post);
@@ -32,6 +34,14 @@ public class PostServiceImpl implements PostService {
         }
 
         return postResponseDTOList;
+    }
+
+    @Override
+    public PostResponseDTO findById(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return new PostResponseDTO(post);
     }
 
     @Override
