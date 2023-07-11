@@ -15,3 +15,8 @@
 #### Test에서 Transactional
 
 - Test코드에서 @Transactional Annotation을 넣으면 Test용 동작이 실제 DB에 저장되지 않고 Rollback 된다.
+
+#### @RequestParam -> ReqeustDTO로 받을 수 있음
+
+- RequestParam 때문에 코드 가독성이 떨어진다고 생각하던 찰나 DTO로 받을 수 있다는걸 알게 되었다.
+- DTO 객체이기에 null값이 들어 올 수 있게 되었으므로 Error 처리도 더 쉬워질 것 같다.
