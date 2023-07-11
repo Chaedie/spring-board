@@ -82,7 +82,10 @@
             </div>
             <div class="datatable-container">
               <table id="datatablesSimple" class="datatable-table">
-                <thead id="columnHead">
+                <thead>
+                <tr id="columnHead">
+
+                </tr>
 
                 </thead>
                 <tbody>
@@ -92,13 +95,13 @@
 
                 <tr data-index="<%=i%>" style="cursor: pointer"
                     onclick="location.href='<%=contextPath%>/boards/<%=responseDTOList.get(i).getPostId()%>'">
-                  <td><%=responseDTOList.get(i).getPostId()%>
+                  <td style="width: 2rem"><%=responseDTOList.get(i).getPostId()%>
                   </td>
-                  <td><%=responseDTOList.get(i).getPostTitle()%>
+                  <td style="width: 10rem"><%=responseDTOList.get(i).getPostTitle()%>
                   </td>
-                  <td><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
+                  <td style="width: 2rem"><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
                   </td>
-                  <td><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
+                  <td style="width: 2rem"><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
                   </td>
                 </tr>
 
@@ -136,6 +139,12 @@
     const orderBy = '<%=orderBy %>';
     const ordering = '<%=ordering %>';
     const totalCount = <%=totalCount%>;
+    const columnHeaderList = [
+      {id: 1, entityColumnName: "postId", listColumnName: "글 ID"},
+      {id: 2, entityColumnName: "postName", listColumnName: "글 제목"},
+      {id: 3, entityColumnName: "createdAt", listColumnName: "작성일"},
+      {id: 4, entityColumnName: "updatedAt", listColumnName: "수정일"},
+    ]
   </script>
   <script src="<%=contextPath%>/resources/js/listPage.js"></script>
 </body>

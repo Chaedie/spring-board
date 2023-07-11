@@ -37,25 +37,26 @@ let selectorInnerHTML = `
 $sizeSelector.innerHTML = selectorInnerHTML;
 $sizeSelector.addEventListener('change', (e) => {
   const value = e.target.value;
-  location.href = `customerList?page=${page}&size=${value}&search=${search}`;
+  location.href = `?page=${page}&size=${value}&search=${search}`;
 });
 
 $searchForm = document.querySelector(".searchForm");
 $searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const value = e.target.searchInput.value;
-  location.href = `customerList?page=1&size=10&search=${value}`;
+  location.href = `?page=1&size=10&search=${value}`;
 })
 
 const handleClickColumn = (column) => {
   const newOrdering = ordering == "desc" ? "asc" : "desc";
-  location.href = `customerList?page=${page}&size=${size}&search=${search}&orderBy=${column}&ordering=${newOrdering}`;
+  location.href = `?page=${page}&size=${size}&search=${search}&orderBy=${column}&ordering=${newOrdering}`;
 }
 const $columnHead = document.querySelector("#columnHead");
-$columnHead.innerHTML = `
-                <tr>
-                  <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_id')">글 ID</a></th>
-                  <th data-sortable="true" style="width: 10rem;><a class="datatable-sorter" onclick="handleClickColumn('c_name')">글 제목</a></th>
-                  <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_gender')">작성일</a></th>
-                  <th data-sortable="true" style="width: 2rem;><a class="datatable-sorter" onclick="handleClickColumn('c_rrn')">수정일</a></th>
-                </tr>`;
+
+let columnHeadInnerHTML = '';
+for (let header of columnHeaderList) {
+  const {id, entityColumnName, listColumnName} = header;
+  columnHeadInnerHTML +=
+      `<th data-sortable="true"><a class="datatable-sorter" onclick="handleClickColumn(${entityColumnName})">${listColumnName}</a></th>`
+}
+$columnHead.innerHTML = columnHeadInnerHTML;
