@@ -89,5 +89,14 @@ public class BoardController {
         return "boards/detailPage";
     }
 
+    @PostMapping("/delete")
+    public String deletePost(Model model, @RequestParam Long postId) {
+        try {
+            postService.delete(postId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return "redirect:list";
+    }
 }

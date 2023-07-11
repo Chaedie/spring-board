@@ -14,4 +14,6 @@ public interface PostService {
 
     PostResponseDTO updatePost(PostRequestDTO postRequestDTO) throws Exception;
 
+    void delete(Long postId) throws Exception;
+
 }

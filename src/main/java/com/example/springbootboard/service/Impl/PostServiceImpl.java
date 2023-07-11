@@ -66,6 +66,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public void delete(Long postId) throws Exception {
+        Optional<Post> selectedPost = postRepository.findById(postId);
+
+        if (selectedPost.isPresent()) {
+            Post post = selectedPost.get();
+
+            postRepository.delete(post);
+        } else {
+            throw new EntityNotFoundException();
+        }
+    }
+
+    @Override
     public PostResponseDTO insertPost(PostRequestDTO postRequestDTO) {
         Post savedPost = postRepository.save(new Post().builder()
                 .postTitle(postRequestDTO.getPostTitle())
