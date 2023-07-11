@@ -16,23 +16,19 @@
   Long totalCount = (Long) request.getAttribute("totalCount");
   String _page = request.getParameter("page");
   String size = request.getParameter("size");
-  String orderBy = request.getParameter("orderBy");
-  String ordering = request.getParameter("ordering");
   String search = request.getParameter("search");
+  String sort = request.getParameter("sort");
   if (_page == null) {
-    _page = "1";
+    _page = "0";
   }
   if (size == null) {
     size = "10";
   }
-  if (orderBy == null) {
-    orderBy = "c_id";
-  }
   if (search == null) {
-    search = "%";
+    search = "";
   }
-  if (ordering == null) {
-    ordering = "asc";
+  if (sort == null) {
+    sort = "postId,DESC";
   }
 %>
 <!DOCTYPE html>
@@ -136,14 +132,13 @@
     const page = <%=_page%>;
     const size = <%=size%>;
     const search = '<%=search %>';
-    const orderBy = '<%=orderBy %>';
-    const ordering = '<%=ordering %>';
+    const sort = '<%=sort %>'
     const totalCount = <%=totalCount%>;
     const columnHeaderList = [
-      {id: 1, entityColumnName: "postId", listColumnName: "글 ID"},
-      {id: 2, entityColumnName: "postName", listColumnName: "글 제목"},
-      {id: 3, entityColumnName: "createdAt", listColumnName: "작성일"},
-      {id: 4, entityColumnName: "updatedAt", listColumnName: "수정일"},
+      {id: 1, entityColumnName: "postId", listColumnName: "글 ID", sortable: "true"},
+      {id: 2, entityColumnName: "postTitle", listColumnName: "글 제목", sortable: "false"},
+      {id: 3, entityColumnName: "createdAt", listColumnName: "작성일", sortable: "true"},
+      {id: 4, entityColumnName: "updatedAt", listColumnName: "수정일", sortable: "true"},
     ]
   </script>
   <script src="<%=contextPath%>/resources/js/listPage.js"></script>

@@ -6,6 +6,8 @@ import com.example.springbootboard.data.entity.Post;
 import com.example.springbootboard.data.repository.PostRepository;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,15 @@ public class PostServiceImpl implements PostService {
         }
 
         return postResponseDTOList;
+    }
+
+    @Override
+    public Page<PostResponseDTO> findAllWithPagination(String search, Pageable pageable) {
+        System.out.println("search = " + search);
+        Page<Post> pageList = postRepository.findByPostTitleContains(search, pageable);
+
+        Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> new PostResponseDTO(post));
+        return pageResponseDTOList;
     }
 
     @Override
