@@ -43,12 +43,15 @@ public class BoardController {
         PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
         model.addAttribute(postResponseDTO);
         Long postId = postResponseDTO.getPostId();
-        
-        return "boards/" + postId;
+
+
+        return "redirect:" + postId;
     }
 
     @GetMapping("/{postId}")
     public String getWritePostPage(Model model, @PathVariable Long postId) {
+        PostResponseDTO postResponseDTO = postService.findById(postId);
+        model.addAttribute(postResponseDTO);
 
         return "boards/detailPage";
     }

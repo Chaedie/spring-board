@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
 <%
@@ -95,9 +96,9 @@
                   </td>
                   <td><%=responseDTOList.get(i).getPostTitle()%>
                   </td>
-                  <td><%=responseDTOList.get(i).getUpdatedAt()%>
+                  <td><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
                   </td>
-                  <td><%=responseDTOList.get(i).getUpdatedAt()%>
+                  <td><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
                   </td>
                     <%
                   }

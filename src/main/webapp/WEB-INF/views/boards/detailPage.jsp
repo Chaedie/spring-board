@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -10,6 +10,7 @@
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
+  PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -43,11 +44,17 @@
         </div>
 
         <div class="card-body w-100">
-
-
-          <a href="<%=contextPath%>/boards/write">
-            <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
-          </a>
+          <div class="postDetailContainer">
+            <p class="postTitle">
+              <%=postResponseDTO.getPostTitle()%>
+            </p>
+            <p class="postContent">
+              <%=postResponseDTO.getPostContent()%>
+            </p>
+            <a href="<%=contextPath%>/boards/write">
+              <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
+            </a>
+          </div>
         </div>
       </div>
     </main>
