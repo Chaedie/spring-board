@@ -54,6 +54,10 @@
             <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
               <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
             </a>
+            <form action="delete" method="post">
+              <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
+              <button type="submit" class="mt-4 btn btn-outline-danger">글 삭제</button>
+            </form>
           </div>
         </div>
       </div>
