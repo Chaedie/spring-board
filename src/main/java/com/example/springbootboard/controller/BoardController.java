@@ -2,6 +2,7 @@ package com.example.springbootboard.controller;
 
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
+import com.example.springbootboard.service.Impl.AwsS3ServiceImpl;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -16,10 +18,12 @@ import javax.persistence.EntityNotFoundException;
 @RequestMapping("/boards")
 public class BoardController {
     private final PostService postService;
+    private final AwsS3ServiceImpl awsS3Service;
 
     @Autowired
-    public BoardController(PostService postService) {
+    public BoardController(PostService postService, AwsS3ServiceImpl awsS3Service) {
         this.postService = postService;
+        this.awsS3Service = awsS3Service;
     }
 
     @GetMapping("/list")
@@ -40,9 +44,11 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO) {
+    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
         // TODO: User 기능 추가 후 제거
         postRequestDTO.setUserId(1l);
+
+        awsS3Service.upload(multipartFiles);
 
         PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
         model.addAttribute(postResponseDTO);

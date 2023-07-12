@@ -44,11 +44,12 @@
         </div>
 
         <div class="card-body">
-          <form class="d-flex flex-column gap-2" method="post" action="write">
+          <form class="d-flex flex-column gap-2" method="post" action="write" enctype="multipart/form-data">
             <input class="p-2" name="postTitle" id="title" type="text" placeholder="제목">
             <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
                       style="resize: none"></textarea>
 
+            <input type="file">
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
           </form>
         </div>

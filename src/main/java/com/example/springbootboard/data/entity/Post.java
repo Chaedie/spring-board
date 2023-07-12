@@ -24,7 +24,10 @@ public class Post extends BaseEntity {
 
     @Column(name = "content")
     private String postContent;
-    
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "user_id")
     private Long userId;
 }

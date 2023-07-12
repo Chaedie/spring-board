@@ -12,9 +12,8 @@ import lombok.*;
 public class PostRequestDTO {
 
     private Long postId;
-    
-    private String postTitle;
 
+    private String postTitle;
     private String postContent;
 
     private Long userId;
