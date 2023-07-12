@@ -41,7 +41,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<PostResponseDTO> findAllWithPagination(String search, Pageable pageable) {
-        System.out.println("search = " + search);
         Page<Post> pageList = postRepository.findByPostTitleContains(search, pageable);
 
         Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> new PostResponseDTO(post));
@@ -91,11 +90,17 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseDTO insertPost(PostRequestDTO postRequestDTO) {
-        Post savedPost = postRepository.save(new Post().builder()
+        Post newPost = new Post().builder()
                 .postTitle(postRequestDTO.getPostTitle())
                 .postContent(postRequestDTO.getPostContent())
+                .fileUrl(postRequestDTO.getFileUrl())
                 .userId(postRequestDTO.getUserId())
-                .build());
+                .build();
+        // postRequestDTO.getFileUrlList()
+        //         .forEach(url -> newPost.getUploadFiles()
+        //                 .add(new UploadFile().builder()
+        //                         .fileUrl(url).build()));
+        Post savedPost = postRepository.save(newPost);
 
         return new PostResponseDTO(savedPost);
     }

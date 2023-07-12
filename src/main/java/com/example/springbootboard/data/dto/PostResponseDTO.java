@@ -25,6 +25,10 @@ public class PostResponseDTO {
 
     private Long userId;
 
+    // private List<UploadFile> uploadFiles;
+
+    private String fileUrl;
+
     public PostResponseDTO(Post post) {
         this.postId = post.getPostId();
         this.postTitle = post.getPostTitle();
@@ -32,5 +36,7 @@ public class PostResponseDTO {
         this.createdAt = post.getCreatedAt();
         this.updatedAt = post.getUpdatedAt();
         this.userId = post.getUserId();
+        // this.uploadFiles = post.getUploadFiles();
+        this.fileUrl = post.getFileUrl();
     }
 }

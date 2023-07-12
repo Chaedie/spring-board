@@ -1,16 +1,15 @@
-<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: chaedongim
-  Date: 2023/07/11
-  Time: 5:22 PM
+  Date: 2023/07/12
+  Time: 1:18 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
+<%@ page isErrorPage="true" contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
-  PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -22,8 +21,9 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
   <link rel="stylesheet" href="<%=contextPath%>/resources/css/navbar.css">
   <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
+  <link rel="stylesheet" href="<%=contextPath%>/resources/css/index.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-  <title>Admin Hana - index.jsp</title>
+  <title>Admin Hana - notFound.jsp</title>
 </head>
 <body>
   <div class="wrap">
@@ -32,7 +32,7 @@
     </nav>
 
     <main>
-      <div class="card m-4">
+      <div class="card m-4 w-100">
         <div class="card-header">
           <svg height="20px" width="20px" class="svg-inline--fa fa-table me-1" aria-hidden="true" focusable="false"
                data-prefix="fas"
@@ -43,16 +43,12 @@
           게시판
         </div>
 
-        <div class="card-body">
-          <form class="d-flex flex-column gap-2" method="post" action="write" enctype="multipart/form-data">
-            <input class="p-2" name="postTitle" id="title" type="text" placeholder="제목">
-            <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
-                      style="resize: none"></textarea>
+        <div class="card-body w-100">
+          <div class="postDetailContainer">
+            <span>삭제된 글이거나 없는 페이지입니다. 뒤로가기 또는 메인페이지 버튼을 눌러주세요..!</span>
+            <a href="<%=contextPath%>/"></a>
 
-            <%--            <input type="file" name="multipartFiles">--%>
-            <input type="file" name="multipartFile">
-            <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
-          </form>
+          </div>
         </div>
       </div>
     </main>

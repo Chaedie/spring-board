@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### db properties
-application-db.properties 
+application-*.properties 
