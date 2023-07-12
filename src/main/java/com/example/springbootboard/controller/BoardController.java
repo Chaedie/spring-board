@@ -29,7 +29,6 @@ public class BoardController {
     @GetMapping("/list")
     public String getPostList(Model model, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
         Page<PostResponseDTO> postResponseDTOList = postService.findAllWithPagination(search, pageable);
-        System.out.println("pageable = " + pageable);
 
         model.addAttribute("listName", "Post");
         model.addAttribute("responseDTOList", postResponseDTOList.toList());
@@ -43,19 +42,36 @@ public class BoardController {
         return "boards/writePostPage";
     }
 
+
     @PostMapping("/write")
-    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
+    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile multipartFile) {
         // TODO: User 기능 추가 후 제거
         postRequestDTO.setUserId(1l);
+        postRequestDTO.setFileUrl(awsS3Service.upload(multipartFile));
+        // postRequestDTO.setFileUrlList(awsS3Service.upload(multipartFile));
 
-        awsS3Service.upload(multipartFiles);
-
+        System.out.println("postRequestDTO = " + postRequestDTO);
         PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
         model.addAttribute(postResponseDTO);
         Long postId = postResponseDTO.getPostId();
 
         return "redirect:" + postId;
     }
+
+    // @PostMapping("/write")
+    // public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
+    //     // TODO: User 기능 추가 후 제거
+    //     postRequestDTO.setUserId(1l);
+    //     postRequestDTO.setFileUrlList(awsS3Service.upload(multipartFiles));
+    //
+    //     System.out.println("postRequestDTO = " + postRequestDTO);
+    //     PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
+    //     model.addAttribute(postResponseDTO);
+    //     Long postId = postResponseDTO.getPostId();
+    //
+    //     return "redirect:" + postId;
+    // }
+
 
     @GetMapping("/update")
     public String getUpdatePostPage(Model model, @RequestParam Long postId) {
@@ -82,10 +98,15 @@ public class BoardController {
 
     @GetMapping("/{postId}")
     public String getWritePostPage(Model model, @PathVariable Long postId) {
-        PostResponseDTO postResponseDTO = postService.findById(postId);
-        model.addAttribute(postResponseDTO);
-
-        return "boards/detailPage";
+        PostResponseDTO postResponseDTO = null;
+        try {
+            postResponseDTO = postService.findById(postId);
+            System.out.println("postResponseDTO = " + postResponseDTO);
+            model.addAttribute(postResponseDTO);
+            return "boards/detailPage";
+        } catch (EntityNotFoundException e) {
+        }
+        return "errors/notFound";
     }
 
     @PostMapping("/delete")
@@ -96,6 +117,6 @@ public class BoardController {
             e.printStackTrace();
         }
 
-        return "redirect:list";
+        return "redirect:list?page=0&size=10&sort=postId,DESC";
     }
 }

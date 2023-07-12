@@ -49,7 +49,8 @@
             <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
                       style="resize: none"></textarea>
 
-            <input type="file">
+            <%--            <input type="file" name="multipartFiles">--%>
+            <input type="file" name="multipartFile">
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
           </form>
         </div>

@@ -21,6 +21,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AwsS3ServiceImpl {
@@ -29,35 +30,77 @@ public class AwsS3ServiceImpl {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    // private final UploadFileRepository uploadFileRepository;
     @Autowired
     public AwsS3ServiceImpl(AmazonS3Client amazonS3Client) {
         this.amazonS3Client = amazonS3Client;
     }
 
-    private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
+    // @Autowired
+    // public AwsS3ServiceImpl(AmazonS3Client amazonS3Client, UploadFileRepository uploadFileRepository) {
+    //     this.amazonS3Client = amazonS3Client;
+    //     this.uploadFileRepository = uploadFileRepository;
+    // }
+
+    private String upload(String filePath, String uploadKey) throws FileNotFoundException {
         return upload(new FileInputStream(filePath), uploadKey);
     }
 
-    private PutObjectResult upload(InputStream inputStream, String uploadKey) {
+    // private PutObjectResult upload(InputStream inputStream, String uploadKey) {
+    //     PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, inputStream, new ObjectMetadata());
+    //     PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
+    //     IOUtils.closeQuietly(inputStream, null);
+    //     return putObjectResult;
+    // }
+
+    private String upload(InputStream inputStream, String uploadKey) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, inputStream, new ObjectMetadata());
         PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
         IOUtils.closeQuietly(inputStream, null);
-        return putObjectResult;
+        return amazonS3Client.getUrl(bucket, uploadKey).toString();
     }
 
-    public List<PutObjectResult> upload(MultipartFile[] multipartFiles) {
-        List<PutObjectResult> putObjectResults = new ArrayList<>();
+
+    // public List<PutObjectResult> upload(MultipartFile[] multipartFiles) {
+    //     List<PutObjectResult> putObjectResults = new ArrayList<>();
+    //     Arrays.stream(multipartFiles)
+    //             .filter(multipartFile -> !StringUtils.isEmpty(multipartFile.getOriginalFilename()))
+    //             .forEach(multipartFile -> {
+    //                 try {
+    //                     putObjectResults.add(upload(multipartFile.getInputStream(), createStoreFileName(multipartFile.getOriginalFilename())));
+    //                 } catch (IOException e) {
+    //                     e.printStackTrace();
+    //                 }
+    //             });
+    //     return putObjectResults;
+    // }
+
+    public String upload(MultipartFile multipartFile) {
+        String storedUrl = null;
+        try {
+            storedUrl = upload(multipartFile.getInputStream(), createStoreFileName(multipartFile.getOriginalFilename()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("storedUrl = " + storedUrl);
+        return storedUrl;
+    }
+
+    public List<String> upload(MultipartFile[] multipartFiles) {
+        List<String> storeUrlList = new ArrayList<>();
         Arrays.stream(multipartFiles)
                 .filter(multipartFile -> !StringUtils.isEmpty(multipartFile.getOriginalFilename()))
                 .forEach(multipartFile -> {
                     try {
-                        putObjectResults.add(upload(multipartFile.getInputStream(), multipartFile.getOriginalFilename()));
+                        storeUrlList.add(upload(multipartFile.getInputStream(), createStoreFileName(multipartFile.getOriginalFilename())));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
-        return putObjectResults;
+        return storeUrlList;
     }
+
 
     public ResponseEntity<byte[]> download(String key) throws IOException {
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, key);
@@ -76,5 +119,16 @@ public class AwsS3ServiceImpl {
         ObjectListing objectListing = amazonS3Client.listObjects(new ListObjectsRequest().withBucketName(bucket));
         List<S3ObjectSummary> s3ObjectSummaries = objectListing.getObjectSummaries();
         return s3ObjectSummaries;
+    }
+
+    private String createStoreFileName(String originalFileName) {
+        String ext = extractExt(originalFileName);
+        String uuid = UUID.randomUUID().toString();
+        return uuid + "." + ext;
+    }
+
+    private String extractExt(String originalFileName) {
+        int pos = originalFileName.lastIndexOf(".");
+        return originalFileName.substring(pos + 1);
     }
 }
