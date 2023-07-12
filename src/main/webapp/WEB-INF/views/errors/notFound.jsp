@@ -1,17 +1,15 @@
-<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: chaedongim
-  Date: 2023/07/11
-  Time: 5:22 PM
+  Date: 2023/07/12
+  Time: 1:18 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
+<%@ page isErrorPage="true" contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
-  PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
-  System.out.println("postResponseDTO.getFileUrl() = " + postResponseDTO.getFileUrl());
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -23,8 +21,9 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
   <link rel="stylesheet" href="<%=contextPath%>/resources/css/navbar.css">
   <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
+  <link rel="stylesheet" href="<%=contextPath%>/resources/css/index.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-  <title>Admin Hana - index.jsp</title>
+  <title>Admin Hana - notFound.jsp</title>
 </head>
 <body>
   <div class="wrap">
@@ -46,21 +45,9 @@
 
         <div class="card-body w-100">
           <div class="postDetailContainer">
-            <p class="postTitle">
-              <%=postResponseDTO.getPostTitle()%>
-            </p>
-            <p class="postContent">
-              <%=postResponseDTO.getPostContent()%>
-            </p>
-            <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
-              <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
-            </a>
-            <img src="<%=postResponseDTO.getFileUrl()%>">
+            <span>삭제된 글이거나 없는 페이지입니다. 뒤로가기 또는 메인페이지 버튼을 눌러주세요..!</span>
+            <a href="<%=contextPath%>/"></a>
 
-            <form action="delete" method="post">
-              <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
-              <button type="submit" class="mt-4 btn btn-outline-danger">글 삭제</button>
-            </form>
           </div>
         </div>
       </div>
