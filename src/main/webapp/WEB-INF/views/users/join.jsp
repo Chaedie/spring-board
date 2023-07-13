@@ -1,4 +1,6 @@
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/13
@@ -11,6 +13,17 @@
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
   List<String> teamList = (List<String>) request.getAttribute("teamList");
+  UserRequestDTO userRequestDTO = (UserRequestDTO) request.getAttribute("userRequestDTO");
+  System.out.println("userRequestDTO join jsp page= " + userRequestDTO);
+  String ninkname = "";
+  String userEmail = "";
+  System.out.println("teamList = " + teamList);
+  String teamName = teamList.get(0);
+  if (userRequestDTO != null) {
+    ninkname = Optional.ofNullable(userRequestDTO.getNickname()).orElse("");
+    userEmail = Optional.ofNullable(userRequestDTO.getUserEmail()).orElse("");
+    teamName = Optional.ofNullable(userRequestDTO.getTeamName()).orElse(teamList.get(0));
+  }
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -45,11 +58,11 @@
 
                       <%-- names = userEmail nickname passwrod team--%>
                       <form class="mx-1 mx-md-4" method="post" action="join">
-
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <input name="userEmail" type="email" id="form3Example3c" class="form-control"/>
+                            <input name="userEmail" type="email" id="form3Example3c" class="form-control"
+                                   value="<%=userEmail%>"/>
                             <label class="form-label" for="form3Example3c">Your Email</label>
                           </div>
                         </div>
@@ -57,7 +70,9 @@
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <input name="nickname" type="text" id="form3Example1c" class="form-control"/>
+                            <input name="nickname" type="text" id="form3Example1c" class="form-control"
+                                   minlength="2"
+                                   maxlength="10"/>
                             <label class="form-label" for="form3Example1c">Your Nickname</label>
                           </div>
                         </div>
@@ -65,7 +80,9 @@
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <input name="password" type="password" id="form3Example4c" class="form-control"/>
+                            <input name="password" type="password" id="form3Example4c" class="form-control"
+                                   minlength="4"
+                                   maxlength="20"/>
                             <label class="form-label" for="form3Example4c">Password</label>
                           </div>
                         </div>
@@ -73,15 +90,17 @@
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <input name="password" type="password" id="form3Example4cd" class="form-control"/>
+                            <input name="password" type="password" id="form3Example4cd" class="form-control"
+                                   minlength="4"
+                                   maxlength="20"/>
                             <label class="form-label" for="form3Example4cd">Repeat your password</label>
                           </div>
                         </div>
 
                         <div class="d-flex flex-row align-items-center mb-4">
-                          <%--                          <i class="fas fa-key fa-lg me-3 fa-fw"></i>--%>
+                          <i class="fas fa-people-group fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <select name="teamName">
+                            <select name="teamName" class="form-control">
                               <%
                                 for (int i = 0; i < teamList.size(); i++) {
                               %>

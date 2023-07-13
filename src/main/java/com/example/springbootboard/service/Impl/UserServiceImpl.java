@@ -24,6 +24,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
     }
+
+    @Override
+    public UserResponseDTO signUpUser(UserRequestDTO userRequestDTO) {
+        return null;
+    }
+
     @Override
     public List<String> getTeamNameList() {
         List<Team> teamList = teamRepository.findAll();

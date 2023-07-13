@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -24,11 +25,23 @@ public class UserController {
     }
 
     @GetMapping("/join")
-    public String getUserJoinPage(Model model) {
+    public String getUserJoinPage(Model model, UserRequestDTO userRequestDTO) {
         List<String> teamList = userService.getTeamNameList();
         model.addAttribute("teamList", teamList);
-        
+        model.addAttribute("userRequestDTO", userRequestDTO);
+
         return "users/join";
+    }
+
+    @PostMapping("/join")
+    public String signUpUser(Model model, UserRequestDTO userRequestDTO, RedirectAttributes redirectAttributes) {
+        try {
+            userService.signUpUser(userRequestDTO);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute(userRequestDTO);
+            return "redirect:join";
+        }
+        return "redirect:login";
     }
 
     @GetMapping("/{userId}")
