@@ -11,7 +11,6 @@
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
   PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
-  System.out.println("postResponseDTO.getFileUrl() = " + postResponseDTO.getFileUrl());
 %>
 <!DOCTYPE html>
 <html lang="ko">
