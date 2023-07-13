@@ -1,14 +1,11 @@
 package com.example.springbootboard.data.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-@Embeddable
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,5 +20,9 @@ public class UploadFile {
 
     @Column(name = "file_url")
     private String fileUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
 }

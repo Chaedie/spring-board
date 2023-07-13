@@ -2,7 +2,6 @@ package com.example.springbootboard.controller;
 
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
-import com.example.springbootboard.service.Impl.AwsS3ServiceImpl;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,12 +17,10 @@ import javax.persistence.EntityNotFoundException;
 @RequestMapping("/boards")
 public class BoardController {
     private final PostService postService;
-    private final AwsS3ServiceImpl awsS3Service;
 
     @Autowired
-    public BoardController(PostService postService, AwsS3ServiceImpl awsS3Service) {
+    public BoardController(PostService postService) {
         this.postService = postService;
-        this.awsS3Service = awsS3Service;
     }
 
     @GetMapping("/list")
@@ -42,34 +39,17 @@ public class BoardController {
         return "boards/writePostPage";
     }
 
-
     @PostMapping("/write")
-    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile multipartFile) {
+    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
         // TODO: User 기능 추가 후 제거
         postRequestDTO.setUserId(1l);
-        postRequestDTO.setFileUrl(awsS3Service.upload(multipartFile));
-        // postRequestDTO.setFileUrlList(awsS3Service.upload(multipartFile));
 
-        PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
+        PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO, multipartFiles);
+
         model.addAttribute(postResponseDTO);
-        Long postId = postResponseDTO.getPostId();
 
-        return "redirect:" + postId;
+        return "redirect:" + postResponseDTO.getPostId();
     }
-
-    // @PostMapping("/write")
-    // public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
-    //     // TODO: User 기능 추가 후 제거
-    //     postRequestDTO.setUserId(1l);
-    //     postRequestDTO.setFileUrlList(awsS3Service.upload(multipartFiles));
-    //
-    //     PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
-    //     model.addAttribute(postResponseDTO);
-    //     Long postId = postResponseDTO.getPostId();
-    //
-    //     return "redirect:" + postId;
-    // }
-
 
     @GetMapping("/update")
     public String getUpdatePostPage(Model model, @RequestParam Long postId) {

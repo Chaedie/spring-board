@@ -3,13 +3,16 @@ package com.example.springbootboard.service.Impl;
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.data.entity.Post;
+import com.example.springbootboard.data.entity.UploadFile;
 import com.example.springbootboard.data.repository.PostRepository;
+import com.example.springbootboard.data.repository.UploadFileRepository;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -19,11 +22,15 @@ import java.util.Optional;
 @Service
 public class PostServiceImpl implements PostService {
 
+    private final AwsS3ServiceImpl awsS3Service;
     private final PostRepository postRepository;
+    private final UploadFileRepository uploadFileRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(AwsS3ServiceImpl awsS3Service, PostRepository postRepository, UploadFileRepository uploadFileRepository) {
+        this.awsS3Service = awsS3Service;
         this.postRepository = postRepository;
+        this.uploadFileRepository = uploadFileRepository;
     }
 
 
@@ -89,19 +96,31 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO) {
-        Post newPost = new Post().builder()
+    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
+        /**
+         * 1. Post 엔티티 생성
+         */
+        Post post = Post.builder()
                 .postTitle(postRequestDTO.getPostTitle())
                 .postContent(postRequestDTO.getPostContent())
-                .fileUrl(postRequestDTO.getFileUrl())
                 .userId(postRequestDTO.getUserId())
+                .uploadFiles(new ArrayList<>())
                 .build();
-        // postRequestDTO.getFileUrlList()
-        //         .forEach(url -> newPost.getUploadFiles()
-        //                 .add(new UploadFile().builder()
-        //                         .fileUrl(url).build()));
-        Post savedPost = postRepository.save(newPost);
 
-        return new PostResponseDTO(savedPost);
+        /**
+         * 2. S3 Upload
+         * 2.1. UploadFile 엔티티 생성
+         * 2.2. post <-> uploadFiles 양방향 연관관계 매핑
+         */
+        awsS3Service.upload(multipartFiles).stream()
+                .forEach(url -> {
+                    UploadFile uploadFile = UploadFile.builder()
+                            .fileUrl(url)
+                            .build();
+                    post.getUploadFiles().add(uploadFile);
+                    uploadFile.setPost(post);
+                });
+
+        return new PostResponseDTO(postRepository.save(post));
     }
 }
