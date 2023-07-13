@@ -79,7 +79,6 @@ public class BoardController {
         PostResponseDTO postResponseDTO = null;
         try {
             postResponseDTO = postService.findById(postId);
-            System.out.println("postResponseDTO = " + postResponseDTO);
             model.addAttribute(postResponseDTO);
             return "boards/detailPage";
         } catch (EntityNotFoundException e) {

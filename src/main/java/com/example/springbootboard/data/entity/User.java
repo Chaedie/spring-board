@@ -22,9 +22,10 @@ public class User extends BaseEntity {
     @Column(name = "email")
     private String userEmail;
 
-    @Column(name = "name")
-    private String userName;
+    @Column(name = "nickname")
+    private String nickname;
 
-    @Column(name = "nick_name")
-    private String nickName;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 }
