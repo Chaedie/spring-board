@@ -33,7 +33,7 @@
     </nav>
 
     <main>
-      <div class="card m-4 w-100">
+      <div class="card m-4">
         <div class="card-header">
           <svg height="20px" width="20px" class="svg-inline--fa fa-table me-1" aria-hidden="true" focusable="false"
                data-prefix="fas"
@@ -52,15 +52,21 @@
             <p class="postContent">
               <%=postResponseDTO.getPostContent()%>
             </p>
-            <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
-              <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
-            </a>
+            <hr>
             <img src="<%=postResponseDTO.getFileUrl()%>">
-
-            <form action="delete" method="post">
-              <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
-              <button type="submit" class="mt-4 btn btn-outline-danger">글 삭제</button>
-            </form>
+            <div>
+              <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
+                <button type="button" class="mt-4 btn btn-outline-secondary">
+                  글 수정
+                </button>
+              </a>
+              <form action="delete" method="post"
+                    class="d-inline-block"
+              >
+                <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
+                <button type="submit" class="mt-4 btn btn-outline-danger">글 삭제</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
