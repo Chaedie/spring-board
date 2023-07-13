@@ -50,7 +50,6 @@ public class BoardController {
         postRequestDTO.setFileUrl(awsS3Service.upload(multipartFile));
         // postRequestDTO.setFileUrlList(awsS3Service.upload(multipartFile));
 
-        System.out.println("postRequestDTO = " + postRequestDTO);
         PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
         model.addAttribute(postResponseDTO);
         Long postId = postResponseDTO.getPostId();
@@ -64,7 +63,6 @@ public class BoardController {
     //     postRequestDTO.setUserId(1l);
     //     postRequestDTO.setFileUrlList(awsS3Service.upload(multipartFiles));
     //
-    //     System.out.println("postRequestDTO = " + postRequestDTO);
     //     PostResponseDTO postResponseDTO = postService.insertPost(postRequestDTO);
     //     model.addAttribute(postResponseDTO);
     //     Long postId = postResponseDTO.getPostId();
@@ -101,7 +99,6 @@ public class BoardController {
         PostResponseDTO postResponseDTO = null;
         try {
             postResponseDTO = postService.findById(postId);
-            System.out.println("postResponseDTO = " + postResponseDTO);
             model.addAttribute(postResponseDTO);
             return "boards/detailPage";
         } catch (EntityNotFoundException e) {

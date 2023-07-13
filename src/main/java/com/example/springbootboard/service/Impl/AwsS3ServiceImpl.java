@@ -83,7 +83,6 @@ public class AwsS3ServiceImpl {
             e.printStackTrace();
         }
 
-        System.out.println("storedUrl = " + storedUrl);
         return storedUrl;
     }
 

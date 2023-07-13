@@ -18,5 +18,10 @@
         게시판
       </a>
 
+      <a class="nav-link" href="<%=contextPath%>/users/join">
+        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+        회원가입
+      </a>
+
     </div>
   </div>
