@@ -1,4 +1,5 @@
-<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %><%--
+<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
+<%@ page import="com.example.springbootboard.data.entity.UploadFile" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -11,7 +12,6 @@
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
   PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
-  System.out.println("postResponseDTO.getFileUrl() = " + postResponseDTO.getFileUrl());
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -55,8 +55,13 @@
             <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
               <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
             </a>
-            <img src="<%=postResponseDTO.getFileUrl()%>">
-
+            <%
+              for (UploadFile uploadFile : postResponseDTO.getUploadFiles()) {
+            %>
+            <img src="<%=uploadFile.getFileUrl()%>">
+            <%
+              }
+            %>
             <form action="delete" method="post">
               <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
               <button type="submit" class="mt-4 btn btn-outline-danger">글 삭제</button>

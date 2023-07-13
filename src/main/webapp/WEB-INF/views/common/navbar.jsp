@@ -2,7 +2,6 @@
 <%
 %>
 <div class="sb-sidenav accordion sb-sidenav-dark">
-
   <div class="sb-sidenav-logo"><a href="<%=contextPath%>/"
                                   style="text-decoration: none; color: white;">Spring 게시판</a>
   </div>
@@ -17,6 +16,6 @@
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
         게시판
       </a>
-
     </div>
   </div>
+</div>
