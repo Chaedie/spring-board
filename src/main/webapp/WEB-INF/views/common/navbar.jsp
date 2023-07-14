@@ -14,9 +14,19 @@
       <%--      </a>--%>
       <a class="nav-link" href="<%=contextPath%>/boards/list?page=0&size=10&sort=postId,DESC">
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-        게시판
+        전체 게시판
       </a>
 
+      <div class="sb-sidenav-menu-heading">팀 게시판</div>
+      <a class="nav-link" href="<%=contextPath%>/boards/list?page=0&size=10&sort=postId,DESC">
+        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+        전체 게시판
+      </a>
+      <a class="nav-link" href="<%=contextPath%>/boards/list?page=0&size=10&sort=postId,DESC">
+        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+        전체 게시판
+      </a>
+      <div class="sb-sidenav-menu-heading">회원 기능</div>
       <a class="nav-link" href="<%=contextPath%>/users/join">
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
         회원가입
