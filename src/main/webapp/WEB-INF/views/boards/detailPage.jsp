@@ -1,5 +1,8 @@
 <%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
-<%@ page import="com.example.springbootboard.data.entity.UploadFile" %><%--
+<%@ page import="com.example.springbootboard.data.entity.UploadFile" %>
+<%@ page import="com.example.springbootboard.data.entity.Comment" %>
+<%@ page import="org.apache.jasper.tagplugins.jstl.core.When" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -53,6 +56,8 @@
               <%=postResponseDTO.getPostContent()%>
             </p>
             <hr>
+
+            <%--사진 영역--%>
             <%
               for (UploadFile uploadFile : postResponseDTO.getUploadFiles()) {
             %>
@@ -60,7 +65,9 @@
             <%
               }
             %>
-            <div>
+
+            <%-- 버튼 영역            --%>
+            <div class="mb-5">
               <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
                 <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
               </a>
@@ -69,6 +76,75 @@
                 <button type="submit" class="mt-4 btn btn-outline-danger">글 삭제</button>
               </form>
             </div>
+
+            <%-- 댓글 영역           --%>
+            <section class="commentsContainer mb-5">
+              <div class="card bg-light">
+                <div class="card-body">
+                  <!-- 댓글 작성 폼 -->
+                  <form class="mb-4 d-flex gap-2" method="post" action="<%=postResponseDTO.getPostId()%>/comments">
+                    <textarea name="commentContent" class="form-control" rows="3"
+                              placeholder="Join the discussion and leave a comment!"></textarea>
+                    <input type="hidden" name="userId" value="<%=postResponseDTO.getUserId()%>"/>
+                    <input type="submit" class="btn btn-outline-secondary">
+                  </form>
+                  <!-- Single comment-->
+                  <%
+                    for (Comment comment : postResponseDTO.getComments()) {
+                  %>
+                  <div class="d-flex mb-4">
+                    <div class="flex-shrink-0">
+                      <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
+                    </div>
+                    <div class="ms-3 w-100">
+                      <div class="d-flex justify-content-between">
+                        <span class="fw-bold"><%=comment.getUserId()%></span>
+                        <span><%=comment.getCreatedAt().format(DateTimeFormatter.ISO_DATE)%></span>
+                      </div>
+                      <%=comment.getCommentContent()%>
+                    </div>
+                  </div>
+                  <%
+                    }
+                  %>
+                  <!-- Comment with nested comments-->
+                  <%--                  <div class="d-flex mb-4">--%>
+                  <%--                    <!-- Parent comment-->--%>
+                  <%--                    <div class="flex-shrink-0"><img class="rounded-circle"--%>
+                  <%--                                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">--%>
+                  <%--                    </div>--%>
+                  <%--                    <div class="ms-3">--%>
+                  <%--                      <div class="fw-bold">Commenter Name</div>--%>
+                  <%--                      If you're going to lead a space frontier, it has to be government; it'll never be private--%>
+                  <%--                      enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified--%>
+                  <%--                      risks.--%>
+                  <%--                      <!-- Child comment 1-->--%>
+                  <%--                      <div class="d-flex mt-4">--%>
+                  <%--                        <div class="flex-shrink-0"><img class="rounded-circle"--%>
+                  <%--                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">--%>
+                  <%--                        </div>--%>
+                  <%--                        <div class="ms-3">--%>
+                  <%--                          <div class="fw-bold">Commenter Name</div>--%>
+                  <%--                          And under those conditions, you cannot establish a capital-market evaluation of that--%>
+                  <%--                          enterprise. You can't get investors.--%>
+                  <%--                        </div>--%>
+                  <%--                      </div>--%>
+                  <%--                      <!-- Child comment 2-->--%>
+                  <%--                      <div class="d-flex mt-4">--%>
+                  <%--                        <div class="flex-shrink-0"><img class="rounded-circle"--%>
+                  <%--                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">--%>
+                  <%--                        </div>--%>
+                  <%--                        <div class="ms-3">--%>
+                  <%--                          <div class="fw-bold">Commenter Name</div>--%>
+                  <%--                          When you put money directly to a problem, it makes a good headline.--%>
+                  <%--                        </div>--%>
+                  <%--                      </div>--%>
+                  <%--                    </div>--%>
+                  <%--                  </div>--%>
+
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>

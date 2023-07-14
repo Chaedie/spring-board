@@ -30,6 +30,9 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<UploadFile> uploadFiles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
     @Column(name = "user_id")
     private Long userId;
 }

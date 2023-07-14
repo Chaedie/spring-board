@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "comments")
@@ -25,6 +24,7 @@ public class Comment extends BaseEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "post_id")
-    private Long postId;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

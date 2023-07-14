@@ -15,11 +15,8 @@ import java.util.List;
 public class PostRequestDTO {
 
     private Long postId;
-
     private String postTitle;
-
     private String postContent;
-
     private Long userId;
 
     private List<UploadFile> uploadFiles;
