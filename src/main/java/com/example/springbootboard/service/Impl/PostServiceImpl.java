@@ -1,5 +1,7 @@
 package com.example.springbootboard.service.Impl;
 
+import com.example.springbootboard.Error.ErrorCode;
+import com.example.springbootboard.Error.Exception.AuthorizationException;
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.data.entity.Post;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,12 +66,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponseDTO updatePost(PostRequestDTO postRequestDTO) throws Exception {
+    @Transactional
+    public PostResponseDTO updatePost(PostRequestDTO postRequestDTO) throws EntityNotFoundException, AuthorizationException {
         Optional<Post> selectedPost = postRepository.findById(postRequestDTO.getPostId());
 
         Post updatedPost;
         if (selectedPost.isPresent()) {
             Post post = selectedPost.get();
+
+            // 비회원일 경우 체크
+            if (!checkNicknamePassword(post, postRequestDTO)) {
+                throw new AuthorizationException(ErrorCode.AUTHORIZATION_FAIL, "CHECK NICKNAME PASSWORD");
+            }
 
             post.setPostTitle(postRequestDTO.getPostTitle());
             post.setPostContent(postRequestDTO.getPostContent());
@@ -82,7 +91,24 @@ public class PostServiceImpl implements PostService {
         return new PostResponseDTO(updatedPost);
     }
 
+    private boolean checkNicknamePassword(Post post, PostRequestDTO postRequestDTO) {
+        String storedNickname = post.getNickname();
+        String storedPassword = post.getPassword();
+
+        // 회원일 경우 return true;
+        if (storedNickname == null && storedPassword == null) {
+            return true;
+        }
+        // 비회원이면서 둘다 맞으면 true;
+        if (storedNickname.equals(postRequestDTO.getNickname()) && storedPassword.equals(postRequestDTO.getPassword())) {
+            return true;
+        }
+        // 아니면 false
+        return false;
+    }
+
     @Override
+    @Transactional
     public void delete(Long postId) throws Exception {
         Optional<Post> selectedPost = postRepository.findById(postId);
 
@@ -96,6 +122,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
         /**
          * 1. Post 엔티티 생성
@@ -104,6 +131,8 @@ public class PostServiceImpl implements PostService {
                 .postTitle(postRequestDTO.getPostTitle())
                 .postContent(postRequestDTO.getPostContent())
                 .userId(postRequestDTO.getUserId())
+                .nickname(postRequestDTO.getNickname())
+                .password(postRequestDTO.getPassword())
                 .uploadFiles(new ArrayList<>())
                 .build();
 

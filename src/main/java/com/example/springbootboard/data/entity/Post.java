@@ -21,11 +21,20 @@ public class Post extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String postTitle;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String postContent;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "nickname")
+    private String nickname;
+
+    @Column(name = "password")
+    private String password;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<UploadFile> uploadFiles = new ArrayList<>();
@@ -33,6 +42,5 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    @Column(name = "user_id")
-    private Long userId;
+
 }

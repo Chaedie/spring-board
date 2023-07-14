@@ -60,7 +60,7 @@ public class BoardController {
     }
 
     @PostMapping("/update")
-    public String postUpdatePostPage(Model model, PostRequestDTO postRequestDTO) throws EntityNotFoundException {
+    public String postUpdatePostPage(Model model, PostRequestDTO postRequestDTO) {
         // TODO: 유저 기능 추가 후 삭제
         postRequestDTO.setUserId(1l);
         PostResponseDTO postResponseDTO = null;
@@ -68,10 +68,11 @@ public class BoardController {
             postResponseDTO = postService.updatePost(postRequestDTO);
         } catch (Exception e) {
             e.printStackTrace();
+            return "redirect:" + postRequestDTO.getPostId();
         }
         model.addAttribute(postResponseDTO);
 
-        return "redirect:" + postResponseDTO.getPostId();
+        return "redirect:" + postRequestDTO.getPostId();
     }
 
     @GetMapping("/{postId}")

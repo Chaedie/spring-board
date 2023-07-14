@@ -37,6 +37,8 @@ public class CommentServiceImpl implements CommentService {
                 .post(post)
                 .commentContent(commentRequestDTO.getCommentContent())
                 .userId(commentRequestDTO.getUserId())
+                .nickname(commentRequestDTO.getNickname())
+                .password(commentRequestDTO.getPassword())
                 .build();
         commentRepository.save(comment);
 

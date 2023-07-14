@@ -44,12 +44,23 @@
         </div>
 
         <div class="card-body">
-          <form class="d-flex flex-column gap-2" method="post" action="update">
-            <input class="p-2" type="text" placeholder="제목" name="postTitle" id="postTitle"
+          <form id="writeForm" class="d-flex flex-column gap-2" method="post" action="update"
+                enctype="multipart/form-data">
+            <div class="d-flex gap-2">
+              <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
+                     value="<%=postResponseDTO.getNickname()%>"
+                     minlength="2"
+                     maxlength="10">
+              <input class="p-2 form-control" name="password" id="password" type="password" placeholder="비밀번호"
+                     minlength="2"
+                     maxlength="10">
+            </div>
+            <input class="p-2 form-control" name="postTitle" id="title" type="text" placeholder="제목"
                    value="<%=postResponseDTO.getPostTitle()%>">
-            <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
+            <textarea class="p-2 form-control" name="postContent" placeholder="내용" rows="15" cols="5"
                       style="resize: none"><%=postResponseDTO.getPostContent()%></textarea>
             <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
+
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
           </form>
         </div>
@@ -59,5 +70,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
           crossorigin="anonymous"></script>
+  <script src="<%=contextPath%>/resources/js/writePost.js">
+  </script>
 </body>
 </html>
