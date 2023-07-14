@@ -1,5 +1,6 @@
 package com.example.springbootboard.data.dto;
 
+import com.example.springbootboard.data.entity.Comment;
 import com.example.springbootboard.data.entity.Post;
 import com.example.springbootboard.data.entity.UploadFile;
 import lombok.*;
@@ -16,18 +17,15 @@ import java.util.List;
 @Builder
 public class PostResponseDTO {
     private Long postId;
-
     private String postTitle;
-
     private String postContent;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
     private Long userId;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     private List<UploadFile> uploadFiles;
+    private List<Comment> comments;
 
     public PostResponseDTO(Post post) {
         this.postId = post.getPostId();
@@ -37,5 +35,6 @@ public class PostResponseDTO {
         this.updatedAt = post.getUpdatedAt();
         this.userId = post.getUserId();
         this.uploadFiles = post.getUploadFiles();
+        this.comments = post.getComments();
     }
 }
