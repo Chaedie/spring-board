@@ -84,7 +84,7 @@
               <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
                 <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
               </a>
-              <form action="delete" method="post" class="d-inline-block">
+              <form action="delete" method="get" class="d-inline-block">
                 <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
                 <button type="submit" class="mt-4 btn btn-outline-danger">글 삭제</button>
               </form>
@@ -95,7 +95,8 @@
               <div class="card bg-light">
                 <div class="card-body">
                   <!-- 댓글 작성 폼 -->
-                  <form class="mb-4 d-flex gap-2" method="post" action="<%=postResponseDTO.getPostId()%>/comments">
+                  <form id="nickPwForm" class="mb-4 d-flex gap-2" method="post"
+                        action="<%=postResponseDTO.getPostId()%>/comments">
                     <div>
                       <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
                              minlength="2"
@@ -175,5 +176,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
           crossorigin="anonymous"></script>
+  <script src="<%=contextPath%>/resources/js/writePost.js">
+  </script>
 </body>
 </html>

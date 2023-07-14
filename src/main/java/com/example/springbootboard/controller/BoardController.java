@@ -87,6 +87,12 @@ public class BoardController {
         return "errors/notFound";
     }
 
+    @GetMapping("/delete")
+    public String getDeletePage(Model model, @RequestParam Long postId) {
+        model.addAttribute("postId", postId);
+        return "boards/deletePage";
+    }
+
     @PostMapping("/delete")
     public String deletePost(Model model, @RequestParam Long postId) {
         try {
