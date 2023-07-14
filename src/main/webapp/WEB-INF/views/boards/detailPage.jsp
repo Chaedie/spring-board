@@ -96,9 +96,17 @@
                 <div class="card-body">
                   <!-- 댓글 작성 폼 -->
                   <form class="mb-4 d-flex gap-2" method="post" action="<%=postResponseDTO.getPostId()%>/comments">
+                    <div>
+                      <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
+                             minlength="2"
+                             maxlength="10">
+                      <input class="p-2 form-control" name="password" id="password" type="password" placeholder="비밀번호"
+                             minlength="2"
+                             maxlength="10">
+                    </div>
                     <textarea name="commentContent" class="form-control" rows="3"
                               placeholder="Join the discussion and leave a comment!"></textarea>
-                    <input type="hidden" name="userId" value="<%=postResponseDTO.getUserId()%>"/>
+                    <%--                    <input type="hidden" name="userId" value="<%=postResponseDTO.getUserId()%>"/>--%>
                     <input type="submit" class="btn btn-outline-secondary">
                   </form>
                   <!-- Single comment-->
@@ -111,7 +119,8 @@
                     </div>
                     <div class="ms-3 w-100">
                       <div class="d-flex justify-content-between">
-                        <span class="fw-bold"><%=comment.getUserId()%></span>
+                        <%--                        <span class="fw-bold"><%=comment.getUserId()%></span>--%>
+                        <span class="fw-bold"><%=comment.getNickname()%></span>
                         <span><%=comment.getCreatedAt().format(DateTimeFormatter.ISO_DATE)%></span>
                       </div>
                       <%=comment.getCommentContent()%>

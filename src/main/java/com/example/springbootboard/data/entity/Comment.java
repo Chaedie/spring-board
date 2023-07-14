@@ -24,6 +24,9 @@ public class Comment extends BaseEntity {
     @Column(name = "user_id")
     private Long userId;
 
+    private String nickname;
+    private String password;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;

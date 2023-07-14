@@ -15,6 +15,8 @@ public class CommentDTO {
         private String commentContent;
         private Long userId;
         private Long postId;
+        private String nickname;
+        private String password;
     }
 
     @Data
@@ -24,10 +26,12 @@ public class CommentDTO {
     public static class Response {
         private String commentContent;
         private Long userId;
+        private String nickname;
 
         public Response(Comment comment) {
             this.commentContent = comment.getCommentContent();
             this.userId = comment.getUserId();
+            this.nickname = comment.getNickname();
         }
     }
 }
