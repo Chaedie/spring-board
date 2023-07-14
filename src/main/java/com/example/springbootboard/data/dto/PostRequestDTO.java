@@ -1,9 +1,6 @@
 package com.example.springbootboard.data.dto;
 
-import com.example.springbootboard.data.entity.UploadFile;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +16,6 @@ public class PostRequestDTO {
     private String postContent;
     private Long userId;
 
-    private List<UploadFile> uploadFiles;
+    private String nickname;
+    private String password;
 }

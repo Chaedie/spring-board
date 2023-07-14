@@ -44,7 +44,16 @@
         </div>
 
         <div class="card-body">
-          <form class="d-flex flex-column gap-2" method="post" action="write" enctype="multipart/form-data">
+          <form id="writeForm" class="d-flex flex-column gap-2" method="post" action="write"
+                enctype="multipart/form-data">
+            <div>
+              <input class="p-2" name="nickname" id="nickname" type="text" placeholder="닉네임"
+                     minlength="2"
+                     maxlength="10">
+              <input class="p-2" name="password" id="password" type="password" placeholder="비밀번호"
+                     minlength="2"
+                     maxlength="10">
+            </div>
             <input class="p-2" name="postTitle" id="title" type="text" placeholder="제목">
             <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
                       style="resize: none"></textarea>
@@ -58,5 +67,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
           crossorigin="anonymous"></script>
+  <script src="<%=contextPath%>/resources/js/writePost.js">
+  </script>
 </body>
 </html>

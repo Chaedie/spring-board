@@ -5,7 +5,7 @@
 }
 
 #layoutSidenav_nav {
-  flex-basis: 225px;
+  flex-basis: 12rem;
   flex-shrink: 0;
   z-index: 1038;
   height: 100%;

@@ -93,7 +93,17 @@
                     onclick="location.href='<%=contextPath%>/boards/<%=responseDTOList.get(i).getPostId()%>'">
                   <td style="width: 2rem"><%=responseDTOList.get(i).getPostId()%>
                   </td>
-                  <td style="width: 10rem"><%=responseDTOList.get(i).getPostTitle()%>
+                  <td style="width: 10rem">
+                    <c:choose>
+                      <c:when test="<%=responseDTOList.get(i).getUploadFiles().size() > 0%>">
+                        <i class="fa-regular fa-image"></i>
+                      </c:when>
+                      <c:otherwise>
+                        <i class="fa-regular fa-comment-dots"></i>
+                      </c:otherwise>
+                    </c:choose>
+                    <%=responseDTOList.get(i).getPostTitle()%>
+                    [<%=responseDTOList.get(i).getComments().size()%>]
                   </td>
                   <td style="width: 2rem"><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
                   </td>

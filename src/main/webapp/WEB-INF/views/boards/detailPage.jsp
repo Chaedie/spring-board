@@ -1,8 +1,9 @@
 <%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
 <%@ page import="com.example.springbootboard.data.entity.UploadFile" %>
 <%@ page import="com.example.springbootboard.data.entity.Comment" %>
-<%@ page import="org.apache.jasper.tagplugins.jstl.core.When" %>
-<%@ page import="java.time.format.DateTimeFormatter" %><%--
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="org.joda.time.format.DateTimeFormat" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -15,6 +16,7 @@
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
   PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
+  String createdAt = postResponseDTO.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss"));
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -49,10 +51,18 @@
 
         <div class="card-body w-100">
           <div class="postDetailContainer">
-            <p class="postTitle">
-              <%=postResponseDTO.getPostTitle()%>
-            </p>
-            <p class="postContent">
+            <div class="postTitle">
+              <p class="fw-bold m-0"><%=postResponseDTO.getPostTitle(
+              )%>
+              </p>
+              <p class="">
+                <span><%=postResponseDTO.getNickname()%></span>
+                <span class="mx-4" style="border-left:1px solid #bbbbbb;"></span>
+                <span><%=createdAt%></span>
+              </p>
+            </div>
+            <hr>
+            <p class="postContent" style="min-height: 10rem;">
               <%=postResponseDTO.getPostContent()%>
             </p>
             <hr>
@@ -68,6 +78,9 @@
 
             <%-- 버튼 영역            --%>
             <div class="mb-5">
+              <a href="<%=contextPath%>/boards/list?page=0&size=10&sort=postId,DESC">
+                <button type="button" class="mt-4 btn btn-outline-secondary">글 목록</button>
+              </a>
               <a href="<%=contextPath%>/boards/update?postId=<%=postResponseDTO.getPostId()%>">
                 <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
               </a>
