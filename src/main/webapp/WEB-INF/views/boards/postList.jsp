@@ -91,7 +91,7 @@
                 %>
 
                 <tr data-index="<%=i%>" style="cursor: pointer"
-                    onclick="location.href='<%=contextPath%>/boards/<%=responseDTOList.get(i).getPostId()%>'">
+                    onclick="location.href='<%=contextPath%>/boards/detail?teamName=<%=teamName%>&postId=<%=responseDTOList.get(i).getPostId()%>'">
                   <td style="width: 2rem"><%=responseDTOList.get(i).getPostId()%>
                   </td>
                   <td style="width: 2rem"><%=responseDTOList.get(i).getTeamName()%>
