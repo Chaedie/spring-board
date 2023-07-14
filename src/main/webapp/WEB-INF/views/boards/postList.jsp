@@ -14,6 +14,7 @@
     responseDTOList = tempList;
   }
   Long totalCount = (Long) request.getAttribute("totalCount");
+  String teamName = request.getParameter("teamName");
   String _page = request.getParameter("page");
   String size = request.getParameter("size");
   String search = request.getParameter("search");
@@ -60,7 +61,7 @@
             <path fill="currentColor"
                   d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path>
           </svg>
-          게시판
+          <%=teamName%> 게시판
         </div>
 
         <div class="card-body">
@@ -77,7 +78,7 @@
               </div>
             </div>
             <div class="datatable-container">
-              <table id="datatablesSimple" class="datatable-table">
+              <table id="datatablesSimple" class="datatable-table w-100">
                 <thead>
                 <tr id="columnHead">
 
@@ -90,20 +91,24 @@
                 %>
 
                 <tr data-index="<%=i%>" style="cursor: pointer"
-                    onclick="location.href='<%=contextPath%>/boards/<%=responseDTOList.get(i).getPostId()%>'">
+                    onclick="location.href='<%=contextPath%>/boards/detail?teamName=<%=teamName%>&postId=<%=responseDTOList.get(i).getPostId()%>'">
                   <td style="width: 2rem"><%=responseDTOList.get(i).getPostId()%>
                   </td>
-                  <td style="width: 10rem">
-                    <c:choose>
-                      <c:when test="<%=responseDTOList.get(i).getUploadFiles().size() > 0%>">
-                        <i class="fa-regular fa-image"></i>
-                      </c:when>
-                      <c:otherwise>
-                        <i class="fa-regular fa-comment-dots"></i>
-                      </c:otherwise>
-                    </c:choose>
-                    <%=responseDTOList.get(i).getPostTitle()%>
-                    [<%=responseDTOList.get(i).getComments().size()%>]
+                  <td style="width: 2rem"><%=responseDTOList.get(i).getTeamName()%>
+                  </td>
+                  <td style="width: 4rem">
+                    <div class="postTitleContainer">
+                      <c:choose>
+                        <c:when test="<%=responseDTOList.get(i).getUploadFiles().size() > 0%>">
+                          <i class="fa-regular fa-image"></i>
+                        </c:when>
+                        <c:otherwise>
+                          <i class="fa-regular fa-comment-dots"></i>
+                        </c:otherwise>
+                      </c:choose>
+                      <span class="postTitle"><%=responseDTOList.get(i).getPostTitle()%></span>
+                      [<%=responseDTOList.get(i).getComments().size()%>]
+                    </div>
                   </td>
                   <td style="width: 2rem"><%=responseDTOList.get(i).getUpdatedAt().format(DateTimeFormatter.ISO_DATE)%>
                   </td>
@@ -126,7 +131,7 @@
               </nav>
             </div>
           </div>
-          <a href="<%=contextPath%>/boards/write">
+          <a href="<%=contextPath%>/boards/write?teamName=<%=teamName%>">
             <button type="button" class="btn btn-outline-secondary">글 쓰기</button>
           </a>
         </div>
@@ -144,11 +149,13 @@
     const search = '<%=search %>';
     const sort = '<%=sort %>'
     const totalCount = <%=totalCount%>;
+    const teamName = '<%=teamName%>';
     const columnHeaderList = [
       {id: 1, entityColumnName: "postId", listColumnName: "글 ID", sortable: "true"},
-      {id: 2, entityColumnName: "postTitle", listColumnName: "글 제목", sortable: "false"},
-      {id: 3, entityColumnName: "createdAt", listColumnName: "작성일", sortable: "true"},
-      {id: 4, entityColumnName: "updatedAt", listColumnName: "수정일", sortable: "true"},
+      {id: 2, entityColumnName: "teamName", listColumnName: "게시판 이름", sortable: "false"},
+      {id: 3, entityColumnName: "postTitle", listColumnName: "글 제목", sortable: "false"},
+      {id: 4, entityColumnName: "createdAt", listColumnName: "작성일", sortable: "true"},
+      {id: 5, entityColumnName: "updatedAt", listColumnName: "수정일", sortable: "true"},
     ]
   </script>
   <script src="<%=contextPath%>/resources/js/listPage.js"></script>

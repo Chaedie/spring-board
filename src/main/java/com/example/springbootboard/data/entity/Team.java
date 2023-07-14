@@ -2,9 +2,9 @@ package com.example.springbootboard.data.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,4 +21,9 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
+    @Column(name = "team_korean_name")
+    private String teamKoreanName;
+
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 }

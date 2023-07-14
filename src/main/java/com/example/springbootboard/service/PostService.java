@@ -13,6 +13,8 @@ public interface PostService {
 
     Page<PostResponseDTO> findAllWithPagination(String search, Pageable pageable);
 
+    Page<PostResponseDTO> findAllByTeamNameWithPagination(String teamName, String search, Pageable pageable);
+
     PostResponseDTO findById(Long postId);
 
     PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles);

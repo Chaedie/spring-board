@@ -11,6 +11,7 @@
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
   PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
+  String teamName = request.getParameter("teamName");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -59,6 +60,8 @@
                       style="resize: none"></textarea>
             <input type="file" name="multipartFiles" multiple accept="image/*">
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
+
+            <input type="hidden" name="teamName" value="<%=teamName%>">
           </form>
         </div>
       </div>

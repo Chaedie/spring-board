@@ -8,24 +8,38 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 
 @Controller
 @RequestMapping("/boards")
-public class BoardController {
+public class PostController {
     private final PostService postService;
 
     @Autowired
-    public BoardController(PostService postService) {
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
     @GetMapping("/list")
-    public String getPostList(Model model, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
-        Page<PostResponseDTO> postResponseDTOList = postService.findAllWithPagination(search, pageable);
+    public String getPostList(Model model, @RequestParam String teamName, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
+        Page<PostResponseDTO> postResponseDTOList = null;
+        try {
+            if (teamName.equals("all")) {
+                postResponseDTOList = postService.findAllWithPagination(search, pageable);
+            } else {
+                postResponseDTOList = postService.findAllByTeamNameWithPagination(teamName, search, pageable);
+            }
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("BoardController 에서 에러발생, 메인으로 리다이렉트");
+            return "redirect:/";
+        }
 
         model.addAttribute("listName", "Post");
         model.addAttribute("responseDTOList", postResponseDTOList.toList());
@@ -48,7 +62,7 @@ public class BoardController {
 
         model.addAttribute(postResponseDTO);
 
-        return "redirect:" + postResponseDTO.getPostId();
+        return "redirect:detail?teamName=" + postRequestDTO.getTeamName() + "&postId=" + postResponseDTO.getPostId();
     }
 
     @GetMapping("/update")
@@ -68,15 +82,15 @@ public class BoardController {
             postResponseDTO = postService.updatePost(postRequestDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:" + postRequestDTO.getPostId();
+            return "redirect:detail?teamName=" + postRequestDTO.getTeamName() + "&postId=" + postRequestDTO.getPostId();
         }
         model.addAttribute(postResponseDTO);
 
-        return "redirect:" + postRequestDTO.getPostId();
+        return "redirect:detail?teamName=" + postRequestDTO.getTeamName() + "&postId=" + postRequestDTO.getPostId();
     }
 
-    @GetMapping("/{postId}")
-    public String getWritePostPage(Model model, @PathVariable Long postId) {
+    @GetMapping("/detail")
+    public String getWritePostPage(Model model, @RequestParam Long postId) {
         PostResponseDTO postResponseDTO = null;
         try {
             postResponseDTO = postService.findById(postId);
@@ -88,19 +102,21 @@ public class BoardController {
     }
 
     @GetMapping("/delete")
-    public String getDeletePage(Model model, @RequestParam Long postId) {
+    public String getDeletePage(Model model, @RequestParam Long postId, @RequestParam String teamName) {
         model.addAttribute("postId", postId);
+        model.addAttribute("teamName", teamName);
+
         return "boards/deletePage";
     }
 
     @PostMapping("/delete")
-    public String deletePost(Model model, @RequestParam Long postId) {
+    public String deletePost(Model model, @RequestParam Long postId, @RequestParam String teamName) {
         try {
             postService.delete(postId);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "redirect:list?page=0&size=10&sort=postId,DESC";
+        return "redirect:list?teamName=" + teamName + "&postId=" + postId + "&age=0&size=10&sort=postId,DESC";
     }
 }
