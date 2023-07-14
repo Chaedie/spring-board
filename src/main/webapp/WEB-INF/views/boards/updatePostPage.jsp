@@ -46,18 +46,18 @@
         <div class="card-body">
           <form id="writeForm" class="d-flex flex-column gap-2" method="post" action="update"
                 enctype="multipart/form-data">
-            <div>
-              <input class="p-2" name="nickname" id="nickname" type="text" placeholder="닉네임"
+            <div class="d-flex gap-2">
+              <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
                      value="<%=postResponseDTO.getNickname()%>"
                      minlength="2"
                      maxlength="10">
-              <input class="p-2" name="password" id="password" type="password" placeholder="비밀번호"
+              <input class="p-2 form-control" name="password" id="password" type="password" placeholder="비밀번호"
                      minlength="2"
                      maxlength="10">
             </div>
-            <input class="p-2" name="postTitle" id="title" type="text" placeholder="제목"
+            <input class="p-2 form-control" name="postTitle" id="title" type="text" placeholder="제목"
                    value="<%=postResponseDTO.getPostTitle()%>">
-            <textarea class="p-2" name="postContent" placeholder="내용" rows="15" cols="5"
+            <textarea class="p-2 form-control" name="postContent" placeholder="내용" rows="15" cols="5"
                       style="resize: none"><%=postResponseDTO.getPostContent()%></textarea>
             <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
 

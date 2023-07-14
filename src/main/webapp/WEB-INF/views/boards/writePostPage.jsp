@@ -46,16 +46,16 @@
         <div class="card-body">
           <form id="writeForm" class="d-flex flex-column gap-2" method="post" action="write"
                 enctype="multipart/form-data">
-            <div>
-              <input class="p-2" name="nickname" id="nickname" type="text" placeholder="닉네임"
+            <div class="d-flex gap-2">
+              <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
                      minlength="2"
                      maxlength="10">
-              <input class="p-2" name="password" id="password" type="password" placeholder="비밀번호"
+              <input class="p-2 form-control" name="password" id="password" type="password" placeholder="비밀번호"
                      minlength="2"
                      maxlength="10">
             </div>
-            <input class="p-2" name="postTitle" id="title" type="text" placeholder="제목">
-            <textarea class="p-2" name="postContent" placeholder="내용" rows="20" cols="5"
+            <input class="p-2 form-control" name="postTitle" id="title" type="text" placeholder="제목">
+            <textarea class="p-2 form-control" name="postContent" placeholder="내용" rows="20" cols="5"
                       style="resize: none"></textarea>
             <input type="file" name="multipartFiles" multiple accept="image/*">
             <button type="submit" class="mt-4 btn btn-outline-secondary">제출</button>
