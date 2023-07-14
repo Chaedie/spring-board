@@ -7,4 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findByPostTitleContains(String postTitle, Pageable pageable);
+
+    Page<Post> findByTeamTeamIdAndPostTitleContains(Long teamId, String postTitle, Pageable pageable);
+
 }

@@ -15,6 +15,7 @@ public class PostRequestDTO {
     private String postTitle;
     private String postContent;
     private Long userId;
+    private String teamName;
 
     private String nickname;
     private String password;

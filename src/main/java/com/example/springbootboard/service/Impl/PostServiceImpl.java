@@ -7,6 +7,7 @@ import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.data.entity.Post;
 import com.example.springbootboard.data.entity.UploadFile;
 import com.example.springbootboard.data.repository.PostRepository;
+import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.data.repository.UploadFileRepository;
 import com.example.springbootboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,14 @@ public class PostServiceImpl implements PostService {
     private final AwsS3ServiceImpl awsS3Service;
     private final PostRepository postRepository;
     private final UploadFileRepository uploadFileRepository;
+    private final TeamRepository teamRepository;
 
     @Autowired
-    public PostServiceImpl(AwsS3ServiceImpl awsS3Service, PostRepository postRepository, UploadFileRepository uploadFileRepository) {
+    public PostServiceImpl(AwsS3ServiceImpl awsS3Service, PostRepository postRepository, UploadFileRepository uploadFileRepository, TeamRepository teamRepository) {
         this.awsS3Service = awsS3Service;
         this.postRepository = postRepository;
         this.uploadFileRepository = uploadFileRepository;
+        this.teamRepository = teamRepository;
     }
 
 
@@ -52,6 +55,18 @@ public class PostServiceImpl implements PostService {
     @Override
     public Page<PostResponseDTO> findAllWithPagination(String search, Pageable pageable) {
         Page<Post> pageList = postRepository.findByPostTitleContains(search, pageable);
+
+        Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> new PostResponseDTO(post));
+        return pageResponseDTOList;
+    }
+
+    @Override
+    public Page<PostResponseDTO> findAllByTeamNameWithPagination(String teamName, String search, Pageable pageable) throws EntityNotFoundException {
+        Long teamId = teamRepository.findByTeamName(teamName)
+                .orElseThrow(EntityNotFoundException::new)
+                .getTeamId();
+
+        Page<Post> pageList = postRepository.findByTeamTeamIdAndPostTitleContains(teamId, search, pageable);
 
         Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> new PostResponseDTO(post));
         return pageResponseDTOList;
@@ -123,7 +138,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
+    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) throws EntityNotFoundException {
         /**
          * 1. Post 엔티티 생성
          */
@@ -133,6 +148,8 @@ public class PostServiceImpl implements PostService {
                 .userId(postRequestDTO.getUserId())
                 .nickname(postRequestDTO.getNickname())
                 .password(postRequestDTO.getPassword())
+                .team(teamRepository.findByTeamName(postRequestDTO.getTeamName())
+                        .orElseThrow(EntityNotFoundException::new))
                 .uploadFiles(new ArrayList<>())
                 .build();
 

@@ -7,21 +7,21 @@ let innerHTML = "";
 
 innerHTML += `
       <li class="datatable-pagination-list-item">
-        <a href="?page=${page - 10 > 0 ? page - 10 : 0}&size=${size}&search=${search}&sort=${sort}"
+        <a href="?teamName=${teamName}&page=${page - 10 > 0 ? page - 10 : 0}&size=${size}&search=${search}&sort=${sort}"
           data-page="1" class="datatable-pagination-list-item-link">‹</a>
       </li>`;
 
 for (let i = startPageIdx; i <= lastPageIdx + 1; i++) {
   innerHTML += `
           <li class="datatable-pagination-list-item ${page == i - 1 ? "datatable-active" : ""} ">
-            <a href="?page=${i - 1}&size=${size}&search=${search}&sort=${sort}" 
+            <a href="?teamName=${teamName}&page=${i - 1}&size=${size}&search=${search}&sort=${sort}" 
               data-page="${i - 1}" class="datatable-pagination-list-item-link">${i}</a>
           </li>
           `;
 }
 innerHTML += `
       <li class="datatable-pagination-list-item"  >
-        <a href="?page=${page + 10 < lastPage ? page + 10 : lastPage}&size=${size}&search=${search}&sort=${sort}" 
+        <a href="?teamName=${teamName}&page=${page + 10 < lastPage ? page + 10 : lastPage}&size=${size}&search=${search}&sort=${sort}" 
           data-page="2" class="datatable-pagination-list-item-link">›</a>
       </li>`;
 $pagenation.innerHTML = innerHTML;
@@ -40,14 +40,14 @@ let selectorInnerHTML = `
 $sizeSelector.innerHTML = selectorInnerHTML;
 $sizeSelector.addEventListener('change', (e) => {
   const value = e.target.value;
-  location.href = `?page=${page}&size=${value}&search=${search}&sort=${sort}`;
+  location.href = `?teamName=${teamName}&page=${page}&size=${value}&search=${search}&sort=${sort}`;
 });
 
 $searchForm = document.querySelector(".searchForm");
 $searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const value = e.target.searchInput.value;
-  location.href = `?page=0&size=10&search=${value}&sort=${sort}`;
+  location.href = `?teamName=${teamName}&page=0&size=10&search=${value}&sort=${sort}`;
 })
 
 const handleClickColumn = (column, sortable) => {
@@ -57,7 +57,7 @@ const handleClickColumn = (column, sortable) => {
   const ordering = sort.split(",")[1];
   const newOrdering = ordering == "DESC" ? "ASC" : "DESC";
 
-  location.href = `?page=${page}&size=${size}&search=${search}&sort=${column},${newOrdering}`;
+  location.href = `?teamName=${teamName}&page=${page}&size=${size}&search=${search}&sort=${column},${newOrdering}`;
 }
 const $columnHead = document.querySelector("#columnHead");
 

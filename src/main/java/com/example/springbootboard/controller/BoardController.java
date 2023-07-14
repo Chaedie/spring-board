@@ -24,8 +24,19 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String getPostList(Model model, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
-        Page<PostResponseDTO> postResponseDTOList = postService.findAllWithPagination(search, pageable);
+    public String getPostList(Model model, @RequestParam String teamName, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
+        Page<PostResponseDTO> postResponseDTOList = null;
+        try {
+            if (teamName.equals("all")) {
+                postResponseDTOList = postService.findAllWithPagination(search, pageable);
+            } else {
+                postResponseDTOList = postService.findAllByTeamNameWithPagination(teamName, search, pageable);
+            }
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("BoardController 에서 에러발생, 메인으로 리다이렉트");
+            return "redirect:/";
+        }
 
         model.addAttribute("listName", "Post");
         model.addAttribute("responseDTOList", postResponseDTOList.toList());

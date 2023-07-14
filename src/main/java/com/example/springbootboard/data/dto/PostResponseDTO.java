@@ -21,6 +21,7 @@ public class PostResponseDTO {
     private String postContent;
     private Long userId;
     private String nickname;
+    private String teamName;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -34,6 +35,7 @@ public class PostResponseDTO {
         this.postContent = post.getPostContent();
         this.userId = post.getUserId();
         this.nickname = post.getNickname();
+        this.teamName = post.getTeam().getTeamName();
         this.createdAt = post.getCreatedAt();
         this.updatedAt = post.getUpdatedAt();
         this.uploadFiles = post.getUploadFiles();
