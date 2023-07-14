@@ -1,5 +1,5 @@
-const $writeForm = document.querySelector("#writeForm")
-$writeForm.addEventListener('submit', (e) => {
+const nickPwForm = document.querySelector("#nickPwForm")
+nickPwForm.addEventListener('submit', (e) => {
   const nickname = e.target.nickname.value;
   const password = e.target.password.value;
   if (nickname.length < 2 || password.length < 2) {
