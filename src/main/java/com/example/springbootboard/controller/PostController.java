@@ -3,8 +3,8 @@ package com.example.springbootboard.controller;
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.service.PostService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -18,14 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/boards")
 @Slf4j
+@RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-
-    @Autowired
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
-
+    
     @GetMapping("/list")
     public String getPostList(Model model, @RequestParam String teamName, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
         Page<PostResponseDTO> postResponseDTOList = null;
