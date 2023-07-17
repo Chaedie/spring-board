@@ -2,7 +2,7 @@ package com.example.springbootboard.controller;
 
 import com.example.springbootboard.data.dto.UserRequestDTO;
 import com.example.springbootboard.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +15,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/join")
     public String getUserJoinPage(Model model, UserRequestDTO userRequestDTO) {

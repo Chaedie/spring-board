@@ -6,25 +6,19 @@ import com.example.springbootboard.data.entity.Team;
 import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.data.repository.UserRepository;
 import com.example.springbootboard.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
     private final TeamRepository teamRepository;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, TeamRepository teamRepository) {
-        this.userRepository = userRepository;
-        this.teamRepository = teamRepository;
-    }
-
+    
     @Override
     public UserResponseDTO signUpUser(UserRequestDTO userRequestDTO) {
         return null;

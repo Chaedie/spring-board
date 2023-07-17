@@ -11,8 +11,8 @@ import com.example.springbootboard.data.repository.PostRepository;
 import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.data.repository.UploadFileRepository;
 import com.example.springbootboard.service.PostService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,23 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
     private final AwsS3ServiceImpl awsS3Service;
     private final PostRepository postRepository;
     private final UploadFileRepository uploadFileRepository;
     private final TeamRepository teamRepository;
-
-    @Autowired
-    public PostServiceImpl(AwsS3ServiceImpl awsS3Service, PostRepository postRepository, UploadFileRepository uploadFileRepository, TeamRepository teamRepository) {
-        this.awsS3Service = awsS3Service;
-        this.postRepository = postRepository;
-        this.uploadFileRepository = uploadFileRepository;
-        this.teamRepository = teamRepository;
-    }
-
 
     @Override
     public List<PostResponseDTO> findAll() {
