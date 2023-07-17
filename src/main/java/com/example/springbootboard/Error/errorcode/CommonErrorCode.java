@@ -1,4 +1,4 @@
-package com.example.springbootboard.Error;
+package com.example.springbootboard.Error.errorcode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,15 +9,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
-public enum ErrorCode {
-    NOT_FOUND(404, "COMMON-ERR-404", "PAGE NOT FOUND"),
+public enum CommonErrorCode implements ErrorCode {
+    ITEM_NOT_FOUND(404, "COMMON-ERR-404", "ITEM NOT FOUND"),
     INTER_SERVER_ERROR(500, "COMMON-ERR-500", "INTER SERVER ERROR"),
     EMAIL_DUPLICATION(400, "MEMBER-ERR-400", "EMAIL DUPLICATED"),
     AWS_CREDENTIALS_FAIL(400, "AWS-ERR-400", "AWS CREDENTIALS FAIL"),
     AUTHORIZATION_FAIL(403, "AUTH-ERR-403", "CHECK ID PASSWORD"),
     ;
 
-    private int status;
+    private int httpStatus;
     private String errorCode;
     private String message;
+
 }

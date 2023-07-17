@@ -1,7 +1,8 @@
 package com.example.springbootboard.service.Impl;
 
-import com.example.springbootboard.Error.ErrorCode;
 import com.example.springbootboard.Error.Exception.AuthorizationException;
+import com.example.springbootboard.Error.Exception.ItemNotFoundException;
+import com.example.springbootboard.Error.errorcode.PostErrorCode;
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.data.entity.Post;
@@ -10,6 +11,7 @@ import com.example.springbootboard.data.repository.PostRepository;
 import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.data.repository.UploadFileRepository;
 import com.example.springbootboard.service.PostService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +19,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -61,9 +63,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<PostResponseDTO> findAllByTeamNameWithPagination(String teamName, String search, Pageable pageable) throws EntityNotFoundException {
+    public Page<PostResponseDTO> findAllByTeamNameWithPagination(String teamName, String search, Pageable pageable) {
         Long teamId = teamRepository.findByTeamName(teamName)
-                .orElseThrow(EntityNotFoundException::new)
+                .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND))
                 .getTeamId();
 
         Page<Post> pageList = postRepository.findByTeamTeamIdAndPostTitleContains(teamId, search, pageable);
@@ -75,23 +77,23 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDTO findById(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND));
 
         return new PostResponseDTO(post);
     }
 
     @Override
     @Transactional
-    public PostResponseDTO updatePost(PostRequestDTO postRequestDTO) throws EntityNotFoundException, AuthorizationException {
+    public PostResponseDTO updatePost(PostRequestDTO postRequestDTO) {
         Optional<Post> selectedPost = postRepository.findById(postRequestDTO.getPostId());
 
         Post updatedPost;
         if (selectedPost.isPresent()) {
             Post post = selectedPost.get();
 
-            // 비회원일 경우 체크
+            // 비회원일 경우 ID PW 체크
             if (!checkNicknamePassword(post, postRequestDTO)) {
-                throw new AuthorizationException(ErrorCode.AUTHORIZATION_FAIL, "CHECK NICKNAME PASSWORD");
+                throw new AuthorizationException(PostErrorCode.AUTHORIZATION_FAIL);
             }
 
             post.setPostTitle(postRequestDTO.getPostTitle());
@@ -100,7 +102,7 @@ public class PostServiceImpl implements PostService {
             updatedPost = postRepository.save(post);
 
         } else {
-            throw new EntityNotFoundException();
+            throw new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND);
         }
 
         return new PostResponseDTO(updatedPost);
@@ -124,7 +126,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void delete(Long postId) throws Exception {
+    public void delete(Long postId) {
         Optional<Post> selectedPost = postRepository.findById(postId);
 
         if (selectedPost.isPresent()) {
@@ -132,13 +134,13 @@ public class PostServiceImpl implements PostService {
 
             postRepository.delete(post);
         } else {
-            throw new EntityNotFoundException();
+            throw new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND);
         }
     }
 
     @Override
     @Transactional
-    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) throws EntityNotFoundException {
+    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
         /**
          * 1. Post 엔티티 생성
          */
@@ -149,7 +151,7 @@ public class PostServiceImpl implements PostService {
                 .nickname(postRequestDTO.getNickname())
                 .password(postRequestDTO.getPassword())
                 .team(teamRepository.findByTeamName(postRequestDTO.getTeamName())
-                        .orElseThrow(EntityNotFoundException::new))
+                        .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND)))
                 .uploadFiles(new ArrayList<>())
                 .build();
 
