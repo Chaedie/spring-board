@@ -1,18 +1,21 @@
 package com.example.springbootboard.Error;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.example.springbootboard.Error.errorcode.ErrorCode;
+import lombok.*;
 
+@Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ErrorResponse {
-    private int status;
+    private int httpStatus;
     private String message;
-    private String code;
+    private String errorCode;
 
     public ErrorResponse(ErrorCode errorCode) {
-        this.status = errorCode.getStatus();
+        this.httpStatus = errorCode.getHttpStatus();
         this.message = errorCode.getMessage();
-        this.code = errorCode.getErrorCode();
+        this.errorCode = errorCode.getErrorCode();
     }
 }

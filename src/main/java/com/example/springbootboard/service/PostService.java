@@ -19,8 +19,8 @@ public interface PostService {
 
     PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles);
 
-    PostResponseDTO updatePost(PostRequestDTO postRequestDTO) throws Exception;
+    PostResponseDTO updatePost(PostRequestDTO postRequestDTO);
 
-    void delete(Long postId) throws Exception;
+    void delete(Long postId);
 
 }

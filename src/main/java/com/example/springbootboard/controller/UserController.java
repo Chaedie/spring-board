@@ -35,12 +35,8 @@ public class UserController {
 
     @PostMapping("/join")
     public String signUpUser(Model model, UserRequestDTO userRequestDTO, RedirectAttributes redirectAttributes) {
-        try {
-            userService.signUpUser(userRequestDTO);
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute(userRequestDTO);
-            return "redirect:join";
-        }
+        userService.signUpUser(userRequestDTO);
+
         return "redirect:login";
     }
 

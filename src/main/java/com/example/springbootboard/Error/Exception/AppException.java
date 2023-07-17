@@ -1,6 +1,6 @@
 package com.example.springbootboard.Error.Exception;
 
-import com.example.springbootboard.Error.ErrorCode;
+import com.example.springbootboard.Error.errorcode.CommonErrorCode;
 import lombok.*;
 
 @Getter
@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class AppException extends RuntimeException {
-    private ErrorCode errorCode;
+    private CommonErrorCode commonErrorCode;
 
-    public AppException(ErrorCode errorCode, String message) {
+    public AppException(CommonErrorCode commonErrorCode, String message) {
         super(message);
-        this.errorCode = errorCode;
+        this.commonErrorCode = commonErrorCode;
     }
 }
