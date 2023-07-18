@@ -1,4 +1,4 @@
-package com.example.springbootboard.controller.Rest;
+package com.example.springbootboard.controller.Rest.v1;
 
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.example.springbootboard.service.Impl.AwsS3ServiceImpl;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/aws/s3")
+@RequestMapping("/rest/v1/aws/s3")
 public class UploadController {
     @Autowired
     private AwsS3ServiceImpl awsS3Service;
