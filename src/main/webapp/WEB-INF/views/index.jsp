@@ -1,20 +1,18 @@
 <%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
-<%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %><%--
+<%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
   Time: 5:22 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
-  UserResponseDTO userResponseDTO = (UserResponseDTO) session.getAttribute("user");
-  if (userResponseDTO == null) {
-    userResponseDTO = new UserResponseDTO();
-  }
+  UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -38,7 +36,7 @@
 
     <main>
 
-      <%=userResponseDTO.toString() %>
+      <%=userSession.toString() %>
 
       <%-- Code Here! --%>
     </main>

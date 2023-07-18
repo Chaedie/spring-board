@@ -6,11 +6,12 @@
   Time: 10:09 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" isErrorPage="true" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" isErrorPage="true" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
+  UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   System.out.println("exception = " + exception);
   ErrorResponse errorResponse = (ErrorResponse) request.getAttribute("errorResponse");
   System.out.println("errorResponse = " + errorResponse);

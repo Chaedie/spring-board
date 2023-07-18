@@ -13,6 +13,7 @@
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
+  UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   List<String> teamList = (List<String>) request.getAttribute("teamList");
   UserRequestDTO userRequestDTO = (UserRequestDTO) request.getAttribute("userRequestDTO");
   System.out.println("userRequestDTO join jsp page= " + userRequestDTO);
@@ -83,7 +84,7 @@
                           <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <input name="password" type="password" id="form3Example4c" class="form-control"
-                                   minlength="4"
+                                   minlength="8"
                                    maxlength="20"/>
                             <label class="form-label" for="form3Example4c">Password</label>
                           </div>

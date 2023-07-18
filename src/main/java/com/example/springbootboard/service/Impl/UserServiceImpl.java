@@ -1,5 +1,7 @@
 package com.example.springbootboard.service.Impl;
 
+import com.example.springbootboard.Error.Exception.ItemNotFoundException;
+import com.example.springbootboard.Error.errorcode.PostErrorCode;
 import com.example.springbootboard.data.dto.UserRequestDTO;
 import com.example.springbootboard.data.dto.UserResponseDTO;
 import com.example.springbootboard.data.entity.Team;
@@ -41,6 +43,8 @@ public class UserServiceImpl implements UserService {
                 .username(userRequestDTO.getUsername())
                 .userEmail(userRequestDTO.getUserEmail())
                 .password(encoder.encode(userRequestDTO.getPassword()))
+                .team(teamRepository.findByTeamName(userRequestDTO.getTeamName())
+                        .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND)))
                 .build();
 
         userRepository.save(user);

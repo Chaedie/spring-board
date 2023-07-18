@@ -40,10 +40,10 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<UploadFile> uploadFiles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
-    
+
 }

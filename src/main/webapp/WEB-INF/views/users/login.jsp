@@ -1,7 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %>
 <%@ page import="java.util.Optional" %>
-<%@ page import="org.springframework.security.web.csrf.DefaultCsrfToken" %><%--
+<%@ page import="org.springframework.security.web.csrf.DefaultCsrfToken" %>
+<%@ page import="com.example.springbootboard.data.entity.User" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/13
@@ -12,8 +13,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   request.setCharacterEncoding("UTF-8");
-
   String contextPath = request.getContextPath();
+  UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -63,7 +64,7 @@
                           <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <input name="password" type="password" id="form3Example4c" class="form-control"
-                                   minlength="4"
+                                   minlength="8"
                                    maxlength="20"/>
                             <label class="form-label" for="form3Example4c">Password</label>
                           </div>

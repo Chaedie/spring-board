@@ -1,6 +1,7 @@
 package com.example.springbootboard.controller;
 
 import com.example.springbootboard.data.dto.UserRequestDTO;
+import com.example.springbootboard.data.dto.UserResponseDTO;
 import com.example.springbootboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -18,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final HttpSession session;
 
     @GetMapping("/join")
     public String getUserJoinPage(Model model, UserRequestDTO userRequestDTO) {
@@ -37,7 +40,18 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
+        UserResponseDTO userResponseDTO = (UserResponseDTO) session.getAttribute("user");
+        if (userResponseDTO != null) {
+            return "redirect:/";
+        }
         return "users/login";
+    }
+
+    @GetMapping("/logout")
+    public String performLogout() {
+        System.out.println("들어옴?");
+        session.removeAttribute("user");
+        return "redirect:/";
     }
 
     @GetMapping("/{userId}")

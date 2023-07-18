@@ -22,12 +22,7 @@ public class WebSecurityConfig {
                 .formLogin()
                 .loginPage("/users/login")
                 .loginProcessingUrl("/users/login")
-                .defaultSuccessUrl("/")
-                .and()
-                .logout()
-                .logoutUrl("/users/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true);
+                .defaultSuccessUrl("/");
         return http.build();
     }
 
