@@ -32,6 +32,14 @@
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
         회원가입
       </a>
+      <a class="nav-link" href="<%=contextPath%>/users/login">
+        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+        로그인
+      </a>
+      <a class="nav-link" href="<%=contextPath%>/users/logout">
+        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+        로그아웃
+      </a>
     </div>
   </div>
 </div>

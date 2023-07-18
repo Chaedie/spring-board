@@ -19,11 +19,14 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(name = "email")
+    @Column(name = "username", nullable = false, length = 30, unique = true)
+    private String username;
+
+    @Column(name = "email", nullable = false, length = 50)
     private String userEmail;
 
-    @Column(name = "nickname")
-    private String nickname;
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "team_id")

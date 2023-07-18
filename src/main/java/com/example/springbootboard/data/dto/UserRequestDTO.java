@@ -11,11 +11,8 @@ import lombok.*;
 @Builder
 public class UserRequestDTO {
 
+    private String username;
     private String userEmail;
-
     private String password;
-
-    private String nickname;
-
     private String teamName;
 }

@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
+<%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -10,6 +11,10 @@
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
+  UserResponseDTO userResponseDTO = (UserResponseDTO) session.getAttribute("user");
+  if (userResponseDTO == null) {
+    userResponseDTO = new UserResponseDTO();
+  }
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,6 +37,9 @@
     </nav>
 
     <main>
+
+      <%=userResponseDTO.toString() %>
+
       <%-- Code Here! --%>
     </main>
   </div>
