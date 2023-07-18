@@ -1,16 +1,19 @@
 package com.example.springbootboard.controller;
 
 import com.example.springbootboard.data.dto.UserRequestDTO;
+import com.example.springbootboard.data.dto.UserResponseDTO;
 import com.example.springbootboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -19,9 +22,10 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final HttpSession session;
 
     @GetMapping("/join")
-    public String getUserJoinPage(Model model, UserRequestDTO userRequestDTO) {
+    public String getUserJoinPage(UserRequestDTO userRequestDTO, Model model) {
         List<String> teamList = userService.getTeamNameList();
         model.addAttribute("teamList", teamList);
         model.addAttribute("userRequestDTO", userRequestDTO);
@@ -30,10 +34,30 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public String signUpUser(Model model, UserRequestDTO userRequestDTO, RedirectAttributes redirectAttributes) {
+    public String signUpUser(@Validated UserRequestDTO userRequestDTO, Errors errors) {
+        if (errors.hasErrors()) {
+            return "redirect:login?error";
+        }
         userService.signUpUser(userRequestDTO);
 
+
         return "redirect:login";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        UserResponseDTO userResponseDTO = (UserResponseDTO) session.getAttribute("user");
+        if (userResponseDTO != null) {
+            return "redirect:/";
+        }
+        return "users/login";
+    }
+
+    @GetMapping("/logout")
+    public String performLogout() {
+        System.out.println("들어옴?");
+        session.removeAttribute("user");
+        return "redirect:/";
     }
 
     @GetMapping("/{userId}")

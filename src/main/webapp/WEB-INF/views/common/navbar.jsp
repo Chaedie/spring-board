@@ -1,3 +1,4 @@
+<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 %>
@@ -26,12 +27,27 @@
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
         데브 옵스 게시판
       </a>
-        
+
       <div class="sb-sidenav-menu-heading">회원 기능</div>
       <a class="nav-link" href="<%=contextPath%>/users/join">
         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
         회원가입
       </a>
+      <c:if test="<%=userSession.getUsername() == null%>">
+        <a class="nav-link" href="<%=contextPath%>/users/login">
+          <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+          로그인
+        </a>
+      </c:if>
+      <c:if test="<%=userSession.getUsername() != null%>">
+        <div class="sb-sidenav-footer">
+          <div class="small">현재 상담 중인 손님:</div>
+          <div class="d-flex justify-content-between"><span><%=userSession.getUsername()%>님</span>
+            <a class="btn btn-light btn-sm" style="--bs-btn-font-size: .50rem; display: inline-block"
+               href="<%=contextPath%>/users/logout">로그아웃</a>
+          </div>
+        </div>
+      </c:if>
     </div>
   </div>
 </div>

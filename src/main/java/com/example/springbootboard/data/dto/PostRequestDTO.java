@@ -2,6 +2,8 @@ package com.example.springbootboard.data.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 @ToString
@@ -12,8 +14,13 @@ import lombok.*;
 public class PostRequestDTO {
 
     private Long postId;
+
+    @NotBlank
     private String postTitle;
+
+    @NotBlank
     private String postContent;
+    
     private Long userId;
     private String teamName;
 

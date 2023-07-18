@@ -1,6 +1,7 @@
 package com.example.springbootboard.data.dto;
 
 import com.example.springbootboard.data.entity.Team;
+import com.example.springbootboard.data.entity.User;
 import lombok.*;
 
 @Getter
@@ -12,9 +13,13 @@ import lombok.*;
 @Builder
 public class UserResponseDTO {
 
+    private String username;
     private String userEmail;
-
-    private String nickname;
-
     private Team team;
+
+    public UserResponseDTO(User user) {
+        this.username = user.getUsername();
+        this.userEmail = user.getUserEmail();
+        this.team = user.getTeam();
+    }
 }

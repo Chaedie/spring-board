@@ -6,7 +6,7 @@ import com.example.springbootboard.data.dto.UserResponseDTO;
 import java.util.List;
 
 public interface UserService {
-    UserResponseDTO signUpUser(UserRequestDTO userRequestDTO);
-
     List<String> getTeamNameList();
+
+    UserResponseDTO signUpUser(UserRequestDTO userRequestDTO);
 }

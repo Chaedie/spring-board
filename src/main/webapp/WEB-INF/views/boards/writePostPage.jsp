@@ -5,11 +5,12 @@
   Time: 5:22 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
+  UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
   String teamName = request.getParameter("teamName");
 %>

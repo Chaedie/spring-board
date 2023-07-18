@@ -2,11 +2,13 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.Optional" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
+  UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   String listName = (String) request.getAttribute("listName");
   List<PostResponseDTO> responseDTOList = new ArrayList<>();
   List<PostResponseDTO> tempList = (List<PostResponseDTO>) request.getAttribute("responseDTOList");

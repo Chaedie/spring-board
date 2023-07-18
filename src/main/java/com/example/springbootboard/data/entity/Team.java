@@ -1,6 +1,9 @@
 package com.example.springbootboard.data.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +11,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,6 +26,10 @@ public class Team {
     @Column(name = "team_korean_name")
     private String teamKoreanName;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "team", cascade = CascadeType.PERSIST)
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "team", cascade = CascadeType.PERSIST)
+    private List<User> users = new ArrayList<>();
+
 }
