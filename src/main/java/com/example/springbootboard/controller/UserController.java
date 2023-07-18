@@ -23,7 +23,7 @@ public class UserController {
     private final HttpSession session;
 
     @GetMapping("/join")
-    public String getUserJoinPage(Model model, UserRequestDTO userRequestDTO) {
+    public String getUserJoinPage(UserRequestDTO userRequestDTO, Model model) {
         List<String> teamList = userService.getTeamNameList();
         model.addAttribute("teamList", teamList);
         model.addAttribute("userRequestDTO", userRequestDTO);
