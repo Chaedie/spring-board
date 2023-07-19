@@ -1,11 +1,11 @@
 package com.example.springbootboard.service.Impl;
 
 import com.example.springbootboard.data.dto.UserEmailRequestDTO;
-import com.example.springbootboard.data.entity.EmailAuth;
-import com.example.springbootboard.data.repository.EmailAuthRepository;
 import com.example.springbootboard.service.EmailService;
+import com.example.springbootboard.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -14,15 +14,15 @@ import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Random;
 
 @Service
+@Primary
 @RequiredArgsConstructor
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceRedisImpl implements EmailService {
 
     private final JavaMailSender emailSender;
-    private final EmailAuthRepository emailAuthRepository;
+    private final RedisUtil redisUtil;
 
     @Value("${AdminMail.id}")
     private String id;
@@ -32,13 +32,10 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Transactional
     public boolean isVerifiedCode(UserEmailRequestDTO userEmailRequestDTO) {
-        List<EmailAuth> selectedEmailAuth = emailAuthRepository.findByUserEmailAndAuthCode(userEmailRequestDTO.getUserEmail(), userEmailRequestDTO.getAuthCode());
-        boolean isExists = selectedEmailAuth.size() > 0;
-        if (isExists) {
-            emailAuthRepository.deleteByUserEmailAndAuthCode(userEmailRequestDTO.getUserEmail(), userEmailRequestDTO.getAuthCode());
-        }
+        String authCode = userEmailRequestDTO.getAuthCode();
+        String storedAuthCode = redisUtil.getData(userEmailRequestDTO.getUserEmail());
 
-        return isExists;
+        return authCode.equals(storedAuthCode);
     }
 
     @Override
@@ -46,10 +43,8 @@ public class EmailServiceImpl implements EmailService {
     public void sendSimpleMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception {
         String authCode = createKey();
         String userEmail = userEmailRequestDTO.getUserEmail();
-        emailAuthRepository.save(EmailAuth.builder()
-                .userEmail(userEmail)
-                .authCode(authCode)
-                .build());
+
+        redisUtil.setDataExpire(userEmail, authCode, (long) (5 * 60) + 30);
 
         sendMail(userEmail, authCode);
     }
