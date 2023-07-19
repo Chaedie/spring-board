@@ -15,4 +15,8 @@ public interface EmailAuthRepository extends JpaRepository<EmailAuth, Long> {
                     "WHERE user_email = :userEmail " +
                     "  AND auth_code = :authCode")
     List<EmailAuth> findByUserEmailAndAuthCode(@Param("userEmail") String userEmail, @Param("authCode") String authCode);
+
+    boolean existsByUserEmailAndAuthCode(String userEmail, String authCode);
+
+    void deleteByUserEmailAndAuthCode(String userEmail, String authCode);
 }
