@@ -44,41 +44,39 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Transactional
     public void sendSimpleMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception {
-        userEmailRequestDTO.setAuthCode(createKey());
-        MimeMessage message = createMessage(userEmailRequestDTO);
+        String authCode = createKey();
+        String userEmail = userEmailRequestDTO.getUserEmail();
+        emailAuthRepository.save(EmailAuth.builder()
+                .userEmail(userEmail)
+                .authCode(authCode)
+                .build());
+
+        sendMail(userEmail, authCode);
+    }
+
+    private void sendMail(String userEmail, String authCode) throws Exception {
+
+        String subject = "스프링 보드 가입 인증 메일";
+        String text = "<div style='margin:20px;'>" +
+                "<h1> 안녕하세요 Spring-Board입니다.</h1><br>" +
+                "<p>아래 코드를 복사해 입력해주세요<p><br>" +
+                "<p>감사합니다.<p><br>" +
+                "<div align='center' style='border:1px solid black); font-family:verdana');>" +
+                "<h3 style='color:blue);'>회원가입 인증 코드입니다.</h3>" +
+                "<div style='font-size:130%'>CODE : <strong>" + authCode + "</strong><div><br/></div>";
+
+        MimeMessage message = emailSender.createMimeMessage();
+        message.addRecipients(RecipientType.TO, userEmail);// 보내는 대상
+        message.setSubject(subject);// 제목
+        message.setText(text, "utf-8", "html");// 내용
+        message.setFrom(new InternetAddress("spring-boards.io", "Spring-Boards"));// 보내는 사람
+
         try {// 예외처리
             emailSender.send(message);
         } catch (MailException es) {
             es.printStackTrace();
             throw new IllegalArgumentException();
         }
-    }
-
-    private MimeMessage createMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception {
-        emailAuthRepository.save(EmailAuth.builder()
-                .userEmail(userEmailRequestDTO.getUserEmail())
-                .authCode(userEmailRequestDTO.getAuthCode())
-                .build());
-        MimeMessage message = emailSender.createMimeMessage();
-
-        message.addRecipients(RecipientType.TO, userEmailRequestDTO.getUserEmail());// 보내는 대상
-        message.setSubject("스프링 보드 가입 인증 메일");// 제목
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div style='margin:20px;'>");
-        sb.append("<h1> 안녕하세요 Spring-Board입니다.. </h1><br>");
-        sb.append("<p>아래 코드를 복사해 입력해주세요<p><br>");
-        sb.append("<p>감사합니다.<p><br>");
-        sb.append("<div align='center' style='border:1px solid black); font-family:verdana');>");
-        sb.append("<h3 style='color:blue);'>회원가입 인증 코드입니다.</h3>");
-        sb.append("<div style='font-size:130%'>");
-        sb.append("CODE : <strong>");
-        sb.append(userEmailRequestDTO.getAuthCode());
-        sb.append("</strong><div><br/></div>");
-        message.setText(sb.toString(), "utf-8", "html");// 내용
-        message.setFrom(new InternetAddress(id, "Spring-Boards"));// 보내는 사람
-
-        return message;
     }
 
     public static String createKey() {
