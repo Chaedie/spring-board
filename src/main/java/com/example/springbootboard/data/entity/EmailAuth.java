@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
+@ToString
 @Table(name = "email_auth")
 public class EmailAuth {
 

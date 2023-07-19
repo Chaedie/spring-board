@@ -74,8 +74,12 @@
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="d-block fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <input id="userEmail" name="userEmail" type="email" id="form3Example3c" class="form-control"
-                                   value="<%=userEmail%>"/>
+                            <div class="d-flex gap-4">
+                              <input id="userEmail" name="userEmail" type="email" id="form3Example3c"
+                                     class="form-control"
+                                     value="<%=userEmail%>"/>
+                              <input id="sendMail" type="button" class="btn btn-primary btn-sm" value="메일 인증"/>
+                            </div>
                             <label class="form-label" for="form3Example3c">Your Email</label>
                           </div>
                         </div>
@@ -83,9 +87,10 @@
                           <i class="d-block fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <div class="d-flex gap-4">
-                              <input type="text" name="authCode" class="form-control" placeholder="인증 코드를 입력해주세요!">
-                              <label class="form-label" for="form3Example3c">timer</label>
-                              <input id="sendMail" type="button" class="btn btn-primary btn-sm" value="메일 인증"/>
+                              <input id="authCode" type="text" name="authCode" class="form-control"
+                                     placeholder="인증 코드를 입력해주세요!">
+                              <span id="verifyTimer">300초</span>
+                              <input id="verifyButton" type="button" class="btn btn-primary btn-sm" value="코드 확인"/>
                             </div>
                           </div>
                         </div>
@@ -159,20 +164,43 @@
           crossorigin="anonymous"></script>
   <script>
     let verificationCode = "";
-    let count = 5 * 60;
     const $userEmail = document.querySelector("#userEmail")
     const $sendMail = document.querySelector("#sendMail");
+    const $verifyTimer = document.querySelector("#verifyTimer");
+    const $verifyButton = document.querySelector("#verifyButton")
+    const $authCode = document.querySelector("#authCode")
+    $verifyButton.addEventListener('click', (e) => {
+      postData('http://localhost:9090/rest/v1/mail/verifyEmail', {
+        userEmail: $userEmail.value,
+        authCode: $authCode.value
+      }).then((data) => {
+        console.log(data)
+      }).catch((error) => {
+        console.error(error)
+      })
+    })
     $sendMail.addEventListener('click', (e) => {
-          postData('http://localhost:9090/rest/v1/mail/send', {userEmail: $userEmail.value})
-              .then((data) => console.log(data))
-              .catch((error) => console.error(error))
           $sendMail.disabled = true;
-          setTimeout(() => {
-            $sendMail.disabled = false;
-          }, 60 * 1000 * 5);
-          setTimeout(() => {
-            count--;
-          }, 60 * 1000 * 5);
+          postData('http://localhost:9090/rest/v1/mail/send', {userEmail: $userEmail.value})
+              .then((data) => {
+                console.log(data)
+                setTimeout(() => {
+                  $sendMail.disabled = false;
+                }, 60 * 1000 * 5);
+                let count = 5 * 60;
+                let timerInterval = setInterval(() => {
+                  count--;
+                  if (count == 0) {
+                    clearInterval(timerInterval);
+                  }
+                  $verifyTimer.innerHTML = count + '초';
+                  console.log(count);
+                }, 1000);
+              })
+              .catch((error) => {
+                console.error(error)
+                $sendMail.disabled = false;
+              })
         }
     )
 

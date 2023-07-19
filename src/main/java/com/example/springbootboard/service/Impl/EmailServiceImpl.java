@@ -14,6 +14,7 @@ import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -22,7 +23,7 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender emailSender;
     private final EmailAuthRepository emailAuthRepository;
-    
+
     @Value("${AdminMail.id}")
     private String id;
     @Value("${AdminMail.password}")
@@ -31,7 +32,9 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Transactional
     public boolean isVerifiedCode(UserEmailRequestDTO userEmailRequestDTO) {
-        return emailAuthRepository.findByUserEmailAndAuthCode(userEmailRequestDTO.getUserEmail(), userEmailRequestDTO.getAuthCode()).isPresent();
+        List<EmailAuth> selectedEmailAuth = emailAuthRepository.findByUserEmailAndAuthCode(userEmailRequestDTO.getUserEmail(), userEmailRequestDTO.getAuthCode());
+
+        return selectedEmailAuth.size() > 0;
     }
 
     @Override
