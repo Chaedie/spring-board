@@ -1,13 +1,12 @@
 package com.example.springbootboard.controller.Rest.v1;
 
+import com.example.springbootboard.data.dto.ResponseDTO;
 import com.example.springbootboard.data.dto.UserEmailRequestDTO;
 import com.example.springbootboard.service.EmailService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +27,12 @@ public class EmailController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<Object> send(@RequestBody UserEmailRequestDTO userEmailRequestDTO) throws Exception {
+    public ResponseDTO<String> sendEmail(@RequestBody UserEmailRequestDTO userEmailRequestDTO) throws Exception {
         System.out.println("userEmail = " + userEmailRequestDTO.getUserEmail());
 
         emailService.sendSimpleMessage(userEmailRequestDTO);
 
-        return ResponseEntity.ok("OK");
+        return ResponseDTO.of(200, "Send Email SUCCESS", "OK");
     }
 
     @PostMapping("/verifyEmail")
@@ -44,10 +43,11 @@ public class EmailController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<Object> verifyEmail(@RequestBody UserEmailRequestDTO userEmailDTO) {
+    public ResponseDTO<String> verifyEmail(@RequestBody UserEmailRequestDTO userEmailDTO) {
+        System.out.println("verify 들어옴 = ");
         if (emailService.isVerifiedCode(userEmailDTO)) {
-            return ResponseEntity.ok("OK");
+            return ResponseDTO.of(200, "Verification SUCCESS", "OK");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail to Verification");
+        return ResponseDTO.of(400, "Verification Fail", "Not OK");
     }
 }
