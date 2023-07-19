@@ -28,8 +28,6 @@ public class EmailController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseDTO<String> sendEmail(@RequestBody UserEmailRequestDTO userEmailRequestDTO) throws Exception {
-        System.out.println("userEmail = " + userEmailRequestDTO.getUserEmail());
-
         emailService.sendSimpleMessage(userEmailRequestDTO);
 
         return ResponseDTO.of(200, "Send Email SUCCESS", "OK");
@@ -44,7 +42,6 @@ public class EmailController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseDTO<String> verifyEmail(@RequestBody UserEmailRequestDTO userEmailDTO) {
-        System.out.println("verify 들어옴 = ");
         if (emailService.isVerifiedCode(userEmailDTO)) {
             return ResponseDTO.of(200, "Verification SUCCESS", "OK");
         }

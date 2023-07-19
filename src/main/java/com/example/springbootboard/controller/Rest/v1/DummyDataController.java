@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @RestController
@@ -15,8 +16,9 @@ import java.util.UUID;
 public class DummyDataController {
 
     private final EmailAuthRepository emailAuthRepository;
-    
+
     @GetMapping("/insertAuthMail")
+    @Transactional
     public String insert_100_000_AuthMail() {
 
         for (int i = 0; i < 100_000; i++) {
@@ -26,5 +28,4 @@ public class DummyDataController {
         }
         return "done!";
     }
-
 }

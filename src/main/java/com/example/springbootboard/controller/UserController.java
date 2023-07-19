@@ -39,8 +39,6 @@ public class UserController {
             return "redirect:login?error";
         }
         userService.signUpUser(userRequestDTO);
-
-
         return "redirect:login";
     }
 
@@ -55,7 +53,6 @@ public class UserController {
 
     @GetMapping("/logout")
     public String performLogout() {
-        System.out.println("들어옴?");
         session.removeAttribute("user");
         return "redirect:/";
     }
