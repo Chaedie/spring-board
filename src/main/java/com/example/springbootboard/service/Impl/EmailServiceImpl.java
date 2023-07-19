@@ -33,8 +33,12 @@ public class EmailServiceImpl implements EmailService {
     @Transactional
     public boolean isVerifiedCode(UserEmailRequestDTO userEmailRequestDTO) {
         List<EmailAuth> selectedEmailAuth = emailAuthRepository.findByUserEmailAndAuthCode(userEmailRequestDTO.getUserEmail(), userEmailRequestDTO.getAuthCode());
+        boolean isExists = selectedEmailAuth.size() > 0;
+        if (isExists) {
+            emailAuthRepository.deleteByUserEmailAndAuthCode(userEmailRequestDTO.getUserEmail(), userEmailRequestDTO.getAuthCode());
+        }
 
-        return selectedEmailAuth.size() > 0;
+        return isExists;
     }
 
     @Override
