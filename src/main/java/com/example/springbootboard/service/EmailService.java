@@ -1,5 +1,9 @@
 package com.example.springbootboard.service;
 
+import com.example.springbootboard.data.dto.UserEmailRequestDTO;
+
 public interface EmailService {
-    String sendSimpleMessage(String userEmail) throws Exception;
+    boolean isVerifiedCode(UserEmailRequestDTO userEmailRequestDTO);
+
+    void sendSimpleMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception;
 }

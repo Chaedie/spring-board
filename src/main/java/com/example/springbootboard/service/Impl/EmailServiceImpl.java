@@ -1,7 +1,10 @@
 package com.example.springbootboard.service.Impl;
 
+import com.example.springbootboard.data.dto.UserEmailRequestDTO;
+import com.example.springbootboard.data.entity.EmailAuth;
+import com.example.springbootboard.data.repository.EmailAuthRepository;
 import com.example.springbootboard.service.EmailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,27 +13,48 @@ import org.springframework.stereotype.Service;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired
-    JavaMailSender emailSender;
-
-    public static final String ePw = createKey();
-
+    private final JavaMailSender emailSender;
+    private final EmailAuthRepository emailAuthRepository;
+    
     @Value("${AdminMail.id}")
     private String id;
     @Value("${AdminMail.password}")
     private String password;
 
-    private MimeMessage createMessage(String to) throws Exception {
-        System.out.println("보내는 대상 : " + to);
-        System.out.println("인증 번호 : " + ePw);
+    @Override
+    @Transactional
+    public boolean isVerifiedCode(UserEmailRequestDTO userEmailRequestDTO) {
+        return emailAuthRepository.findByUserEmailAndAuthCode(userEmailRequestDTO.getUserEmail(), userEmailRequestDTO.getAuthCode()).isPresent();
+    }
+
+    @Override
+    @Transactional
+    public void sendSimpleMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception {
+        userEmailRequestDTO.setAuthCode(createKey());
+        MimeMessage message = createMessage(userEmailRequestDTO);
+        try {// 예외처리
+            emailSender.send(message);
+        } catch (MailException es) {
+            es.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private MimeMessage createMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception {
+        emailAuthRepository.save(EmailAuth.builder()
+                .userEmail(userEmailRequestDTO.getUserEmail())
+                .authCode(userEmailRequestDTO.getAuthCode())
+                .build());
         MimeMessage message = emailSender.createMimeMessage();
 
-        message.addRecipients(RecipientType.TO, to);// 보내는 대상
+        message.addRecipients(RecipientType.TO, userEmailRequestDTO.getUserEmail());// 보내는 대상
         message.setSubject("스프링 보드 가입 인증 메일");// 제목
 
         StringBuilder sb = new StringBuilder();
@@ -42,7 +66,7 @@ public class EmailServiceImpl implements EmailService {
         sb.append("<h3 style='color:blue);'>회원가입 인증 코드입니다.</h3>");
         sb.append("<div style='font-size:130%'>");
         sb.append("CODE : <strong>");
-        sb.append(ePw);
+        sb.append(userEmailRequestDTO.getAuthCode());
         sb.append("</strong><div><br/></div>");
         message.setText(sb.toString(), "utf-8", "html");// 내용
         message.setFrom(new InternetAddress(id, "Spring-Boards"));// 보내는 사람
@@ -73,17 +97,5 @@ public class EmailServiceImpl implements EmailService {
             }
         }
         return key.toString();
-    }
-
-    @Override
-    public String sendSimpleMessage(String to) throws Exception {
-        MimeMessage message = createMessage(to);
-        try {// 예외처리
-            emailSender.send(message);
-        } catch (MailException es) {
-            es.printStackTrace();
-            throw new IllegalArgumentException();
-        }
-        return ePw;
     }
 }
