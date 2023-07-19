@@ -44,7 +44,8 @@ public class EmailServiceRedisImpl implements EmailService {
         String authCode = createKey();
         String userEmail = userEmailRequestDTO.getUserEmail();
 
-        redisUtil.setDataExpire(userEmail, authCode, (long) (5 * 60) + 30);
+        // Redis TTL과 화면단 타이머가 5초 차이 발생 -> duration +5초 
+        redisUtil.setDataExpire(userEmail, authCode, (long) (5 * 60) + 5);
 
         sendMail(userEmail, authCode);
     }
