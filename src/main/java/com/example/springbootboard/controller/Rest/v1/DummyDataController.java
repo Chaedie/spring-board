@@ -1,7 +1,11 @@
 package com.example.springbootboard.controller.Rest.v1;
 
 import com.example.springbootboard.data.entity.EmailAuth;
+import com.example.springbootboard.data.entity.Post;
+import com.example.springbootboard.data.entity.Team;
 import com.example.springbootboard.data.repository.EmailAuthRepository;
+import com.example.springbootboard.data.repository.PostRepository;
+import com.example.springbootboard.data.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +20,10 @@ import java.util.UUID;
 public class DummyDataController {
 
     private final EmailAuthRepository emailAuthRepository;
+    private final PostRepository postRepository;
+    private final TeamRepository teamRepository;
 
-    @GetMapping("/insertAuthMail")
+    @GetMapping("/authMails/insert")
     @Transactional
     public String insert_100_000_AuthMail() {
         for (int i = 0; i < 100_000; i++) {
@@ -27,4 +33,24 @@ public class DummyDataController {
         }
         return "done!";
     }
+
+    @GetMapping("/posts/insert")
+    @Transactional
+    public String insert_10_000_posts() {
+        Team team = teamRepository.findById(1L).get();
+        for (int i = 0; i < 10_000; i++) {
+            postRepository.save(
+                    Post.builder()
+                            .postTitle(UUID.randomUUID().toString())
+                            .postContent("디도스 컨텐츠ㅋㅋㅋ")
+                            .nickname("SpringBoot")
+                            .password("asdfasdf")
+                            .userId(1L)
+                            .team(team)
+                            .build()
+            );
+        }
+        return "done!";
+    }
+
 }
