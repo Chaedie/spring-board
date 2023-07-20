@@ -1,8 +1,8 @@
 package com.example.springbootboard.service.Impl;
 
 import com.example.springbootboard.data.dto.UserEmailRequestDTO;
+import com.example.springbootboard.global.utils.RedisUtil;
 import com.example.springbootboard.service.EmailService;
-import com.example.springbootboard.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;

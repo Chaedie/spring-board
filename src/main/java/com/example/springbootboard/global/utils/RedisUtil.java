@@ -1,4 +1,4 @@
-package com.example.springbootboard.utils;
+package com.example.springbootboard.global.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
