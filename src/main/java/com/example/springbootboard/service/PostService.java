@@ -23,4 +23,8 @@ public interface PostService {
 
     void delete(Long postId);
 
+    long incrementViewCount(Long postId);
+
+    void syncViewCount();
+
 }

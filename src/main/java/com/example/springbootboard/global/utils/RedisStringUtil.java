@@ -9,7 +9,7 @@ import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
-public class RedisUtil {
+public class RedisStringUtil {
 
     // StringRedisTemplate 은 RedisTemplate<String, String> 를 extends한 Redis의 Build-in Class 
     private final StringRedisTemplate redisTemplate;
@@ -43,7 +43,6 @@ public class RedisUtil {
         Duration expireDuration = Duration.ofSeconds(durationSeconds);
         return valueOperations.setIfAbsent(key, value, expireDuration);
     }
-
 
     // 삭제
     public void deleteData(String key) {

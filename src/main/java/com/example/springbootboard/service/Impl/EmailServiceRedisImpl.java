@@ -1,7 +1,7 @@
 package com.example.springbootboard.service.Impl;
 
 import com.example.springbootboard.data.dto.UserEmailRequestDTO;
-import com.example.springbootboard.global.utils.RedisUtil;
+import com.example.springbootboard.global.utils.RedisStringUtil;
 import com.example.springbootboard.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ import java.util.Random;
 public class EmailServiceRedisImpl implements EmailService {
 
     private final JavaMailSender emailSender;
-    private final RedisUtil redisUtil;
+    private final RedisStringUtil redisUtil;
 
     @Value("${AdminMail.id}")
     private String id;
@@ -55,9 +55,10 @@ public class EmailServiceRedisImpl implements EmailService {
 
     private void sendMail(String userEmail, String authCode) throws Exception {
 
-        String subject = "스프링 보드 가입 인증 메일";
+        String serviceName = "Spring-Boards";
+        String subject = serviceName + " 가입 인증 메일";
         String text = "<div style='margin:20px;'>" +
-                "<h1> 안녕하세요 Spring-Board입니다.</h1><br>" +
+                "<h1> 안녕하세요 " + serviceName + " 입니다.</h1><br>" +
                 "<p>아래 코드를 복사해 입력해주세요<p><br>" +
                 "<p>감사합니다.<p><br>" +
                 "<div align='center' style='border:1px solid black); font-family:verdana');>" +
@@ -68,7 +69,7 @@ public class EmailServiceRedisImpl implements EmailService {
         message.addRecipients(RecipientType.TO, userEmail);// 보내는 대상
         message.setSubject(subject);// 제목
         message.setText(text, "utf-8", "html");// 내용
-        message.setFrom(new InternetAddress("spring-boards.io", "Spring-Boards"));// 보내는 사람
+        message.setFrom(new InternetAddress(id, serviceName));// 보내는 사람
 
         try {// 예외처리
             emailSender.send(message);

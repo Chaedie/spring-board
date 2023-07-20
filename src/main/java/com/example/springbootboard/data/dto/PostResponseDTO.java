@@ -22,6 +22,7 @@ public class PostResponseDTO {
     private Long userId;
     private String nickname;
     private String teamName;
+    private Long view;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

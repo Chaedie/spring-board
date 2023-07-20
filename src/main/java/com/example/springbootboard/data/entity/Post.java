@@ -36,6 +36,9 @@ public class Post extends BaseEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "view", columnDefinition = "BIGINT DEFAULT 0")
+    private Long view;
+
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
@@ -46,4 +49,8 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
+    @PrePersist
+    public void prePersist() {
+        this.view = this.view == null ? 0 : this.view;
+    }
 }

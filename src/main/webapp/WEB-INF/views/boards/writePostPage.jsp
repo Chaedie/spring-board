@@ -1,4 +1,5 @@
-<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %><%--
+<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -48,6 +49,7 @@
         <div class="card-body">
           <form id="nickPwForm" class="d-flex flex-column gap-2" method="post" action="write"
                 enctype="multipart/form-data">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="d-flex gap-2">
               <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
                      minlength="2"

@@ -1,5 +1,6 @@
 <%@ page import="com.example.springbootboard.global.error.errorcode.ErrorCode" %>
-<%@ page import="com.example.springbootboard.global.error.ErrorResponse" %><%--
+<%@ page import="com.example.springbootboard.global.error.ErrorResponse" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/17
