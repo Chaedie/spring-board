@@ -1,19 +1,19 @@
 package com.example.springbootboard.service.Impl;
 
 import com.example.springbootboard.data.dto.UserEmailRequestDTO;
+import com.example.springbootboard.global.utils.RedisUtil;
 import com.example.springbootboard.service.EmailService;
-import com.example.springbootboard.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
 import java.util.Random;
 
 @Service
@@ -41,13 +41,16 @@ public class EmailServiceRedisImpl implements EmailService {
     @Override
     @Transactional
     public void sendSimpleMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception {
-        String authCode = createKey();
+        String newAuthCode = createKey();
         String userEmail = userEmailRequestDTO.getUserEmail();
 
-        // Redis TTL과 화면단 타이머가 5초 차이 발생 -> duration +5초 
-        redisUtil.setDataExpire(userEmail, authCode, (long) (5 * 60) + 5);
-
-        sendMail(userEmail, authCode);
+        // Redis TTL 과 화면단 타이머가 5초 차이 발생 -> duration +5초 
+        boolean hasSetNewAuthCode = redisUtil.setDataIfAbsentExpire(userEmail, newAuthCode, (long) (5 * 60) + 5);
+        if (hasSetNewAuthCode) {
+            sendMail(userEmail, newAuthCode);
+            return;
+        }
+        System.out.println("이미 인증코드 발송이 된 메일입니다.");
     }
 
     private void sendMail(String userEmail, String authCode) throws Exception {

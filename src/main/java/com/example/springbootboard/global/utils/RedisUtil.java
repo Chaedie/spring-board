@@ -1,4 +1,4 @@
-package com.example.springbootboard.utils;
+package com.example.springbootboard.global.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,15 +33,15 @@ public class RedisUtil {
     }
 
     // 키값이 없을 경우에만 저장
-    public void setDataIfAbsent(String key, String value) {
+    public boolean setDataIfAbsent(String key, String value) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.setIfAbsent(key, value);
+        return valueOperations.setIfAbsent(key, value);
     }
 
-    public void setDataIfAbsentExpire(String key, String value, long durationSeconds) {
+    public boolean setDataIfAbsentExpire(String key, String value, long durationSeconds) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         Duration expireDuration = Duration.ofSeconds(durationSeconds);
-        valueOperations.setIfAbsent(key, value, expireDuration);
+        return valueOperations.setIfAbsent(key, value, expireDuration);
     }
 
 
