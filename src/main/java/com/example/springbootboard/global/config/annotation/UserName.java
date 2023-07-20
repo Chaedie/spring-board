@@ -1,4 +1,4 @@
-package com.example.springbootboard.config.annotation;
+package com.example.springbootboard.global.config.annotation;
 
 import javax.validation.Constraint;
 import java.lang.annotation.ElementType;

@@ -1,6 +1,6 @@
-package com.example.springbootboard.Error.Exception;
+package com.example.springbootboard.global.error.Exception;
 
-import com.example.springbootboard.Error.errorcode.ErrorCode;
+import com.example.springbootboard.global.error.errorcode.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

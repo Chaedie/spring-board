@@ -1,7 +1,7 @@
 package com.example.springbootboard.data.dto;
 
-import com.example.springbootboard.config.annotation.Password;
-import com.example.springbootboard.config.annotation.UserName;
+import com.example.springbootboard.global.config.annotation.Password;
+import com.example.springbootboard.global.config.annotation.UserName;
 import lombok.*;
 
 import javax.validation.constraints.Email;

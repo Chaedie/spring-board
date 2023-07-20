@@ -1,4 +1,4 @@
-package com.example.springbootboard.config;
+package com.example.springbootboard.global.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;

@@ -1,6 +1,6 @@
-package com.example.springbootboard.Error;
+package com.example.springbootboard.global.error;
 
-import com.example.springbootboard.Error.errorcode.ErrorCode;
+import com.example.springbootboard.global.error.errorcode.ErrorCode;
 import lombok.*;
 
 @Builder
