@@ -2,11 +2,11 @@ package com.example.springbootboard.service.Impl;
 
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
+import com.example.springbootboard.data.dto.RedisPostDTO;
 import com.example.springbootboard.data.entity.Post;
 import com.example.springbootboard.data.entity.UploadFile;
 import com.example.springbootboard.data.repository.PostRepository;
 import com.example.springbootboard.data.repository.TeamRepository;
-import com.example.springbootboard.data.repository.UploadFileRepository;
 import com.example.springbootboard.global.error.Exception.AuthorizationException;
 import com.example.springbootboard.global.error.Exception.ItemNotFoundException;
 import com.example.springbootboard.global.error.errorcode.PostErrorCode;
@@ -16,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,8 +34,8 @@ public class PostServiceImpl implements PostService {
 
     private final AwsS3ServiceImpl awsS3Service;
     private final PostRepository postRepository;
-    private final UploadFileRepository uploadFileRepository;
     private final TeamRepository teamRepository;
+    private final RedisTemplate<String, RedisPostDTO> redisTemplate;
 
     @Override
     @Transactional
@@ -132,6 +135,55 @@ public class PostServiceImpl implements PostService {
         } else {
             throw new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND);
         }
+    }
+
+    /**
+     * @param postId
+     * @RedisKey postId::{postId}
+     */
+    @Override
+    @Transactional
+    public long incrementViewCount(Long postId) {
+        String key = "postId::" + postId;
+        RedisPostDTO cachedRedisPostDTO = redisTemplate.opsForValue().get(key);
+
+        if (cachedRedisPostDTO == null) {
+            Long view = postRepository.findById(postId).orElseThrow(ItemNotFoundException::new).getView();
+            RedisPostDTO redisPostDTO = RedisPostDTO.builder()
+                    .view(view + 1)
+                    .build();
+            redisTemplate.opsForValue().set(key, redisPostDTO);
+            return view + 1;
+        }
+        Long cachedView = cachedRedisPostDTO.getView();
+        cachedRedisPostDTO.setView(cachedView + 1);
+        redisTemplate.opsForValue().set(key, cachedRedisPostDTO);
+        return cachedView + 1;
+    }
+
+    @Override
+    @Transactional
+    public void syncViewCount() {
+        ScanOptions scanOptions = ScanOptions.scanOptions().match("*").count(10).build();
+        Cursor<byte[]> keys = redisTemplate.getConnectionFactory().getConnection().scan(scanOptions);
+
+        while (keys.hasNext()) {
+            String key = new String(keys.next());
+            RedisPostDTO value = redisTemplate.opsForValue().get(key);
+            Long postId = extractPostId(key);
+
+            Post post = postRepository.findById(postId).get();
+            post.setView(value.getView());
+            postRepository.save(post);
+        }
+
+        redisTemplate.getConnectionFactory().getConnection().flushAll();
+    }
+
+    private Long extractPostId(String key) {
+        int index = key.indexOf(":");
+
+        return Long.valueOf(key.substring(index + 2));
     }
 
     @Override

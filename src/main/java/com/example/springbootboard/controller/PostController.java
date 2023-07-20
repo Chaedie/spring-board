@@ -3,6 +3,9 @@ package com.example.springbootboard.controller;
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.service.PostService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-    
+
     @GetMapping("/list")
     public String getPostList(Model model, @RequestParam String teamName, @RequestParam(required = false, defaultValue = "") String search, Pageable pageable) {
         Page<PostResponseDTO> postResponseDTOList = null;
@@ -76,8 +79,17 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public String getWritePostPage(Model model, @RequestParam Long postId) {
+    @ApiOperation(value = "상세 페이지", notes = "")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public String getDetailPage(Model model, @RequestParam Long postId, @RequestParam String teamName) {
         PostResponseDTO postResponseDTO = postService.findById(postId);
+        postResponseDTO.setView(postService.incrementViewCount(postId));
+        
         model.addAttribute(postResponseDTO);
         return "boards/detailPage";
     }

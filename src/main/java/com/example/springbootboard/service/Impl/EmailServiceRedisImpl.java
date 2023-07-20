@@ -1,7 +1,7 @@
 package com.example.springbootboard.service.Impl;
 
 import com.example.springbootboard.data.dto.UserEmailRequestDTO;
-import com.example.springbootboard.global.utils.RedisUtil;
+import com.example.springbootboard.global.utils.RedisStringUtil;
 import com.example.springbootboard.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ import java.util.Random;
 public class EmailServiceRedisImpl implements EmailService {
 
     private final JavaMailSender emailSender;
-    private final RedisUtil redisUtil;
+    private final RedisStringUtil redisUtil;
 
     @Value("${AdminMail.id}")
     private String id;
