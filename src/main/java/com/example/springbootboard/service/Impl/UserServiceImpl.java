@@ -1,13 +1,13 @@
 package com.example.springbootboard.service.Impl;
 
-import com.example.springbootboard.Error.Exception.ItemNotFoundException;
-import com.example.springbootboard.Error.errorcode.PostErrorCode;
 import com.example.springbootboard.data.dto.UserRequestDTO;
 import com.example.springbootboard.data.dto.UserResponseDTO;
 import com.example.springbootboard.data.entity.Team;
 import com.example.springbootboard.data.entity.User;
 import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.data.repository.UserRepository;
+import com.example.springbootboard.global.error.Exception.ItemNotFoundException;
+import com.example.springbootboard.global.error.errorcode.PostErrorCode;
 import com.example.springbootboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

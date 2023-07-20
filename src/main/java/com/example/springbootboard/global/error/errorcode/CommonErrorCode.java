@@ -1,4 +1,4 @@
-package com.example.springbootboard.Error.errorcode;
+package com.example.springbootboard.global.error.errorcode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

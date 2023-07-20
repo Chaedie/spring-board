@@ -1,4 +1,4 @@
-package com.example.springbootboard.Error.errorcode;
+package com.example.springbootboard.global.error.errorcode;
 
 public interface ErrorCode {
     String getErrorCode();
