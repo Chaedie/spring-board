@@ -41,13 +41,16 @@ public class EmailServiceRedisImpl implements EmailService {
     @Override
     @Transactional
     public void sendSimpleMessage(UserEmailRequestDTO userEmailRequestDTO) throws Exception {
-        String authCode = createKey();
+        String newAuthCode = createKey();
         String userEmail = userEmailRequestDTO.getUserEmail();
 
-        // Redis TTL과 화면단 타이머가 5초 차이 발생 -> duration +5초 
-        redisUtil.setDataExpire(userEmail, authCode, (long) (5 * 60) + 5);
-
-        sendMail(userEmail, authCode);
+        // Redis TTL 과 화면단 타이머가 5초 차이 발생 -> duration +5초 
+        boolean hasSetNewAuthCode = redisUtil.setDataIfAbsentExpire(userEmail, newAuthCode, (long) (5 * 60) + 5);
+        if (hasSetNewAuthCode) {
+            sendMail(userEmail, newAuthCode);
+            return;
+        }
+        System.out.println("이미 인증코드 발송이 된 메일입니다.");
     }
 
     private void sendMail(String userEmail, String authCode) throws Exception {
