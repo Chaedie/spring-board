@@ -8,9 +8,9 @@ import com.example.springbootboard.data.repository.PostRepository;
 import com.example.springbootboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
-    
+
     @Override
     @Transactional
     public CommentDTO.Response insertComment(CommentDTO.Request commentRequestDTO) {
