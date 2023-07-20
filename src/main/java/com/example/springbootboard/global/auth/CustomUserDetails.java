@@ -1,4 +1,4 @@
-package com.example.springbootboard.auth;
+package com.example.springbootboard.global.auth;
 
 import com.example.springbootboard.data.entity.User;
 import lombok.RequiredArgsConstructor;

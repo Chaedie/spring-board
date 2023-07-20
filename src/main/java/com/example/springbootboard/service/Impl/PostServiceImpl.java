@@ -1,8 +1,5 @@
 package com.example.springbootboard.service.Impl;
 
-import com.example.springbootboard.Error.Exception.AuthorizationException;
-import com.example.springbootboard.Error.Exception.ItemNotFoundException;
-import com.example.springbootboard.Error.errorcode.PostErrorCode;
 import com.example.springbootboard.data.dto.PostRequestDTO;
 import com.example.springbootboard.data.dto.PostResponseDTO;
 import com.example.springbootboard.data.entity.Post;
@@ -10,6 +7,9 @@ import com.example.springbootboard.data.entity.UploadFile;
 import com.example.springbootboard.data.repository.PostRepository;
 import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.data.repository.UploadFileRepository;
+import com.example.springbootboard.global.error.Exception.AuthorizationException;
+import com.example.springbootboard.global.error.Exception.ItemNotFoundException;
+import com.example.springbootboard.global.error.errorcode.PostErrorCode;
 import com.example.springbootboard.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

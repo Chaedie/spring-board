@@ -1,4 +1,4 @@
-package com.example.springbootboard.aop;
+package com.example.springbootboard.global.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
