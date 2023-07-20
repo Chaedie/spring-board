@@ -3,7 +3,8 @@
 <%@ page import="com.example.springbootboard.data.entity.Comment" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="org.joda.time.format.DateTimeFormat" %><%--
+<%@ page import="org.joda.time.format.DateTimeFormat" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/11
@@ -60,10 +61,12 @@
                 <span><%=postResponseDTO.getNickname()%></span>
                 <span class="mx-4" style="border-left:1px solid #bbbbbb;"></span>
                 <span><%=createdAt%></span>
+                <span class="mx-4" style="border-left:1px solid #bbbbbb;"></span>
+                <span>조회수: <%=postResponseDTO.getView()%></span>
               </p>
             </div>
             <hr>
-            <p class="postContent" style="min-height: 10rem;">
+            <p class=" postContent" style="min-height: 10rem;">
               <%=postResponseDTO.getPostContent()%>
             </p>
             <hr>
