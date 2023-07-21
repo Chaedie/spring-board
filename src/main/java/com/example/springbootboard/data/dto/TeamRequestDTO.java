@@ -10,13 +10,15 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class TeamResponseDTO {
+public class TeamRequestDTO {
 
     private String teamName;
     private String teamKoreanName;
 
-    public TeamResponseDTO(Team team) {
-        this.teamName = team.getTeamName();
-        this.teamKoreanName = team.getTeamKoreanName();
+    public Team toEntity() {
+        return Team.builder()
+                .teamName(teamName)
+                .teamKoreanName(teamKoreanName)
+                .build();
     }
 }

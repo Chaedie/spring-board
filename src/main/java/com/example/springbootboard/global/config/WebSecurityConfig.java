@@ -15,7 +15,9 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests((authz) -> authz
+        http.csrf().ignoringAntMatchers("/rest/**")
+                .and()
+                .authorizeRequests((authz) -> authz
                         .requestMatchers(new AntPathRequestMatcher("/users/myPage")).authenticated()
                         .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())

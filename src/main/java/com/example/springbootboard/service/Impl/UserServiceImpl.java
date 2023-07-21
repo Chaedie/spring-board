@@ -2,7 +2,6 @@ package com.example.springbootboard.service.Impl;
 
 import com.example.springbootboard.data.dto.UserRequestDTO;
 import com.example.springbootboard.data.dto.UserResponseDTO;
-import com.example.springbootboard.data.entity.Team;
 import com.example.springbootboard.data.entity.User;
 import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.data.repository.UserRepository;
@@ -14,9 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -25,16 +21,6 @@ public class UserServiceImpl implements UserService {
     private final TeamRepository teamRepository;
     private final BCryptPasswordEncoder encoder;
 
-    @Override
-    public List<String> getTeamNameList() {
-        List<Team> teamList = teamRepository.findAll();
-        List<String> teamNameList = new ArrayList<>();
-        for (Team team : teamList) {
-            teamNameList.add(team.getTeamName());
-        }
-
-        return teamNameList;
-    }
 
     @Override
     @Transactional
