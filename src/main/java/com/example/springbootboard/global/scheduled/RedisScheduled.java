@@ -15,7 +15,7 @@ public class RedisScheduled {
     private final PostService postService;
 
     @Transactional
-    @Scheduled(cron = "0 0 0 * * ?") // 매일 0시에
+    @Scheduled(cron = "0 0 * * * ?") // 매 시간마다
     public void syncViewCountWithDB() {
         log.info("현재 시각은 : {}", DateTime.now());
         postService.syncViewCount();
