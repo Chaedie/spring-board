@@ -6,6 +6,7 @@ import com.example.springbootboard.global.error.Exception.ItemNotFoundException;
 import com.example.springbootboard.global.error.errorcode.CommonErrorCode;
 import com.example.springbootboard.global.error.errorcode.ErrorCode;
 import com.example.springbootboard.global.error.errorcode.PostErrorCode;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,22 @@ import javax.persistence.EntityNotFoundException;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+
+    @ExceptionHandler(JsonProcessingException.class)
+    protected String handleJsonParseException(JsonProcessingException ex, Model model) {
+        log.error("handleAuthorizationException  ", ex);
+        ErrorCode errorCode = CommonErrorCode.JSON_PARSE_ERROR;
+        final ErrorResponse errorResponse = ErrorResponse.builder()
+                .httpStatus(errorCode.getHttpStatus())
+                .errorCode(errorCode.getErrorCode())
+                .message(errorCode.getMessage())
+                .build();
+
+        model.addAttribute(errorResponse);
+
+        return "errors/error";
+    }
 
     @ExceptionHandler(AuthorizationException.class)
     protected String handleAuthorizationException(AuthorizationException ex, Model model) {

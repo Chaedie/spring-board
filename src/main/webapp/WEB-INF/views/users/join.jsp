@@ -17,10 +17,8 @@
   UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   List<TeamResponseDTO> teamList = (List<TeamResponseDTO>) request.getAttribute("teamList");
   UserRequestDTO userRequestDTO = (UserRequestDTO) request.getAttribute("userRequestDTO");
-  System.out.println("userRequestDTO join jsp page= " + userRequestDTO);
   String username = "";
   String userEmail = "";
-  System.out.println("teamList = " + teamList);
   String teamName = teamList.get(0).getTeamName();
   if (userRequestDTO != null) {
     username = Optional.ofNullable(userRequestDTO.getUsername()).orElse("");
