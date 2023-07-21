@@ -20,8 +20,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
     private final BCryptPasswordEncoder encoder;
-
-
+    
     @Override
     @Transactional
     public UserResponseDTO signUpUser(UserRequestDTO userRequestDTO) {

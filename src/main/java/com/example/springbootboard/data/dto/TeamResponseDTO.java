@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"teamName", "teamKoreanName"})
 @Builder
 public class TeamResponseDTO {
 
