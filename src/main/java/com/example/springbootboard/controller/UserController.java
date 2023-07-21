@@ -1,7 +1,10 @@
 package com.example.springbootboard.controller;
 
+import com.example.springbootboard.data.dto.TeamResponseDTO;
 import com.example.springbootboard.data.dto.UserRequestDTO;
 import com.example.springbootboard.data.dto.UserResponseDTO;
+import com.example.springbootboard.global.aop.TimeClock;
+import com.example.springbootboard.service.TeamService;
 import com.example.springbootboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,11 +25,13 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final TeamService teamService;
     private final HttpSession session;
 
+    @TimeClock
     @GetMapping("/join")
     public String getUserJoinPage(UserRequestDTO userRequestDTO, Model model) {
-        List<String> teamList = userService.getTeamNameList();
+        List<TeamResponseDTO> teamList = teamService.getTeamList();
         model.addAttribute("teamList", teamList);
         model.addAttribute("userRequestDTO", userRequestDTO);
 

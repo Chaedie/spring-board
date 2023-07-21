@@ -38,7 +38,7 @@ public class PostServiceImpl implements PostService {
     private final RedisTemplate<String, RedisPostDTO> redisTemplate;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PostResponseDTO> findAll() {
         List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "postId"));
         List<PostResponseDTO> postResponseDTOList = new ArrayList<>();
@@ -51,7 +51,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<PostResponseDTO> findAllWithPagination(String search, Pageable pageable) {
         Page<Post> pageList = postRepository.findByPostTitleContains(search, pageable);
 
@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<PostResponseDTO> findAllByTeamNameWithPagination(String teamName, String search, Pageable pageable) {
         Long teamId = teamRepository.findByTeamName(teamName)
                 .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND))
@@ -73,7 +73,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public PostResponseDTO findById(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND));

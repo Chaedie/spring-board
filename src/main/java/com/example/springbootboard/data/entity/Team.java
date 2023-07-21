@@ -1,9 +1,6 @@
 package com.example.springbootboard.data.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,16 +11,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Team {
 
     @Id
     @Column(name = "team_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teamId;
 
-    @Column(name = "team_name")
+    @Column(name = "team_name", unique = true)
     private String teamName;
 
-    @Column(name = "team_korean_name")
+    @Column(name = "team_korean_name", unique = true)
     private String teamKoreanName;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.PERSIST)

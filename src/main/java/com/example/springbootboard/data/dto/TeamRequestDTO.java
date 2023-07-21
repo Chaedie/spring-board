@@ -8,15 +8,17 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"teamName", "teamKoreanName"})
+@EqualsAndHashCode
 @Builder
-public class TeamResponseDTO {
+public class TeamRequestDTO {
 
     private String teamName;
     private String teamKoreanName;
 
-    public TeamResponseDTO(Team team) {
-        this.teamName = team.getTeamName();
-        this.teamKoreanName = team.getTeamKoreanName();
+    public Team toEntity() {
+        return Team.builder()
+                .teamName(teamName)
+                .teamKoreanName(teamKoreanName)
+                .build();
     }
 }

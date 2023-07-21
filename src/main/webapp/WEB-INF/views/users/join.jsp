@@ -1,7 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %>
 <%@ page import="java.util.Optional" %>
-<%@ page import="org.springframework.security.web.csrf.DefaultCsrfToken" %><%--
+<%@ page import="org.springframework.security.web.csrf.DefaultCsrfToken" %>
+<%@ page import="com.example.springbootboard.data.dto.TeamResponseDTO" %><%--
   Created by IntelliJ IDEA.
   User: chaedongim
   Date: 2023/07/13
@@ -14,17 +15,15 @@
   request.setCharacterEncoding("UTF-8");
   String contextPath = request.getContextPath();
   UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
-  List<String> teamList = (List<String>) request.getAttribute("teamList");
+  List<TeamResponseDTO> teamList = (List<TeamResponseDTO>) request.getAttribute("teamList");
   UserRequestDTO userRequestDTO = (UserRequestDTO) request.getAttribute("userRequestDTO");
-  System.out.println("userRequestDTO join jsp page= " + userRequestDTO);
   String username = "";
   String userEmail = "";
-  System.out.println("teamList = " + teamList);
-  String teamName = teamList.get(0);
+  String teamName = teamList.get(0).getTeamName();
   if (userRequestDTO != null) {
     username = Optional.ofNullable(userRequestDTO.getUsername()).orElse("");
     userEmail = Optional.ofNullable(userRequestDTO.getUserEmail()).orElse("");
-    teamName = Optional.ofNullable(userRequestDTO.getTeamName()).orElse(teamList.get(0));
+    teamName = Optional.ofNullable(userRequestDTO.getTeamName()).orElse(teamList.get(0).getTeamName());
   }
 %>
 <!DOCTYPE html>
@@ -122,7 +121,7 @@
                               <%
                                 for (int i = 0; i < teamList.size(); i++) {
                               %>
-                              <option value="<%=teamList.get(i)%>"><%=teamList.get(i)%>
+                              <option value="<%=teamList.get(i).getTeamName()%>"><%=teamList.get(i).getTeamName()%>
                               </option>
                               <%
                                 }

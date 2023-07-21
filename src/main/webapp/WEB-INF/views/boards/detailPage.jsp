@@ -103,6 +103,7 @@
                   <!-- 댓글 작성 폼 -->
                   <form id="nickPwForm" class="mb-4 d-flex gap-2" method="post"
                         action="detail/comments?teamName=<%=postResponseDTO.getTeamName()%>&postId=<%=postResponseDTO.getPostId()%>">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div>
                       <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
                              minlength="2"
