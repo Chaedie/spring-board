@@ -11,7 +11,6 @@ import org.springframework.util.StopWatch;
 public class ControllerExecutionTimeAOP {
 
     @Around("@annotation(TimeClock)")
-    // @Around("execution(* com.example.springbootboard.controller.*.*.*(..))")
     public Object executionAspect(ProceedingJoinPoint joinPoint) throws Throwable {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();

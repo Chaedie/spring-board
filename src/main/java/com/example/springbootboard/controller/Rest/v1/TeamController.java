@@ -19,10 +19,6 @@ public class TeamController {
 
     @PostMapping
     public ResponseDTO<TeamRequestDTO> insertTeamName(@Validated TeamRequestDTO teamRequestDTO) {
-        // if (errors.hasErrors()) {
-        //     return ResponseDTO.of(400, "입력값을 확인해주세요.", teamRequestDTO);
-        // }
-
         teamService.insert(teamRequestDTO);
 
         return ResponseDTO.of(200, "팀 생성 성공", teamRequestDTO);
