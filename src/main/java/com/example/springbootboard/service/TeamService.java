@@ -10,4 +10,6 @@ public interface TeamService {
     void insert(TeamRequestDTO teamRequestDTO);
 
     List<TeamResponseDTO> getTeamList();
+
+    void deleteById(Long teamId);
 }

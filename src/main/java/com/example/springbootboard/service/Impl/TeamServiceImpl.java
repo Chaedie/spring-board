@@ -4,6 +4,7 @@ import com.example.springbootboard.data.dto.TeamRequestDTO;
 import com.example.springbootboard.data.dto.TeamResponseDTO;
 import com.example.springbootboard.data.entity.Team;
 import com.example.springbootboard.data.repository.TeamRepository;
+import com.example.springbootboard.global.error.Exception.ItemNotFoundException;
 import com.example.springbootboard.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +40,13 @@ public class TeamServiceImpl implements TeamService {
         teamList.forEach(team -> teamResponseDTOList.add(new TeamResponseDTO(team)));
 
         return teamResponseDTOList;
+    }
+
+    @Override
+    public void deleteById(Long teamId) {
+        Team team = teamRepository.findById(teamId).orElseThrow(ItemNotFoundException::new);
+        teamRepository.delete(team);
+
+        redisTemplate.opsForList().remove("teamList", 1, new TeamResponseDTO(team));
     }
 }
