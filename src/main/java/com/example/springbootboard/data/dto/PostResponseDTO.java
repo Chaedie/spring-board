@@ -41,5 +41,6 @@ public class PostResponseDTO {
         this.updatedAt = post.getUpdatedAt();
         this.uploadFiles = post.getUploadFiles();
         this.comments = post.getComments();
+        this.view = post.getView();
     }
 }

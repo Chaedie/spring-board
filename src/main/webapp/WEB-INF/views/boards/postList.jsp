@@ -3,6 +3,7 @@
 <%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.util.Optional" %>
+<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
