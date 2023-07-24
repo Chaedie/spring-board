@@ -5,11 +5,9 @@
   Time: 1:18 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page isErrorPage="true" contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page isErrorPage="true" contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-  request.setCharacterEncoding("UTF-8");
-  String contextPath = request.getContextPath();
   UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
 %>
 <!DOCTYPE html>
@@ -20,9 +18,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/navbar.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/index.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/navbar.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/base.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/index.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <title>Admin Hana - notFound.jsp</title>
 </head>
@@ -47,7 +45,7 @@
         <div class="card-body w-100">
           <div class="postDetailContainer">
             <span>삭제된 글이거나 없는 페이지입니다. 뒤로가기 또는 메인페이지 버튼을 눌러주세요..!</span>
-            <a href="<%=contextPath%>/"></a>
+            <a href="${request.contextPath}/"></a>
 
           </div>
         </div>

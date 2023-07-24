@@ -2,20 +2,10 @@
 <%@ page import="com.example.springbootboard.data.entity.UploadFile" %>
 <%@ page import="com.example.springbootboard.data.entity.Comment" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="org.joda.time.format.DateTimeFormat" %>
-<%@ page import="java.util.Optional" %><%--
-  Created by IntelliJ IDEA.
-  User: chaedongim
-  Date: 2023/07/11
-  Time: 5:22 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page import="java.util.Optional" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-  request.setCharacterEncoding("UTF-8");
-  String contextPath = request.getContextPath();
   UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   PostResponseDTO postResponseDTO = (PostResponseDTO) request.getAttribute("postResponseDTO");
   String createdAt = postResponseDTO.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss"));
@@ -28,8 +18,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/navbar.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/navbar.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/base.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <title>Admin Hana - index.jsp</title>
 </head>
@@ -82,10 +72,10 @@
 
             <%-- 버튼 영역            --%>
             <div class="mb-5">
-              <a href="<%=contextPath%>/boards/list?teamName=<%=postResponseDTO.getTeamName()%>&page=0&size=10&sort=postId,DESC">
+              <a href="${request.contextPath}/boards/list?teamName=<%=postResponseDTO.getTeamName()%>&page=0&size=10&sort=postId,DESC">
                 <button type="button" class="mt-4 btn btn-outline-secondary">글 목록</button>
               </a>
-              <a href="<%=contextPath%>/boards/update?teamName=<%=postResponseDTO.getTeamName()%>&postId=<%=postResponseDTO.getPostId()%>">
+              <a href="${request.contextPath}/boards/update?teamName=<%=postResponseDTO.getTeamName()%>&postId=<%=postResponseDTO.getPostId()%>">
                 <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
               </a>
               <form action="delete?teamName=<%=postResponseDTO.getTeamName()%>&postId=<%=postResponseDTO.getPostId()%>"
@@ -183,7 +173,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
           crossorigin="anonymous"></script>
-  <script src="<%=contextPath%>/resources/js/writePost.js">
+  <script src="${request.contextPath}/resources/js/writePost.js">
   </script>
 </body>
 </html>

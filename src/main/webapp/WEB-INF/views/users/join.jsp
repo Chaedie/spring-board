@@ -1,19 +1,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %>
 <%@ page import="java.util.Optional" %>
-<%@ page import="org.springframework.security.web.csrf.DefaultCsrfToken" %>
-<%@ page import="com.example.springbootboard.data.dto.TeamResponseDTO" %><%--
-  Created by IntelliJ IDEA.
-  User: chaedongim
-  Date: 2023/07/13
-  Time: 5:06 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page import="com.example.springbootboard.data.dto.TeamResponseDTO" %>
+<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-  request.setCharacterEncoding("UTF-8");
-  String contextPath = request.getContextPath();
   UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   List<TeamResponseDTO> teamList = (List<TeamResponseDTO>) request.getAttribute("teamList");
   UserRequestDTO userRequestDTO = (UserRequestDTO) request.getAttribute("userRequestDTO");
@@ -34,8 +26,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/navbar.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/navbar.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/base.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <title>Admin Hana - join.jsp</title>
 </head>
@@ -54,7 +46,6 @@
                 <div class="card-body p-md-5">
                   <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
                       <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
                       <%-- names = userEmail username passwrod team--%>
@@ -118,14 +109,9 @@
                           <i class="fas fa-people-group fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <select name="teamName" class="form-control">
-                              <%
-                                for (int i = 0; i < teamList.size(); i++) {
-                              %>
-                              <option value="<%=teamList.get(i).getTeamName()%>"><%=teamList.get(i).getTeamName()%>
-                              </option>
-                              <%
-                                }
-                              %>
+                              <c:forEach var="team" items="${teamList}">
+                                <option value="${team.teamName}">${team.teamName}</option>
+                              </c:forEach>
                             </select>
                           </div>
                         </div>
@@ -136,17 +122,12 @@
                             I agree all statements in <a href="#!">Terms of service</a>
                           </label>
                         </div>
-
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button type="submit" class="btn btn-primary btn-lg">Register</button>
                         </div>
-
                       </form>
-
                     </div>
                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-
                     </div>
                   </div>
                 </div>
