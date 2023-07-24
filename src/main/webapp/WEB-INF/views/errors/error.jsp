@@ -1,4 +1,5 @@
-<%@ page import="com.example.springbootboard.global.error.ErrorResponse" %>
+<%@ page import="java.util.Optional" %>
+<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isErrorPage="true" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
