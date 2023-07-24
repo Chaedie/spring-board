@@ -3,17 +3,9 @@
 <%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
 <%@ page import="java.util.Optional" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: chaedongim
-  Date: 2023/07/01
-  Time: 4:56 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%
-  request.setCharacterEncoding("UTF-8");
-  String contextPath = request.getContextPath();
+
   UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   List<PostResponseDTO> responseDTOList = new ArrayList<>();
   List<PostResponseDTO> tempList = (List<PostResponseDTO>) request.getAttribute("responseDTOList");
@@ -50,9 +42,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/nav.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/listPage.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/nav.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/base.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/listPage.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <title>Admin Hana - responseDTOList.jsp</title>
 </head>
@@ -143,6 +135,6 @@
     const ordering = '<%=ordering %>';
     const totalCount = <%=totalCount%>;
   </script>
-  <script src="<%=contextPath%>/resources/js/listPage.js"></script>
+  <script src="${request.contextPath}/resources/js/listPage.js"></script>
 </body>
 </html>

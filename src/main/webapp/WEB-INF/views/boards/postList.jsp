@@ -4,10 +4,8 @@
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.util.Optional" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  request.setCharacterEncoding("UTF-8");
-  String contextPath = request.getContextPath();
   UserResponseDTO userSession = Optional.ofNullable((UserResponseDTO) session.getAttribute("user")).orElseGet(UserResponseDTO::new);
   String listName = (String) request.getAttribute("listName");
   List<PostResponseDTO> responseDTOList = new ArrayList<>();
@@ -42,9 +40,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/navbar.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/base.css">
-  <link rel="stylesheet" href="<%=contextPath%>/resources/css/listPage.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/navbar.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/base.css">
+  <link rel="stylesheet" href="${request.contextPath}/resources/css/listPage.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <title>Admin Hana - responseDTOList.jsp</title>
 </head>
@@ -93,7 +91,7 @@
                 %>
 
                 <tr data-index="<%=i%>" style="cursor: pointer"
-                    onclick="location.href='<%=contextPath%>/boards/detail?teamName=<%=teamName%>&postId=<%=responseDTOList.get(i).getPostId()%>'">
+                    onclick="location.href='${request.contextPath}/boards/detail?teamName=<%=teamName%>&postId=<%=responseDTOList.get(i).getPostId()%>'">
                   <td style="width: 2rem"><%=responseDTOList.get(i).getPostId()%>
                   </td>
                   <td style="width: 2rem"><%=responseDTOList.get(i).getTeamName()%>
@@ -133,7 +131,7 @@
               </nav>
             </div>
           </div>
-          <a href="<%=contextPath%>/boards/write?teamName=<%=teamName%>">
+          <a href="${request.contextPath}/boards/write?teamName=<%=teamName%>">
             <button type="button" class="btn btn-outline-secondary">글 쓰기</button>
           </a>
         </div>
@@ -160,6 +158,6 @@
       {id: 5, entityColumnName: "updatedAt", listColumnName: "수정일", sortable: "true"},
     ]
   </script>
-  <script src="<%=contextPath%>/resources/js/listPage.js"></script>
+  <script src="${request.contextPath}/resources/js/listPage.js"></script>
 </body>
 </html>
