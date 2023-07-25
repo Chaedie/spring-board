@@ -41,7 +41,7 @@ public class TeamServiceImpl implements TeamService {
     public void insert(TeamRequestDTO teamRequestDTO) {
         Team team = teamRepository.save(teamRequestDTO.toEntity());
 
-        redisTemplate.opsForList().rightPush(TEAM_LIST, redisMapperUtil.serialize(new TeamResponseDTO(team)));
+        redisTemplate.opsForList().rightPush(TEAM_LIST, redisMapperUtil.getJsonFromDTO(new TeamResponseDTO(team)));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TeamServiceImpl implements TeamService {
             List<TeamResponseDTO> teamResponseDTOList = new ArrayList<>();
             teamList.forEach(team -> teamResponseDTOList.add(new TeamResponseDTO(team)));
             teamResponseDTOList
-                    .forEach(team -> redisTemplate.opsForList().rightPush(TEAM_LIST, redisMapperUtil.serialize(team)));
+                    .forEach(team -> redisTemplate.opsForList().rightPush(TEAM_LIST, redisMapperUtil.getJsonFromDTO(team)));
 
             return teamResponseDTOList;
         }
@@ -72,6 +72,6 @@ public class TeamServiceImpl implements TeamService {
         Team team = teamRepository.findById(teamId).orElseThrow(ItemNotFoundException::new);
         teamRepository.delete(team);
 
-        redisTemplate.opsForList().remove(TEAM_LIST, 1, redisMapperUtil.serialize(new TeamResponseDTO(team)));
+        redisTemplate.opsForList().remove(TEAM_LIST, 1, redisMapperUtil.getJsonFromDTO(new TeamResponseDTO(team)));
     }
 }
