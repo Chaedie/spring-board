@@ -94,9 +94,7 @@ public class PostServiceImpl implements PostService {
             if (!checkNicknamePassword(post, postRequestDTO)) {
                 throw new AuthorizationException(PostErrorCode.AUTHORIZATION_FAIL);
             }
-
-            post.setPostTitle(postRequestDTO.getPostTitle());
-            post.setPostContent(postRequestDTO.getPostContent());
+            post.updatePostTitleAndContent(postRequestDTO);
 
             updatedPost = postRepository.save(post);
 
@@ -173,7 +171,7 @@ public class PostServiceImpl implements PostService {
             Long postId = extractPostId(key);
 
             Post post = postRepository.findById(postId).get();
-            post.setView(value.getView());
+            post.updateView(value.getView());
             postRepository.save(post);
         }
 

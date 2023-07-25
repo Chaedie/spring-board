@@ -1,11 +1,13 @@
 package com.example.springbootboard.data.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,7 @@ public class UploadFile {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }
