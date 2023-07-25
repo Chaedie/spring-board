@@ -162,7 +162,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public void syncViewCount() {
-        ScanOptions scanOptions = ScanOptions.scanOptions().match("*").count(10).build();
+        ScanOptions scanOptions = ScanOptions.scanOptions().match("^postId::").count(10).build();
         Cursor<byte[]> keys = redisTemplate.getConnectionFactory().getConnection().scan(scanOptions);
 
         while (keys.hasNext()) {
@@ -173,9 +173,9 @@ public class PostServiceImpl implements PostService {
             Post post = postRepository.findById(postId).get();
             post.updateView(value.getView());
             postRepository.save(post);
-        }
 
-        redisTemplate.getConnectionFactory().getConnection().flushAll();
+            redisGenericUtil.deleteData(key);
+        }
     }
 
     private Long extractPostId(String key) {
