@@ -1,5 +1,6 @@
 package com.example.springbootboard.data.entity;
 
+import com.example.springbootboard.data.dto.PostRequestDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -51,5 +52,14 @@ public class Post extends BaseEntity {
     @PrePersist
     public void prePersist() {
         this.view = this.view == null ? 0 : this.view;
+    }
+
+    public void updatePostTitleAndContent(PostRequestDTO postRequestDTO) {
+        this.postTitle = postRequestDTO.getPostTitle();
+        this.postContent = postRequestDTO.getPostContent();
+    }
+
+    public void updateView(Long view) {
+        this.view = view;
     }
 }
