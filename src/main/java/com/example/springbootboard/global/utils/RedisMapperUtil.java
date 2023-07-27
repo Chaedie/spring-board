@@ -13,7 +13,7 @@ public class RedisMapperUtil {
 
     private final ObjectMapper objectMapper;
 
-    public <T> String serialize(T t) {
+    public <T> String getJsonFromDTO(T t) {
         String result = "";
         try {
             result = objectMapper.writeValueAsString(t);

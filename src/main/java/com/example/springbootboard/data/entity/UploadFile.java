@@ -23,6 +23,9 @@ public class UploadFile {
     @Column(name = "file_url")
     private String fileUrl;
 
+    @Column(name = "file_key")
+    private String fileKey;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;

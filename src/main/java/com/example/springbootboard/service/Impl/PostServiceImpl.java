@@ -10,6 +10,7 @@ import com.example.springbootboard.data.repository.TeamRepository;
 import com.example.springbootboard.global.error.Exception.AuthorizationException;
 import com.example.springbootboard.global.error.Exception.ItemNotFoundException;
 import com.example.springbootboard.global.error.errorcode.PostErrorCode;
+import com.example.springbootboard.global.utils.RedisGenericUtil;
 import com.example.springbootboard.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,8 @@ public class PostServiceImpl implements PostService {
     private final AwsS3ServiceImpl awsS3Service;
     private final PostRepository postRepository;
     private final TeamRepository teamRepository;
-    private final RedisTemplate<String, RedisPostDTO> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
+    private final RedisGenericUtil<RedisPostDTO> redisGenericUtil;
 
     @Override
     @Transactional(readOnly = true)
@@ -143,39 +145,39 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public long incrementViewCount(Long postId) {
         String key = "postId::" + postId;
-        RedisPostDTO cachedRedisPostDTO = redisTemplate.opsForValue().get(key);
+        RedisPostDTO cachedRedisPostDTO = redisGenericUtil.getData(key, RedisPostDTO.class);
 
         if (cachedRedisPostDTO == null) {
             Long view = postRepository.findById(postId).orElseThrow(ItemNotFoundException::new).getView();
             RedisPostDTO redisPostDTO = RedisPostDTO.builder()
                     .view(view + 1)
                     .build();
-            redisTemplate.opsForValue().set(key, redisPostDTO);
+            redisGenericUtil.setData(key, redisPostDTO);
             return view + 1;
         }
         Long cachedView = cachedRedisPostDTO.getView();
         cachedRedisPostDTO.setView(cachedView + 1);
-        redisTemplate.opsForValue().set(key, cachedRedisPostDTO);
+        redisGenericUtil.setData(key, cachedRedisPostDTO);
         return cachedView + 1;
     }
 
     @Override
     @Transactional
     public void syncViewCount() {
-        ScanOptions scanOptions = ScanOptions.scanOptions().match("*").count(10).build();
+        ScanOptions scanOptions = ScanOptions.scanOptions().match("^postId::").count(10).build();
         Cursor<byte[]> keys = redisTemplate.getConnectionFactory().getConnection().scan(scanOptions);
 
         while (keys.hasNext()) {
             String key = new String(keys.next());
-            RedisPostDTO value = redisTemplate.opsForValue().get(key);
+            RedisPostDTO value = redisGenericUtil.getData(key, RedisPostDTO.class);
             Long postId = extractPostId(key);
 
             Post post = postRepository.findById(postId).get();
             post.updateView(value.getView());
             postRepository.save(post);
-        }
 
-        redisTemplate.getConnectionFactory().getConnection().flushAll();
+            redisGenericUtil.deleteData(key);
+        }
     }
 
     private Long extractPostId(String key) {
@@ -206,9 +208,10 @@ public class PostServiceImpl implements PostService {
          * 2.1. UploadFile 엔티티 생성
          * 2.2. post <-> uploadFiles 양방향 연관관계 매핑
          */
-        awsS3Service.upload(multipartFiles).stream()
-                .forEach(url -> {
+        awsS3Service.upload(multipartFiles)
+                .forEach((key, url) -> {
                     UploadFile uploadFile = UploadFile.builder()
+                            .fileKey(key)
                             .fileUrl(url)
                             .build();
                     post.getUploadFiles().add(uploadFile);

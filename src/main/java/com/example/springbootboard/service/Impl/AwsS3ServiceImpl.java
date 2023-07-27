@@ -16,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,19 +33,21 @@ public class AwsS3ServiceImpl {
         return amazonS3Client.getUrl(bucket, uploadKey).toString();
     }
 
-    
-    public List<String> upload(MultipartFile[] multipartFiles) {
-        List<String> storeUrlList = new ArrayList<>();
+
+    public Map<String, String> upload(MultipartFile[] multipartFiles) {
+        Map<String, String> storeMap = new HashMap();
         Arrays.stream(multipartFiles)
                 .filter(multipartFile -> !StringUtils.isEmpty(multipartFile.getOriginalFilename()))
                 .forEach(multipartFile -> {
                     try {
-                        storeUrlList.add(upload(multipartFile.getInputStream(), createStoreFileName(multipartFile.getOriginalFilename())));
+                        String uploadKey = createStoreFileName(multipartFile.getOriginalFilename());
+                        String uploadUrl = upload(multipartFile.getInputStream(), uploadKey);
+                        storeMap.put(uploadKey, uploadUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
-        return storeUrlList;
+        return storeMap;
     }
 
     public ResponseEntity<byte[]> download(String key) throws IOException {
@@ -73,7 +72,7 @@ public class AwsS3ServiceImpl {
     private String createStoreFileName(String originalFileName) {
         String ext = extractExt(originalFileName);
         String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
+        return uuid + "_" + originalFileName;
     }
 
     private String extractExt(String originalFileName) {
