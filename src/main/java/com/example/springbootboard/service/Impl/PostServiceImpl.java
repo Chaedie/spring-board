@@ -208,9 +208,10 @@ public class PostServiceImpl implements PostService {
          * 2.1. UploadFile 엔티티 생성
          * 2.2. post <-> uploadFiles 양방향 연관관계 매핑
          */
-        awsS3Service.upload(multipartFiles).stream()
-                .forEach(url -> {
+        awsS3Service.upload(multipartFiles)
+                .forEach((key, url) -> {
                     UploadFile uploadFile = UploadFile.builder()
+                            .fileKey(key)
                             .fileUrl(url)
                             .build();
                     post.getUploadFiles().add(uploadFile);
