@@ -21,7 +21,7 @@ public class UploadFile {
     @Column(name = "id")
     private Long fileId;
 
-    @Column(name = "file_url")
+    @Column(name = "file_url", length = 1000)
     private String fileUrl;
 
     @Column(name = "file_key")
