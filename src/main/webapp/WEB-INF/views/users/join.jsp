@@ -1,8 +1,8 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.springbootboard.data.dto.UserRequestDTO" %>
+<%@ page import="com.example.springbootboard.domain.users.dto.UserRequestDTO" %>
 <%@ page import="java.util.Optional" %>
-<%@ page import="com.example.springbootboard.data.dto.TeamResponseDTO" %>
-<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
+<%@ page import="com.example.springbootboard.domain.teams.dto.TeamResponseDTO" %>
+<%@ page import="com.example.springbootboard.domain.users.dto.UserResponseDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%

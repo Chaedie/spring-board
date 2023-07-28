@@ -1,4 +1,4 @@
-<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
+<%@ page import="com.example.springbootboard.domain.users.dto.UserResponseDTO" %>
 <%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -26,8 +26,23 @@
     </nav>
 
     <main>
-
-      <%=userSession.toString() %>
+      <h1>Spring 게시판 !!!</h1>
+      <br>
+      <h3>로그인한 유저 정보</h3>
+      <c:choose>
+        <c:when test="${empty sessionScope.user}">
+          <span>비회원입니다!!!</span>
+        </c:when>
+        <c:otherwise>
+          <table>
+            <tr class="d-flex flex-column">
+              <td>유저네임 : ${sessionScope.user.username}</td>
+              <td>유저 이메일 : ${sessionScope.user.userEmail}</td>
+              <td>유저 팀 : ${sessionScope.user.team}</td>
+            </tr>
+          </table>
+        </c:otherwise>
+      </c:choose>
 
       <%-- Code Here! --%>
     </main>

@@ -1,8 +1,8 @@
 package com.example.springbootboard.controller.Rest.v1;
 
-import com.example.springbootboard.data.dto.ResponseDTO;
-import com.example.springbootboard.data.dto.TeamRequestDTO;
-import com.example.springbootboard.service.TeamService;
+import com.example.springbootboard.common.ResponseDTO;
+import com.example.springbootboard.domain.teams.dto.TeamRequestDTO;
+import com.example.springbootboard.domain.teams.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;

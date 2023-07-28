@@ -1,7 +1,7 @@
 package com.example.springbootboard.controller;
 
-import com.example.springbootboard.data.dto.CommentDTO;
-import com.example.springbootboard.service.CommentService;
+import com.example.springbootboard.domain.comments.CommentService;
+import com.example.springbootboard.domain.comments.dto.CommentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
