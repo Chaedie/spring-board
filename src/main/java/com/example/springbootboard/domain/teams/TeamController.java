@@ -1,4 +1,4 @@
-package com.example.springbootboard.controller.Rest.v1;
+package com.example.springbootboard.domain.teams;
 
 import com.example.springbootboard.common.ResponseDTO;
 import com.example.springbootboard.domain.teams.dto.TeamRequestDTO;

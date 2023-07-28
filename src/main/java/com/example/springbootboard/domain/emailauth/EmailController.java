@@ -1,4 +1,4 @@
-package com.example.springbootboard.controller.Rest.v1;
+package com.example.springbootboard.domain.emailauth;
 
 import com.example.springbootboard.common.ResponseDTO;
 import com.example.springbootboard.domain.emailauth.service.EmailService;

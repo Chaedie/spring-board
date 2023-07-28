@@ -10,7 +10,7 @@ import com.example.springbootboard.domain.teams.dto.TeamRequestDTO;
 import com.example.springbootboard.domain.teams.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +26,7 @@ public class DummyDataController {
     private final TeamRepository teamRepository;
     private final TeamService teamService;
 
-    @GetMapping("/authMails/insert")
+    @PostMapping("/authMails/insert")
     @Transactional
     public String insert_10_000_AuthMail() {
         for (int i = 0; i < 10_000; i++) {
@@ -37,7 +37,7 @@ public class DummyDataController {
         return "done!";
     }
 
-    @GetMapping("/posts/insert")
+    @PostMapping("/posts/insert")
     @Transactional
     public String insert_10_000_posts() {
         Team team = teamRepository.findById(1L).get();
@@ -56,7 +56,7 @@ public class DummyDataController {
         return "done!";
     }
 
-    @GetMapping("/teams/insert")
+    @PostMapping("/teams/insert")
     @Transactional
     public String insert_3_default_teams() {
 
