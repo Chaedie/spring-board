@@ -16,6 +16,6 @@
 
 #### CheckList
 
-- [ ] MVC 패턴 준수
+- [ ] Test Coverage 80%
 - [ ] 코딩 컨벤션 준수
 - [ ] 커밋 컨벤션 준수
