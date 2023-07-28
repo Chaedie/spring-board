@@ -62,13 +62,36 @@ class UserControllerTest {
                         .content(new ObjectMapper().writeValueAsString(userRequest)))
                 .andExpect(status().isOk())
                 .andDo(print());
+        User byUsername = userRepository.findByUsername(username).get();
 
         // then
-        User byUsername = userRepository.findByUsername(username).get();
         assertThat(byUsername.getUsername()).isEqualTo(username);
         assertThat(byUsername.getUserEmail()).isEqualTo(userEmail);
         assertThat(byUsername.getTeam().getTeamName()).isEqualTo(teamName);
+    }
 
+    @Test
+    @Transactional
+    void 회원가입_비밀번호가8자리이하면_실패한다() throws Exception {
+        // given
+        String username = "username";
+        String password = "pass";
+        String teamName = "all";
+        String userEmail = "user@email.com";
+        UserRequestDTO userRequest = UserRequestDTO.builder()
+                .username(username)
+                .password(password)
+                .teamName(teamName)
+                .userEmail(userEmail)
+                .build();
+
+        String url = "http://localhost:" + port + "/api/v1/users/join/api";
+        System.out.println("UserControllerTest.회원가입");
+        // when
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(userRequest)))
+                .andExpect(status().isBadRequest());
     }
 
 }

@@ -22,6 +22,7 @@ public class PostRequestDTO {
     private String postContent;
 
     private Long userId;
+    @NotBlank
     private String teamName;
 
     private String nickname;

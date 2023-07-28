@@ -23,10 +23,10 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teamId;
 
-    @Column(name = "team_name", unique = true)
+    @Column(name = "team_name", unique = true, length = 100)
     private String teamName;
 
-    @Column(name = "team_korean_name", unique = true)
+    @Column(name = "team_korean_name", unique = true, length = 100)
     private String teamKoreanName;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.PERSIST)

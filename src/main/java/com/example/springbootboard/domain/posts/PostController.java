@@ -1,15 +1,17 @@
 package com.example.springbootboard.domain.posts;
 
+import com.example.springbootboard.common.CommonResponse;
 import com.example.springbootboard.domain.posts.dto.PostRequestDTO;
 import com.example.springbootboard.domain.posts.dto.PostResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/write")
-    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
+    public String postWritePostPage(Model model, PostRequestDTO postRequestDTO, List<MultipartFile> multipartFiles) {
         // TODO: User 기능 추가 후 제거
         postRequestDTO.setUserId(1l);
 
@@ -28,6 +30,16 @@ public class PostController {
         model.addAttribute(postResponseDTO);
 
         return "redirect:/boards/detail?teamName=" + postRequestDTO.getTeamName() + "&postId=" + postResponseDTO.getPostId();
+    }
+
+    @PostMapping("/write/api")
+    public CommonResponse<Object> createPost(
+            @Valid @RequestPart(value = "postRequestDTO") PostRequestDTO postRequestDTO,
+            @RequestPart(value = "multipartFiles") List<MultipartFile> multipartFiles) {
+        // TODO: User 기능 추가 후 제거
+        postRequestDTO.setUserId(1L);
+
+        return CommonResponse.success(postService.insertPost(postRequestDTO, multipartFiles));
     }
 
 
@@ -40,6 +52,15 @@ public class PostController {
         model.addAttribute(postResponseDTO);
 
         return "redirect:/boards/detail?teamName=" + postResponseDTO.getTeamName() + "&postId=" + postRequestDTO.getPostId();
+    }
+
+    @PutMapping("/update/api")
+    public CommonResponse<Object> updatePost(@Valid @RequestBody PostRequestDTO postRequest) {
+        // TODO: 유저 기능 추가 후 삭제
+        postRequest.setUserId(1l);
+        PostResponseDTO postResponse = postService.updatePost(postRequest);
+
+        return CommonResponse.success(postResponse);
     }
 
 

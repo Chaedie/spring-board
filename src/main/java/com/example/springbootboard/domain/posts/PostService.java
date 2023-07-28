@@ -177,7 +177,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, MultipartFile[] multipartFiles) {
+    public PostResponseDTO insertPost(PostRequestDTO postRequestDTO, List<MultipartFile> multipartFiles) {
         /**
          * 1. Post 엔티티 생성
          */

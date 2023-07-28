@@ -3,6 +3,7 @@ package com.example.springbootboard.domain.emailauth;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Builder
 @Getter
@@ -19,6 +20,7 @@ public class EmailAuth {
     private Long id;
 
     @Column(name = "user_email", nullable = false, length = 40)
+    @Email
     private String userEmail;
 
     @Column(name = "auth_code", nullable = false, length = 16)
