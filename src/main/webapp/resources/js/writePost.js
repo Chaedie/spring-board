@@ -4,14 +4,14 @@ const $saveForm = document.querySelector("#saveForm");
 // nickPwForm.addEventListener('submit', validateSavePost)
 
 const validateSavePost = (e) => {
-  e.preventDefault();
+  // e.preventDefault();
   const nickname = e.target.nickname.value;
   const password = e.target.password.value;
   if (nickname.length < 2 || password.length < 2) {
     alert("닉네임, 패스워드는 필수입니다.")
     return;
   }
-  savePost();
+  // savePost();
 }
 
 // const $saveButton = document.querySelector("#saveButton");

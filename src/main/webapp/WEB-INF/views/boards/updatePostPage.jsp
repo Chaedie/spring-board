@@ -39,7 +39,7 @@
         </div>
 
         <div class="card-body">
-          <form id="nickPwForm" class="d-flex flex-column gap-2" method="post" action="update"
+          <form id="nickPwForm" class="d-flex flex-column gap-2" method="post" action="/api/v1/boards/update"
                 enctype="multipart/form-data">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="d-flex gap-2">

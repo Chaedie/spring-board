@@ -4,17 +4,17 @@ import com.example.springbootboard.domain.posts.dto.PostRequestDTO;
 import com.example.springbootboard.domain.posts.dto.PostResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/boards")
-@RestController
+@Controller
 public class PostController {
     private final PostService postService;
 
@@ -27,7 +27,7 @@ public class PostController {
 
         model.addAttribute(postResponseDTO);
 
-        return "redirect:detail?teamName=" + postRequestDTO.getTeamName() + "&postId=" + postResponseDTO.getPostId();
+        return "redirect:/boards/detail?teamName=" + postRequestDTO.getTeamName() + "&postId=" + postResponseDTO.getPostId();
     }
 
 
@@ -39,7 +39,7 @@ public class PostController {
 
         model.addAttribute(postResponseDTO);
 
-        return "redirect:detail?teamName=" + postResponseDTO.getTeamName() + "&postId=" + postRequestDTO.getPostId();
+        return "redirect:/boards/detail?teamName=" + postResponseDTO.getTeamName() + "&postId=" + postRequestDTO.getPostId();
     }
 
 
@@ -47,6 +47,6 @@ public class PostController {
     public String deletePost(Model model, @RequestParam Long postId, @RequestParam String teamName) {
         postService.delete(postId);
 
-        return "redirect:list?teamName=" + teamName + "&postId=" + postId + "&age=0&size=10&sort=postId,DESC";
+        return "redirect:/boards/list?teamName=" + teamName + "&postId=" + postId + "&age=0&size=10&sort=postId,DESC";
     }
 }

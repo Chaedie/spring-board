@@ -20,10 +20,10 @@ public class UserController {
     @PostMapping("/join")
     public String signUpUser(@Validated UserRequestDTO userRequestDTO, Errors errors) {
         if (errors.hasErrors()) {
-            return "redirect:login?error";
+            return "redirect:/users/login?error";
         }
         userService.signUpUser(userRequestDTO);
-        return "redirect:login";
+        return "redirect:/users/login";
     }
 
     @PostMapping("/join/api")

@@ -12,7 +12,7 @@
   </div>
 
   <div class="card-body">
-    <form id="saveForm" class="d-flex flex-column gap-2" method="post" action="write"
+    <form id="saveForm" class="d-flex flex-column gap-2" method="post"
           enctype="multipart/form-data">
       <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       <div class="d-flex gap-2">

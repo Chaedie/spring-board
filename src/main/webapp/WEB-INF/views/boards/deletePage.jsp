@@ -39,7 +39,7 @@
           글 삭제
         </div>
         <div class="card-body w-100">
-          <form class="" action="delete?teamName=<%=teamName%>&postId=<%=postId%>"
+          <form class="" action="/api/v1/boards/delete?teamName=<%=teamName%>&postId=<%=postId%>"
                 method="post">
             <input class="p-2 form-control" name="nickname" id="nickname" type="text" placeholder="닉네임"
                    minlength="2"

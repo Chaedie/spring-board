@@ -40,8 +40,8 @@ public class BoardsViewController {
     }
 
     @GetMapping("/write")
-    public String getWritePostPage(Model model) {
-        return "boards/writePostPageRefactor";
+    public String getWritePostPage() {
+        return "boards/writePostPage";
     }
 
     @GetMapping("/update")
