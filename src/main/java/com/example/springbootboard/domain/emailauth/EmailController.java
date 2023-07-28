@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/mail")
@@ -27,7 +29,7 @@ public class EmailController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseDTO<String> sendEmail(@RequestBody UserEmailRequestDTO userEmailRequestDTO) throws Exception {
+    public ResponseDTO<String> sendEmail(@Valid @RequestBody UserEmailRequestDTO userEmailRequestDTO) throws Exception {
         emailService.sendSimpleMessage(userEmailRequestDTO);
 
         return ResponseDTO.of(200, "Send Email SUCCESS", "OK");
@@ -41,7 +43,7 @@ public class EmailController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseDTO<String> verifyEmail(@RequestBody UserEmailRequestDTO userEmailDTO) {
+    public ResponseDTO<String> verifyEmail(@Valid @RequestBody UserEmailRequestDTO userEmailDTO) {
         if (emailService.isVerifiedCode(userEmailDTO)) {
             return ResponseDTO.of(200, "Verification SUCCESS", "OK");
         }
