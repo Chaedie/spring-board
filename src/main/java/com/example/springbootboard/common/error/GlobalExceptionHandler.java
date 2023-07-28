@@ -1,4 +1,4 @@
-package com.example.springbootboard.common.error.handler;
+package com.example.springbootboard.common.error;
 
 import com.example.springbootboard.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
