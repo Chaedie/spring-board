@@ -49,7 +49,7 @@
                       <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
                       <%-- names = userEmail username passwrod team--%>
-                      <form id="joinForm" class="mx-1 mx-md-4" method="post" action="join">
+                      <form id="joinForm" class="mx-1 mx-md-4" method="post" action="/api/v1/users/join">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>

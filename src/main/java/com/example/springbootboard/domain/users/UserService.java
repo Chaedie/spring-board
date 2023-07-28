@@ -24,6 +24,7 @@ public class UserService {
                 .username(userRequestDTO.getUsername())
                 .userEmail(userRequestDTO.getUserEmail())
                 .password(encoder.encode(userRequestDTO.getPassword()))
+                .role(Role.USER)
                 .team(teamRepository.findByTeamName(userRequestDTO.getTeamName())
                         .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND)))
                 .build();

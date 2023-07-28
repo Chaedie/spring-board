@@ -1,4 +1,4 @@
-package com.example.springbootboard.controller.Rest.v1;
+package com.example.springbootboard.domain.emailauth;
 
 import com.example.springbootboard.common.ResponseDTO;
 import com.example.springbootboard.domain.emailauth.service.EmailService;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/v1/mail")
+@RequestMapping("/api/v1/mail")
 public class EmailController {
 
     private final EmailService emailService;

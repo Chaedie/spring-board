@@ -1,4 +1,4 @@
-package com.example.springbootboard.controller.Rest.v1;
+package com.example.springbootboard.domain.teams;
 
 import com.example.springbootboard.common.ResponseDTO;
 import com.example.springbootboard.domain.teams.dto.TeamRequestDTO;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/rest/v1/teams")
+@RequestMapping("/api/v1/teams")
 @RequiredArgsConstructor
 public class TeamController {
 
