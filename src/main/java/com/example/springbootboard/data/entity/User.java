@@ -27,6 +27,10 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+    
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
