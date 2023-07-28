@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/v1/aws/s3")
+@RequestMapping("/api/v1/aws/s3")
 public class UploadFileController {
     @Autowired
     private AwsS3ServiceImpl awsS3Service;

@@ -4,15 +4,13 @@ import com.example.springbootboard.domain.posts.dto.PostRequestDTO;
 import com.example.springbootboard.domain.posts.dto.PostResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@Controller("/boards")
+@RequestMapping("/api/v1/boards")
+@RestController
 public class PostController {
     private final PostService postService;
 
