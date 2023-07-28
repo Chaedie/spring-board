@@ -1,7 +1,5 @@
-package com.example.springbootboard.repository;
+package com.example.springbootboard.domain.posts;
 
-import com.example.springbootboard.domain.posts.Post;
-import com.example.springbootboard.domain.posts.PostRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

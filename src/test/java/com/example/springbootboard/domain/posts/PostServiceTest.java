@@ -1,6 +1,5 @@
-package com.example.springbootboard.service.impl;
+package com.example.springbootboard.domain.posts;
 
-import com.example.springbootboard.domain.posts.PostService;
 import com.example.springbootboard.domain.posts.dto.PostRequestDTO;
 import com.example.springbootboard.domain.posts.dto.PostResponseDTO;
 import com.example.springbootboard.domain.uploadfiles.UploadFileService;

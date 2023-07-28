@@ -1,4 +1,4 @@
-package com.example.springbootboard.controller;
+package com.example.springbootboard.common;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

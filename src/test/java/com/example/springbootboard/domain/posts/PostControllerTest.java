@@ -1,7 +1,5 @@
-package com.example.springbootboard.controller;
+package com.example.springbootboard.domain.posts;
 
-import com.example.springbootboard.domain.posts.PostController;
-import com.example.springbootboard.domain.posts.PostService;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
