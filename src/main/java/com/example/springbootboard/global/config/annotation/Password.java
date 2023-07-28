@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface Password {
-    String message() default "비밀번호는 8~20자 영문 대 소문자, 숫자, 특수문자를 사용해주세요.";
+    String message() default "비밀번호는 8~20자 영문 대 소문자, 숫자만 사용해주세요.";
 
     Class[] groups() default {};
 

@@ -10,6 +10,6 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             return false;
         }
 
-        return value.matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}");
+        return value.matches("([a-zA-Z0-9]).{7,20}");
     }
 }
