@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 @Controller
@@ -27,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/join/api")
-    public CommonResponse<Object> signUpUserAPI(@RequestBody UserRequestDTO userRequest) {
+    public CommonResponse<Object> signUpUserAPI(@Valid @RequestBody UserRequestDTO userRequest) {
         return CommonResponse.success(userService.signUpUser(userRequest));
     }
 }

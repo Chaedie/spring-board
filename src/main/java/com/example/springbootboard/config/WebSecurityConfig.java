@@ -15,7 +15,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().ignoringAntMatchers("/rest/**")
+        http.csrf().ignoringAntMatchers("/api/v1/**")
                 .and()
                 .authorizeRequests((authz) -> authz
                         .requestMatchers(new AntPathRequestMatcher("/users/myPage")).authenticated()
