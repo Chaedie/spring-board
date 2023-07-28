@@ -1,11 +1,13 @@
 package com.example.springbootboard.domain.users;
 
+import com.example.springbootboard.common.CommonResponse;
 import com.example.springbootboard.domain.users.dto.UserRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
@@ -24,5 +26,8 @@ public class UserController {
         return "redirect:login";
     }
 
-
+    @PostMapping("/join/api")
+    public CommonResponse<Object> signUpUserAPI(@RequestBody UserRequestDTO userRequest) {
+        return CommonResponse.success(userService.signUpUser(userRequest));
+    }
 }
