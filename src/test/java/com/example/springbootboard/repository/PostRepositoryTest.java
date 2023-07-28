@@ -1,7 +1,7 @@
 package com.example.springbootboard.repository;
 
-import com.example.springbootboard.data.entity.Post;
-import com.example.springbootboard.data.repository.PostRepository;
+import com.example.springbootboard.domain.posts.Post;
+import com.example.springbootboard.domain.posts.PostRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

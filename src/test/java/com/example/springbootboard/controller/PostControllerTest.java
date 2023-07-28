@@ -1,6 +1,7 @@
 package com.example.springbootboard.controller;
 
-import com.example.springbootboard.service.Impl.PostServiceImpl;
+import com.example.springbootboard.domain.posts.PostController;
+import com.example.springbootboard.domain.posts.PostService;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class PostControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PostServiceImpl postService;
+    private PostService postService;
 
     @Test
     void visitAllPosts() throws Exception {

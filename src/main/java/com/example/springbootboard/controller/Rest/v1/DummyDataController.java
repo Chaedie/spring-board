@@ -1,13 +1,13 @@
 package com.example.springbootboard.controller.Rest.v1;
 
-import com.example.springbootboard.data.dto.TeamRequestDTO;
-import com.example.springbootboard.data.entity.EmailAuth;
-import com.example.springbootboard.data.entity.Post;
-import com.example.springbootboard.data.entity.Team;
-import com.example.springbootboard.data.repository.EmailAuthRepository;
-import com.example.springbootboard.data.repository.PostRepository;
-import com.example.springbootboard.data.repository.TeamRepository;
-import com.example.springbootboard.service.TeamService;
+import com.example.springbootboard.domain.emailauth.EmailAuth;
+import com.example.springbootboard.domain.emailauth.EmailAuthRepository;
+import com.example.springbootboard.domain.posts.Post;
+import com.example.springbootboard.domain.posts.PostRepository;
+import com.example.springbootboard.domain.teams.Team;
+import com.example.springbootboard.domain.teams.TeamRepository;
+import com.example.springbootboard.domain.teams.dto.TeamRequestDTO;
+import com.example.springbootboard.domain.teams.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;

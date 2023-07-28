@@ -1,7 +1,7 @@
 package com.example.springbootboard.controller.Rest.v1;
 
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.example.springbootboard.service.Impl.AwsS3ServiceImpl;
+import com.example.springbootboard.domain.uploadfiles.AwsS3ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

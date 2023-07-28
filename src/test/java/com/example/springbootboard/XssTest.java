@@ -4,11 +4,11 @@ package com.example.springbootboard;
 import com.nhncorp.lucy.security.xss.XssFilter;
 import com.nhncorp.lucy.security.xss.XssPreventer;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@WebMvcTest
+@AutoConfigureMockMvc
 public class XssTest {
     @Test
     public void testXssPreventer() {

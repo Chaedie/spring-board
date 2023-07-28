@@ -1,9 +1,9 @@
-<%@ page import="com.example.springbootboard.data.dto.PostResponseDTO" %>
-<%@ page import="com.example.springbootboard.data.entity.UploadFile" %>
-<%@ page import="com.example.springbootboard.data.entity.Comment" %>
+<%@ page import="com.example.springbootboard.domain.posts.dto.PostResponseDTO" %>
+<%@ page import="com.example.springbootboard.domain.uploadfiles.UploadFile" %>
+<%@ page import="com.example.springbootboard.domain.comments.Comment" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.util.Optional" %>
-<%@ page import="com.example.springbootboard.data.dto.UserResponseDTO" %>
+<%@ page import="com.example.springbootboard.domain.users.dto.UserResponseDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
