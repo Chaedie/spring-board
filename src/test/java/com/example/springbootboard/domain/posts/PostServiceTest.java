@@ -46,7 +46,7 @@ class PostServiceTest {
         multipartFiles[0] = file;
 
         // when
-        PostResponseDTO postResponse = postService.insertPost(postRequest, multipartFiles);
+        PostResponseDTO postResponse = postService.insertPost(postRequest, null);
 
         // then
         PostResponseDTO findPost = postService.findById(postResponse.getPostId());
