@@ -18,6 +18,10 @@
 - 개발 요구 사항, 트러블 슈팅 등의 사항은 WIKI에 기록합니다.
 - [-> 깃헙 WIKI 바로가기](https://github.com/Chaedie/spring-board/wiki)
 
+### ERD
+
+<img width="852" alt="image" src="https://github.com/Chaedie/spring-board/assets/88099590/0ee32b62-4960-473d-88f4-2f58286f3851">
+
 <br>
 
 ---
