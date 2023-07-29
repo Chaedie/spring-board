@@ -29,7 +29,7 @@ public class Comment extends BaseTimeEntity {
     private String nickname;
     private String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 }

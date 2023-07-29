@@ -27,7 +27,7 @@ public class UploadFile {
     @Column(name = "file_key")
     private String fileKey;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
