@@ -44,7 +44,7 @@ public class Post extends BaseTimeEntity {
     private Long view;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)

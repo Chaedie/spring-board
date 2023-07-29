@@ -34,6 +34,6 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 }

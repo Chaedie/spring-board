@@ -28,7 +28,7 @@ public class UploadFile {
     private String fileKey;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
     public void setPost(Post post) {
