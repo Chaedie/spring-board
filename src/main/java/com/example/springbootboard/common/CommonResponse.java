@@ -1,8 +1,11 @@
 package com.example.springbootboard.common;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
+@Getter
 public class CommonResponse<T> {
     private String message;
     private T data;
