@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rest/v1/dummy")
+@RequestMapping("/api/v1/dummy")
 @RequiredArgsConstructor
 public class DummyDataController {
 

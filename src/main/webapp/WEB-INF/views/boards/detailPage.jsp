@@ -79,7 +79,7 @@
               <a href="${request.contextPath}/boards/update?teamName=<%=postResponseDTO.getTeamName()%>&postId=<%=postResponseDTO.getPostId()%>">
                 <button type="button" class="mt-4 btn btn-outline-secondary">글 수정</button>
               </a>
-              <form action="/api/v1/boards/delete?teamName=<%=postResponseDTO.getTeamName()%>&postId=<%=postResponseDTO.getPostId()%>"
+              <form action="/boards/delete?teamName=<%=postResponseDTO.getTeamName()%>&postId=<%=postResponseDTO.getPostId()%>"
                     method="get" class="d-inline-block">
                 <input type="hidden" name="postId" value="<%=postResponseDTO.getPostId()%>">
                 <input type="hidden" name="teamName" value="<%=postResponseDTO.getTeamName()%>">

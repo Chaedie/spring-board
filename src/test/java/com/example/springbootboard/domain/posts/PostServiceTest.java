@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,6 +31,7 @@ class PostServiceTest {
     PostService postService;
 
 
+    @Transactional
     @Test
     void insertPost() throws IOException {
         // given
@@ -42,11 +45,11 @@ class PostServiceTest {
         String filename = "test_image.png";
 
         MockMultipartFile file = new MockMultipartFile("images", new FileInputStream(filepath + filename));
-        MultipartFile[] multipartFiles = new MultipartFile[1];
-        multipartFiles[0] = file;
+        List<MultipartFile> multipartFiles = new ArrayList<>();
+        multipartFiles.add(file);
 
         // when
-        PostResponseDTO postResponse = postService.insertPost(postRequest, null);
+        PostResponseDTO postResponse = postService.insertPost(postRequest, multipartFiles);
 
         // then
         PostResponseDTO findPost = postService.findById(postResponse.getPostId());

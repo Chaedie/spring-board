@@ -29,11 +29,17 @@ public class User extends BaseTimeEntity {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
+    @Embedded
+    Address homeAddress;
+
+    @Embedded
+    Account userAccount;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 }
