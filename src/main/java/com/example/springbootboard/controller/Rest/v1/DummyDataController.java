@@ -1,5 +1,6 @@
 package com.example.springbootboard.controller.Rest.v1;
 
+import com.example.springbootboard.common.CommonResponse;
 import com.example.springbootboard.domain.emailauth.EmailAuth;
 import com.example.springbootboard.domain.emailauth.EmailAuthRepository;
 import com.example.springbootboard.domain.posts.Post;
@@ -10,9 +11,8 @@ import com.example.springbootboard.domain.teams.dto.TeamRequestDTO;
 import com.example.springbootboard.domain.teams.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;
 
@@ -65,5 +65,32 @@ public class DummyDataController {
         teamService.insert(TeamRequestDTO.builder().teamName("devops").teamKoreanName("데브옵스").build());
 
         return "done!";
+    }
+
+    @GetMapping("/rent-loan-rate-info")
+    public CommonResponse<Object> getRentLoanRateInfo(
+            @RequestParam String serviceKey,
+            // @RequestParam String pageNo,
+            // @RequestParam String numOfRows,
+            // @RequestParam String dataType
+    ) {
+        String pageNo = "1";
+        String numOfRows = "10";
+        String dataType = "json";
+        String block = WebClient.builder()
+                .baseUrl("http://apis.data.go.kr").build()
+                .get()
+                .uri(builder ->
+                        builder.path("/B551408/rent-loan-rate-info/rate-list")
+                                .queryParam("serviceKey", serviceKey)
+                                .queryParam("pageNo", pageNo)
+                                .queryParam("numOfRows", numOfRows)
+                                .queryParam("dataType", dataType)
+                                .build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        System.out.println("block = " + block);
+        return CommonResponse.success(block);
     }
 }
