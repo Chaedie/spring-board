@@ -38,7 +38,7 @@
             <tr class="d-flex flex-column">
               <td>유저네임 : ${sessionScope.user.username}</td>
               <td>유저 이메일 : ${sessionScope.user.userEmail}</td>
-              <td>유저 팀 : ${sessionScope.user.team}</td>
+              <td>유저 팀 : ${sessionScope.user.team.teamName}</td>
             </tr>
           </table>
         </c:otherwise>

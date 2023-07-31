@@ -23,7 +23,7 @@ public class WebSecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .formLogin()
                 .loginPage("/users/login")
-                .loginProcessingUrl("/users/login")
+                .loginProcessingUrl("/api/v1/users/login")
                 .defaultSuccessUrl("/");
         return http.build();
     }
