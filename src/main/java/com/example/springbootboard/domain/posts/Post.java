@@ -66,4 +66,8 @@ public class Post extends BaseTimeEntity {
     public void updateView(Long view) {
         this.view = view;
     }
+
+    public void incrementView() {
+        this.view++;
+    }
 }
