@@ -20,9 +20,5 @@ public class RedisPostDTO {
     public RedisPostDTO(Post post) {
         this.view = post.getView();
     }
-
-    public RedisPostDTO incrementView() {
-        this.view++;
-        return this;
-    }
+    
 }
