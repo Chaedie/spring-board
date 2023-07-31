@@ -139,17 +139,14 @@ public class PostService {
         RedisPostDTO cachedRedisPostDTO = redisGenericUtil.getData(key, RedisPostDTO.class);
 
         if (cachedRedisPostDTO == null) {
-            Long view = postRepository.findById(postId).orElseThrow(ItemNotFoundException::new).getView();
-            RedisPostDTO redisPostDTO = RedisPostDTO.builder()
-                    .view(view + 1)
-                    .build();
+            RedisPostDTO redisPostDTO = new RedisPostDTO(postRepository.findById(postId)
+                    .orElseThrow(ItemNotFoundException::new)).incrementView();
+
             redisGenericUtil.setData(key, redisPostDTO);
-            return view + 1;
+            return redisPostDTO.getView();
         }
-        Long cachedView = cachedRedisPostDTO.getView();
-        cachedRedisPostDTO.setView(cachedView + 1);
-        redisGenericUtil.setData(key, cachedRedisPostDTO);
-        return cachedView + 1;
+        redisGenericUtil.setData(key, cachedRedisPostDTO.incrementView());
+        return cachedRedisPostDTO.getView();
     }
 
     @Transactional

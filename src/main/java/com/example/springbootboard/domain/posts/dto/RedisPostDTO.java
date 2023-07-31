@@ -1,18 +1,28 @@
 package com.example.springbootboard.domain.posts.dto;
 
-import lombok.*;
+import com.example.springbootboard.domain.posts.Post;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-@Builder
+@RequiredArgsConstructor
 public class RedisPostDTO {
+
     /**
      * Redis의 postId::{postId}에 해당 DTO를 넣는다.
      */
     private Long view;
 
+    @Builder
+    public RedisPostDTO(Post post) {
+        this.view = post.getView();
+    }
+
+    public RedisPostDTO incrementView() {
+        this.view++;
+        return this;
+    }
 }
