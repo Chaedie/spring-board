@@ -133,23 +133,23 @@ public class PostService {
      * @param postId
      * @RedisKey postId::{postId}
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public long incrementViewCount(Long postId) {
         String key = "postId::" + postId;
         RedisPostDTO cachedRedisPostDTO = redisGenericUtil.getData(key, RedisPostDTO.class);
 
         if (cachedRedisPostDTO == null) {
-            Long view = postRepository.findById(postId).orElseThrow(ItemNotFoundException::new).getView();
-            RedisPostDTO redisPostDTO = RedisPostDTO.builder()
-                    .view(view + 1)
-                    .build();
+            Post post = postRepository.findById(postId).orElseThrow(ItemNotFoundException::new);
+            post.incrementView();
+
+            RedisPostDTO redisPostDTO = new RedisPostDTO(post);
+
             redisGenericUtil.setData(key, redisPostDTO);
-            return view + 1;
+            return redisPostDTO.getView();
         }
-        Long cachedView = cachedRedisPostDTO.getView();
-        cachedRedisPostDTO.setView(cachedView + 1);
+        cachedRedisPostDTO.setView(cachedRedisPostDTO.getView() + 1);
         redisGenericUtil.setData(key, cachedRedisPostDTO);
-        return cachedView + 1;
+        return cachedRedisPostDTO.getView();
     }
 
     @Transactional

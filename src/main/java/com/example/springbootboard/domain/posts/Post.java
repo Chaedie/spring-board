@@ -43,7 +43,7 @@ public class Post extends BaseTimeEntity {
     @Column(name = "view", columnDefinition = "BIGINT DEFAULT 0")
     private Long view;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
@@ -65,5 +65,9 @@ public class Post extends BaseTimeEntity {
 
     public void updateView(Long view) {
         this.view = view;
+    }
+
+    public void incrementView() {
+        this.view++;
     }
 }
