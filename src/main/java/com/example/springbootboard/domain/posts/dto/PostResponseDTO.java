@@ -27,7 +27,9 @@ public class PostResponseDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @ToString.Exclude
     private List<UploadFile> uploadFiles;
+    @ToString.Exclude
     private List<Comment> comments;
 
     public PostResponseDTO(Post post) {

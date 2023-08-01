@@ -10,13 +10,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Builder
 public class UserResponseDTO {
 
     private String username;
     private String userEmail;
     private Team team;
 
+    @Builder
     public UserResponseDTO(User user) {
         this.username = user.getUsername();
         this.userEmail = user.getUserEmail();

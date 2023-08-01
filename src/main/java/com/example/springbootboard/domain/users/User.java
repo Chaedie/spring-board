@@ -12,8 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity
 @Table(name = "users")
+@Entity
 public class User extends BaseTimeEntity {
     @Id
     @Column(name = "id")

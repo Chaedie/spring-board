@@ -10,9 +10,9 @@ import javax.validation.constraints.Email;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
 @ToString
 @Table(name = "email_auth")
+@Entity
 public class EmailAuth {
 
     @Id

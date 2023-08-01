@@ -11,8 +11,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
 @Table(name = "comments")
+@Entity
 public class Comment extends BaseTimeEntity {
     @Id
     @Column(name = "id")

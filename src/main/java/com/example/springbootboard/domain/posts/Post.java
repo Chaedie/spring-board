@@ -47,9 +47,11 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<UploadFile> uploadFiles = new ArrayList<>();
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 

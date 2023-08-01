@@ -9,12 +9,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"teamName", "teamKoreanName"})
-@Builder
 public class TeamResponseDTO {
 
     private String teamName;
     private String teamKoreanName;
 
+    @Builder
     public TeamResponseDTO(Team team) {
         this.teamName = team.getTeamName();
         this.teamKoreanName = team.getTeamKoreanName();

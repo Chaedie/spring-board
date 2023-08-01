@@ -1,4 +1,4 @@
-package com.example.springbootboard.controller.Rest.v1;
+package com.example.springbootboard.controller.api.v1;
 
 import com.example.springbootboard.common.CommonResponse;
 import com.example.springbootboard.domain.emailauth.EmailAuth;
@@ -10,15 +10,17 @@ import com.example.springbootboard.domain.teams.TeamRepository;
 import com.example.springbootboard.domain.teams.dto.TeamRequestDTO;
 import com.example.springbootboard.domain.teams.service.TeamService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/v1/dummy")
+@Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/dummy")
+@RestController
 public class DummyDataController {
 
     private final EmailAuthRepository emailAuthRepository;
@@ -69,7 +71,7 @@ public class DummyDataController {
 
     @GetMapping("/rent-loan-rate-info")
     public CommonResponse<Object> getRentLoanRateInfo(
-            @RequestParam String serviceKey,
+            @RequestParam String serviceKey
             // @RequestParam String pageNo,
             // @RequestParam String numOfRows,
             // @RequestParam String dataType
@@ -92,5 +94,11 @@ public class DummyDataController {
                 .block();
         System.out.println("block = " + block);
         return CommonResponse.success(block);
+    }
+
+    @PostMapping("/xss")
+    public String xss(@RequestBody String content) {
+        log.info("content = {}", content);
+        return content;
     }
 }
