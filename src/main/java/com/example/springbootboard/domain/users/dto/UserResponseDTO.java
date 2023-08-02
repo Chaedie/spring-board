@@ -17,9 +17,13 @@ public class UserResponseDTO {
     private Team team;
 
     @Builder
-    public UserResponseDTO(User user) {
+    private UserResponseDTO(User user) {
         this.username = user.getUsername();
         this.userEmail = user.getUserEmail();
         this.team = user.getTeam();
+    }
+
+    public static UserResponseDTO from(User user) {
+        return new UserResponseDTO(user);
     }
 }

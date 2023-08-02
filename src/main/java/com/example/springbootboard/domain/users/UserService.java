@@ -31,6 +31,6 @@ public class UserService {
 
         userRepository.save(user);
 
-        return new UserResponseDTO(user);
+        return UserResponseDTO.from(user);
     }
 }

@@ -42,7 +42,7 @@ public class PostService {
         List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "postId"));
         List<PostResponseDTO> postResponseDTOList = new ArrayList<>();
         for (Post post : postList) {
-            PostResponseDTO postResponseDTO = new PostResponseDTO(post);
+            PostResponseDTO postResponseDTO = PostResponseDTO.from(post);
             postResponseDTOList.add(postResponseDTO);
         }
 
@@ -53,7 +53,7 @@ public class PostService {
     public Page<PostResponseDTO> findAllWithPagination(String search, Pageable pageable) {
         Page<Post> pageList = postRepository.findByPostTitleContains(search, pageable);
 
-        Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> new PostResponseDTO(post));
+        Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> PostResponseDTO.from(post));
         return pageResponseDTOList;
     }
 
@@ -65,7 +65,7 @@ public class PostService {
 
         Page<Post> pageList = postRepository.findByTeamTeamIdAndPostTitleContains(teamId, search, pageable);
 
-        Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> new PostResponseDTO(post));
+        Page<PostResponseDTO> pageResponseDTOList = pageList.map(post -> PostResponseDTO.from(post));
         return pageResponseDTOList;
     }
 
@@ -74,7 +74,7 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND));
 
-        return new PostResponseDTO(post);
+        return PostResponseDTO.from(post);
     }
 
     @Transactional
@@ -97,7 +97,7 @@ public class PostService {
             throw new ItemNotFoundException(PostErrorCode.ITEM_NOT_FOUND);
         }
 
-        return new PostResponseDTO(updatedPost);
+        return PostResponseDTO.from(updatedPost);
     }
 
     private boolean checkNicknamePassword(Post post, PostRequestDTO postRequestDTO) {
@@ -207,6 +207,6 @@ public class PostService {
                     uploadFile.setPost(post);
                 });
 
-        return new PostResponseDTO(postRepository.save(post));
+        return PostResponseDTO.from(postRepository.save(post));
     }
 }

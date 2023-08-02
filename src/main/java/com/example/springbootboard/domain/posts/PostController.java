@@ -58,9 +58,8 @@ public class PostController {
     public CommonResponse<Object> updatePost(@Valid @RequestBody PostRequestDTO postRequest) {
         // TODO: 유저 기능 추가 후 삭제
         postRequest.setUserId(1l);
-        PostResponseDTO postResponse = postService.updatePost(postRequest);
 
-        return CommonResponse.success(postResponse);
+        return CommonResponse.success(postService.updatePost(postRequest));
     }
 
 

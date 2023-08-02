@@ -1,6 +1,6 @@
 package com.example.springbootboard.domain.emailauth.service;
 
-import com.example.springbootboard.domain.users.dto.UserEmailRequestDTO;
+import com.example.springbootboard.domain.emailauth.dto.UserEmailRequestDTO;
 
 public interface EmailService {
 

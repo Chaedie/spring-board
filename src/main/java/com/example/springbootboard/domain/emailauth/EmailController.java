@@ -1,8 +1,8 @@
 package com.example.springbootboard.domain.emailauth;
 
 import com.example.springbootboard.common.ResponseDTO;
+import com.example.springbootboard.domain.emailauth.dto.UserEmailRequestDTO;
 import com.example.springbootboard.domain.emailauth.service.EmailService;
-import com.example.springbootboard.domain.users.dto.UserEmailRequestDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
