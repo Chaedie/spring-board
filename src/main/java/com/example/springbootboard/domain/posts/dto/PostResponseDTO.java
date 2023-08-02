@@ -11,10 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Builder
 public class PostResponseDTO {
     private Long postId;
     private String postTitle;
@@ -27,9 +25,12 @@ public class PostResponseDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @ToString.Exclude
     private List<UploadFile> uploadFiles;
+    @ToString.Exclude
     private List<Comment> comments;
 
+    @Builder
     public PostResponseDTO(Post post) {
         this.postId = post.getPostId();
         this.postTitle = post.getPostTitle();
@@ -37,10 +38,15 @@ public class PostResponseDTO {
         this.userId = post.getUserId();
         this.nickname = post.getNickname();
         this.teamName = post.getTeam().getTeamName();
+        this.view = post.getView();
         this.createdAt = post.getCreatedAt();
         this.updatedAt = post.getUpdatedAt();
         this.uploadFiles = post.getUploadFiles();
         this.comments = post.getComments();
-        this.view = post.getView();
+    }
+
+    // 정적 팩토리 메서드 사용
+    public static PostResponseDTO from(Post post) {
+        return new PostResponseDTO(post);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.springbootboard.domain.emailauth.service;
 
 import com.example.springbootboard.domain.emailauth.EmailAuthRepository;
-import com.example.springbootboard.domain.users.dto.UserEmailRequestDTO;
+import com.example.springbootboard.domain.emailauth.dto.UserEmailRequestDTO;
 import com.example.springbootboard.utils.RedisStringUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +75,7 @@ class EmailServiceImplTest {
 
         // when
         boolean isExists = emailService.isVerifiedCode(userEmailRequest);
-        
+
         // then
         assertThat(isExists).isTrue();
     }

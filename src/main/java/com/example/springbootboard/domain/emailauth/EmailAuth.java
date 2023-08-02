@@ -5,14 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
-@Builder
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
 @ToString
 @Table(name = "email_auth")
+@Entity
 public class EmailAuth {
 
     @Id
@@ -25,4 +23,10 @@ public class EmailAuth {
 
     @Column(name = "auth_code", nullable = false, length = 16)
     private String authCode;
+
+    @Builder
+    public EmailAuth(String userEmail, String authCode) {
+        this.userEmail = userEmail;
+        this.authCode = authCode;
+    }
 }

@@ -2,7 +2,7 @@ package com.example.springbootboard.domain.emailauth.service;
 
 import com.example.springbootboard.domain.emailauth.EmailAuth;
 import com.example.springbootboard.domain.emailauth.EmailAuthRepository;
-import com.example.springbootboard.domain.users.dto.UserEmailRequestDTO;
+import com.example.springbootboard.domain.emailauth.dto.UserEmailRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

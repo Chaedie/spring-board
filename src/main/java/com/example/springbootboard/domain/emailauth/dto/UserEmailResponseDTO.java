@@ -1,4 +1,4 @@
-package com.example.springbootboard.domain.users.dto;
+package com.example.springbootboard.domain.emailauth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
